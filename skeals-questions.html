@@ -1,0 +1,372 @@
+<title>Skeals — Les six inconnues</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#EBEEEC; --surface:#FAFCFA; --surface-2:#F1F4F2;
+  --ink:#0E1513; --ink-soft:#525E59; --ink-faint:#7C8985;
+  --rule:#D0D8D4; --rule-strong:#A9B5B0;
+  --accent:#0A5647; --accent-soft:#DCE9E4; --accent-ink:#083F34;
+  --signal:#A63A28; --signal-soft:#F4DFDA;
+  --gold:#8E6412; --gold-soft:#F0E6CF;
+  --line:#C3CCC8;
+  --f-display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0B100F; --surface:#141A18; --surface-2:#1A2220;
+    --ink:#E4EAE7; --ink-soft:#9AA8A3; --ink-faint:#74827D;
+    --rule:#26302C; --rule-strong:#3A4742;
+    --accent:#48C7A2; --accent-soft:#12312A; --accent-ink:#8FE0C6;
+    --signal:#E58974; --signal-soft:#331A15;
+    --gold:#D9AE55; --gold-soft:#2E2412;
+    --line:#2E3A35;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0B100F; --surface:#141A18; --surface-2:#1A2220;
+  --ink:#E4EAE7; --ink-soft:#9AA8A3; --ink-faint:#74827D;
+  --rule:#26302C; --rule-strong:#3A4742;
+  --accent:#48C7A2; --accent-soft:#12312A; --accent-ink:#8FE0C6;
+  --signal:#E58974; --signal-soft:#331A15;
+  --gold:#D9AE55; --gold-soft:#2E2412;
+  --line:#2E3A35;
+}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:0 clamp(18px,4.5vw,40px)}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+a{color:var(--accent);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+strong{font-weight:600;color:var(--ink)}
+
+header.top{border-bottom:1px solid var(--rule);padding:clamp(30px,6vw,58px) 0 clamp(24px,4vw,34px)}
+header.top h1{font-family:var(--f-display);font-weight:800;font-size:clamp(34px,6.6vw,62px);line-height:1;letter-spacing:-.025em;margin:15px 0 0;text-wrap:balance}
+header.top h1 em{font-style:normal;color:var(--accent)}
+.deck{font-size:clamp(17px,2.1vw,20px);color:var(--ink-soft);max-width:58ch;margin:18px 0 0;line-height:1.5}
+.stamp{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:26px;font-family:var(--f-mono);font-size:12px;color:var(--ink-faint)}
+.stamp b{color:var(--ink-soft);font-weight:500}
+
+.rule-box{background:var(--accent-soft);border-left:3px solid var(--accent);padding:18px 20px;margin:26px 0 0;border-radius:0 4px 4px 0}
+.rule-box p{font-family:var(--f-display);font-weight:500;font-size:clamp(17px,2.1vw,20px);line-height:1.35;color:var(--accent-ink);margin:0;letter-spacing:-.01em}
+.rule-box p+p{margin-top:10px}
+
+.order{border:1px solid var(--rule);border-radius:4px;background:var(--surface);padding:16px 18px;margin:26px 0 0}
+.order h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 10px;font-weight:600}
+.order ol{margin:0;padding-left:1.3em;font-size:14.5px;color:var(--ink-soft);columns:2;column-gap:26px}
+.order li{margin-bottom:5px;break-inside:avoid}
+@media(max-width:620px){.order ol{columns:1}}
+
+/* question block */
+.q{border-bottom:1px solid var(--rule);padding:clamp(30px,5vw,46px) 0}
+.qhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.qnum{font-family:var(--f-display);font-weight:800;font-size:26px;line-height:1;color:var(--accent);letter-spacing:-.02em}
+.qtheme{font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint)}
+.qtag{margin-left:auto;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:var(--gold-soft);color:var(--gold);white-space:nowrap}
+.qtag.piv{background:var(--signal-soft);color:var(--signal)}
+.ask{font-family:var(--f-display);font-weight:700;font-size:clamp(21px,3vw,27px);line-height:1.22;letter-spacing:-.018em;margin:0 0 4px;text-wrap:balance}
+.ask+.ask{margin-top:12px}
+
+h4.sub{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:22px 0 8px;font-weight:600}
+.relances{margin:0;padding-left:1.15em}
+.relances li{margin-bottom:6px;font-size:15.5px;color:var(--ink-soft);line-height:1.45}
+.relances li::marker{color:var(--accent)}
+.relances li b{color:var(--ink);font-weight:600}
+
+.why{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:15px 17px;margin:18px 0 0}
+.why .lbl{font-family:var(--f-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);font-weight:600;display:block;margin-bottom:6px}
+.why p{margin:0;font-size:15px;line-height:1.5;color:var(--ink-soft)}
+.why p+p{margin-top:9px}
+.why.warn{border-left:3px solid var(--signal)}
+.why.warn .lbl{color:var(--signal)}
+
+.answer{margin:20px 0 0}
+.answer .lbl{font-family:var(--f-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;display:block;margin-bottom:7px}
+.lines{height:78px;border:1px solid var(--rule);border-radius:3px;background:
+  repeating-linear-gradient(to bottom,transparent 0 25px,var(--line) 25px 26px);
+  background-clip:padding-box}
+
+/* numbers to leave with */
+.must{border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin:24px 0;background:var(--rule);display:grid;gap:1px}
+@media(min-width:720px){.must{grid-template-columns:repeat(3,1fr)}}
+.must .m{background:var(--surface);padding:17px 18px}
+.must .m .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.must .m .v{font-family:var(--f-display);font-weight:700;font-size:16.5px;line-height:1.25;margin:8px 0 7px;letter-spacing:-.01em}
+.must .m p{font-size:14px;color:var(--ink-soft);margin:0;line-height:1.45}
+
+section.close{padding:clamp(30px,5vw,46px) 0}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(23px,3.2vw,31px);line-height:1.14;letter-spacing:-.02em;margin:0 0 14px;text-wrap:balance}
+p.lead{margin:0 0 15px;max-width:66ch;color:var(--ink-soft)}
+
+.bonus{background:var(--surface-2);border:1px dashed var(--rule-strong);border-radius:4px;padding:18px 20px;margin:22px 0}
+.bonus h4{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 11px;font-weight:600}
+.bonus ul{margin:0;padding-left:1.15em}
+.bonus li{margin-bottom:8px;font-size:15.5px;color:var(--ink-soft);line-height:1.45}
+.bonus li b{color:var(--ink);font-weight:600}
+
+footer{border-top:1px solid var(--rule);padding:26px 0 50px;color:var(--ink-faint);font-family:var(--f-mono);font-size:11.5px;line-height:1.7;margin-top:20px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .q{page-break-inside:avoid;border-bottom:1px solid #bbb}
+  .lines{height:64px}
+  .qtag{border:1px solid #999}
+}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">Uplye Studio × Skeals · Guide d'entretien · 3 septembre, 15 h 00</div>
+  <h1>Les six<br><em>inconnues</em></h1>
+  <p class="deck">Six choses qu'on ignore encore et qui empêchent de piloter au résultat. Tant qu'elles ne sont pas chiffrées, on poste pour poster. Une heure d'écoute vaut trois mois de suppositions.</p>
+  <div class="stamp">
+    <span>Interlocuteurs <b>Nicolas Lerousseau &amp; Valentin</b></span>
+    <span>Conduite <b>Enzo Folletete</b></span>
+    <span>Format <b>Écoute — pas de pitch</b></span>
+  </div>
+
+  <div class="rule-box">
+    <p>Une seule règle pour cette heure : on ne vend rien. L'offre est déjà choisie. Ce qu'on cherche, ce sont des chiffres et des priorités — parce que c'est ce qui nous permettra, dans trois mois, de dire si ça a marché ou non.</p>
+  </div>
+
+  <div class="order">
+    <h4>Ordre de passage — on remonte du cap vers les canaux</h4>
+    <ol>
+      <li>Le cap : où vous voulez être</li>
+      <li>Les chiffres : ce qu'on peut piloter</li>
+      <li>Le financement : la mécanique réelle</li>
+      <li>La conversion : le chiffre unique</li>
+      <li>La valeur client : ce que vaut un kiné</li>
+      <li>Les canaux : ce qui existe déjà</li>
+    </ol>
+  </div>
+</header>
+
+<!-- 01 -->
+<div class="q">
+  <div class="qhead"><span class="qnum">01</span><span class="qtheme">Le cap</span><span class="qtag piv">Question pivot</span></div>
+  <p class="ask">« Dans douze mois, à quoi ressemble Skeals si tout se passe bien ? Et dans six ? »</p>
+  <p class="ask" style="color:var(--signal)">« Et surtout : votre frein aujourd'hui, c'est la demande ou l'offre ? »</p>
+
+  <h4 class="sub">Relances</h4>
+  <ul class="relances">
+    <li>Plus de <b>sessions</b>, plus de <b>villes</b>, plus de <b>formations au catalogue</b> — ou les mêmes sessions <b>mieux remplies</b> ?</li>
+    <li>Y a-t-il des régions que vous voulez ouvrir ? Lesquelles, et à quelle échéance ?</li>
+    <li>Est-ce que vous manquez de <b>formateurs</b> ou de <b>salles</b> pour absorber plus d'inscrits ?</li>
+    <li>Y a-t-il une échéance externe qui commande le calendrier : recrutement, agrément, renouvellement Qualiopi, saison ?</li>
+    <li>Le distanciel ou la classe virtuelle sont-ils au programme ?</li>
+  </ul>
+
+  <div class="why warn">
+    <span class="lbl">Pourquoi c'est la question la plus importante de la réunion</span>
+    <p>Si le frein est <strong>l'offre</strong> et non la demande — pas assez de formateurs, pas assez de créneaux de salle — alors faire de l'acquisition est une erreur : on générerait une demande qu'ils ne peuvent pas servir. Dans ce cas, le contenu doit d'abord servir à <strong>recruter des formateurs</strong>, ce qui change entièrement les piliers éditoriaux.</p>
+    <p>Cette question doit être posée tôt et franchement. Aucune agence ne la pose. Elle vaut la réunion à elle seule.</p>
+  </div>
+
+  <div class="why">
+    <span class="lbl">Ce que la réponse change</span>
+    <p><strong>« Mieux remplir l'existant »</strong> → priorité aux sessions en danger, contenus géolocalisés, comptes à rebours. <strong>« Ouvrir de nouvelles villes »</strong> → contenu de notoriété en amont sur le bassin visé, plusieurs mois avant la première session. <strong>« Plus de formateurs »</strong> → on inverse la cible du contenu.</p>
+    <p>Sur le distanciel : à décourager en 2026, puisque le DPC ne l'indemnise plus. Leur force est précisément le présentiel.</p>
+  </div>
+
+  <div class="answer"><span class="lbl">Réponse</span><div class="lines"></div></div>
+</div>
+
+<!-- 02 -->
+<div class="q">
+  <div class="qhead"><span class="qnum">02</span><span class="qtheme">Les chiffres pilotables</span><span class="qtag">Chiffré</span></div>
+  <p class="ask">« Combien de places par session, et combien sont remplies en moyenne aujourd'hui ? »</p>
+
+  <h4 class="sub">Relances</h4>
+  <ul class="relances">
+    <li>Combien de sessions organisez-vous par an ? Et combien de places par session, au <b>minimum viable</b> et au <b>maximum</b> ?</li>
+    <li>Quel est votre <b>taux de remplissage moyen</b> ? Et l'écart entre la meilleure et la pire formation ?</li>
+    <li>Combien de sessions avez-vous <b>annulées faute d'inscrits</b> l'an dernier ?</li>
+    <li>À partir de combien de participants une session devient-elle rentable ?</li>
+    <li>Quel est votre <b>panier moyen réel</b> ? On a relevé 798 € sur la formation Main — est-ce représentatif ?</li>
+    <li>CA actuel, et CA cible à douze mois ?</li>
+  </ul>
+
+  <div class="why">
+    <span class="lbl">Pourquoi</span>
+    <p>« Sessions annulées faute d'inscrits » est la question qui transforme la conversation. Une session annulée, c'est du chiffre d'affaires perdu, un formateur déçu, une réservation de salle payée et un signal négatif envoyé aux inscrits qu'il faut rembourser ou reporter. <strong>Si Skeals en annule six ou huit par an, en sauver la moitié rembourse le contrat plusieurs fois.</strong> C'est un objectif bien plus défendable et bien plus motivant qu'un nombre d'abonnés.</p>
+    <p>Le seuil de rentabilité par session donne l'autre moitié : il indique exactement combien d'inscrits marginaux on doit aller chercher, session par session.</p>
+  </div>
+
+  <div class="why">
+    <span class="lbl">Ce que la réponse change</span>
+    <p>Elle fixe l'objectif contractuel du trimestre. On passe de « on va vous faire gagner en visibilité » à « on vise le remplissage de ces quatre sessions-là, qui sont aujourd'hui à 60 % ». C'est ce qui rend le renouvellement à trois mois discutable sur des faits.</p>
+  </div>
+
+  <div class="answer"><span class="lbl">Réponse</span><div class="lines"></div></div>
+</div>
+
+<!-- 03 -->
+<div class="q">
+  <div class="qhead"><span class="qnum">03</span><span class="qtheme">Le financement</span><span class="qtag">Mécanique</span></div>
+  <p class="ask">« Sur cent inscrits, combien passent par le DPC, combien par le FIF PL, combien paient de leur poche ? »</p>
+
+  <h4 class="sub">Relances</h4>
+  <ul class="relances">
+    <li><b>Toutes</b> vos formations sont-elles référencées DPC, ou seulement une partie ? Combien d'actions référencées ?</li>
+    <li>Avez-vous un <b>quota annuel de places DPC financées</b> ? Si oui, à quelle période de l'année est-il épuisé ?</li>
+    <li>Le kiné fait-il la démarche seul, ou vous l'accompagnez ? Qui, chez vous, s'en occupe ?</li>
+    <li>Combien de temps entre « je veux m'inscrire » et « c'est validé » ?</li>
+    <li><b>Combien abandonnent en cours de démarche administrative ?</b> C'est là que se perdent les inscriptions.</li>
+    <li>Les salariés d'établissements (OPCO, ANFH) représentent quelle part ?</li>
+  </ul>
+
+  <div class="why">
+    <span class="lbl">Pourquoi</span>
+    <p>Le quota DPC est la question invisible. Si l'enveloppe de Skeals est consommée en juin, l'argument « c'est gratuit et on vous verse 532 € » cesse d'être vrai à partir de juin — et un contenu qui le promettrait encore serait à la fois inefficace et problématique pour un organisme Qualiopi. Le calendrier éditorial doit basculer sur le FIF PL à ce moment-là.</p>
+    <p>L'abandon administratif, lui, est un gisement pur : ce sont des gens déjà convaincus. Si 20 % se perdent dans la paperasse, deux stories pédagogiques par mois sur « comment monter son dossier en 10 minutes » rapportent plus que dix Reels de notoriété.</p>
+  </div>
+
+  <div class="why">
+    <span class="lbl">Ce que la réponse change</span>
+    <p>Elle détermine le message BOFU mois par mois, et elle peut faire apparaître un pilier de contenu qu'on n'avait pas prévu : l'accompagnement administratif. Elle nous dit aussi quels chiffres on a le droit d'afficher publiquement, et à quelle période.</p>
+  </div>
+
+  <div class="answer"><span class="lbl">Réponse</span><div class="lines"></div></div>
+</div>
+
+<!-- 04 -->
+<div class="q">
+  <div class="qhead"><span class="qnum">04</span><span class="qtheme">La conversion</span><span class="qtag">Arbitrage</span></div>
+  <p class="ask">« Si on ne devait piloter qu'un seul chiffre pendant trois mois, ce serait lequel ? »</p>
+
+  <h4 class="sub">Relances</h4>
+  <ul class="relances">
+    <li>Le remplissage <b>global</b>, ou celui de <b>sessions précises</b> — les plus rentables, ou les plus en danger ?</li>
+    <li>Quelles formations rapportent le plus ? Lesquelles ont le plus de mal à se remplir ?</li>
+    <li>Y a-t-il des thématiques prioritaires ? Le catalogue penche vers le Sport (12 formations) et la Santé de la femme (7) — est-ce un choix, ou un héritage ?</li>
+    <li>Vous avez une <b>newsletter</b> : quelle taille, quelle fréquence, quel taux d'ouverture ? Et quel est son taux de conversion en inscription ?</li>
+    <li>Aujourd'hui, une inscription arrive plutôt par le site, par téléphone, par mail ou par message privé ?</li>
+  </ul>
+
+  <div class="why">
+    <span class="lbl">Pourquoi la newsletter mérite d'être creusée</span>
+    <p>Vos propres stories prévoient des « rappels newsletter ». Elle existe donc déjà. Or, avec un cycle d'achat long — on s'inscrit en septembre pour une session en janvier — <strong>l'e-mail est probablement un meilleur objectif de conversion pour Instagram que l'inscription directe</strong>. Instagram capte, la newsletter mûrit et déclenche au bon moment, notamment au 1<sup>er</sup> janvier quand les budgets se rechargent.</p>
+    <p>Si sa base est déjà significative et qu'elle convertit, la cible de nos contenus BOFU devient l'inscription à la newsletter, et non le clic vers une fiche formation. C'est plus facile à obtenir, et mesurable dès le mois 1.</p>
+  </div>
+
+  <div class="why">
+    <span class="lbl">Ce que la réponse change</span>
+    <p>Elle fixe l'appel à l'action de tous les contenus BOFU et le contenu du lien en bio. Un seul objectif de conversion, pas trois — c'est la condition pour pouvoir mesurer quoi que ce soit.</p>
+  </div>
+
+  <div class="answer"><span class="lbl">Réponse</span><div class="lines"></div></div>
+</div>
+
+<!-- 05 -->
+<div class="q">
+  <div class="qhead"><span class="qnum">05</span><span class="qtheme">La valeur client</span><span class="qtag">Économie</span></div>
+  <p class="ask">« Un kiné qui s'est formé une fois chez vous, il revient combien de fois ? »</p>
+
+  <h4 class="sub">Relances</h4>
+  <ul class="relances">
+    <li>Quelle part de vos inscrits d'une année sont des <b>anciens stagiaires</b> ?</li>
+    <li>Combien de kinés ont été formés chez vous <b>depuis 2022</b>, au total ?</li>
+    <li>Cette base est-elle exploitable — e-mails, consentement, segmentation par thématique et par ville ?</li>
+    <li>Quelle part de vos inscriptions vient du <b>bouche-à-oreille</b> ou d'une recommandation de confrère ?</li>
+    <li>Y a-t-il des parcours logiques entre formations — quelqu'un qui fait « Rachis » enchaîne-t-il naturellement sur autre chose ?</li>
+  </ul>
+
+  <div class="why">
+    <span class="lbl">Pourquoi</span>
+    <p>Deux raisons. La première : la valeur vie client détermine ce qu'on peut se permettre de dépenser pour acquérir un inscrit. Si un kiné vaut 800 €, le raisonnement n'est pas le même que s'il en vaut 2 400 sur trois ans.</p>
+    <p>La seconde est plus dérangeante, et il faut la dire quand même : <strong>si Skeals a plusieurs milliers d'anciens stagiaires dans une base exploitable, c'est un actif plus rentable que n'importe quelle audience Instagram à construire.</strong> Ces gens vous connaissent, vous ont notés 100 % de recommandation, et leurs droits se rechargent chaque janvier. Le réactiver coûte moins cher que de recruter.</p>
+    <p>Contrainte à garder en tête : le DPC plafonne à 14 h par an — une formation — et le FIF PL à 900 €. Un kiné peut donc en financer environ deux par an, pas davantage. La valeur vie client est bornée par la réglementation, ce qui rend la fidélisation d'autant plus mécanique à planifier.</p>
+  </div>
+
+  <div class="why">
+    <span class="lbl">Ce que la réponse change</span>
+    <p>Une base dormante importante ouvre une piste que le contrat actuel ne couvre pas : produire du contenu pour réactiver les anciens, plutôt que uniquement pour recruter des inconnus. À poser honnêtement — même si ça ne relève pas de l'accompagnement Instagram, ça sert Skeals, et c'est ce qui installe une relation de conseil plutôt que de prestation.</p>
+  </div>
+
+  <div class="answer"><span class="lbl">Réponse</span><div class="lines"></div></div>
+</div>
+
+<!-- 06 -->
+<div class="q">
+  <div class="qhead"><span class="qnum">06</span><span class="qtheme">Les canaux</span><span class="qtag">Écosystème</span></div>
+  <p class="ask">« Le SEO, qui s'en occupe aujourd'hui — et qu'est-ce qu'il vous rapporte ? »</p>
+
+  <h4 class="sub">Relances</h4>
+  <ul class="relances">
+    <li>On a vu vos pages <b>« Formation pour kinés à Marseille »</b>, <b>« Formation kiné à Lyon »</b>, <b>« Formation kiné scoliose »</b>. C'est une stratégie assumée ? Depuis quand, et par qui ?</li>
+    <li>Quel trafic organique par mois, et quelles pages génèrent réellement des inscriptions ?</li>
+    <li>Avez-vous une fiche <b>Google Business</b> et des avis ? Combien ?</li>
+    <li>Avez-vous déjà testé la <b>publicité</b> ? Quel budget, quels résultats, quelles conclusions ?</li>
+    <li>Vos <b>formateurs</b> relaient-ils leurs propres sessions auprès de leur réseau ? Est-ce organisé ou spontané ?</li>
+    <li>Partenariats : IFMK, syndicats, groupes professionnels, associations, congrès ?</li>
+    <li>Qu'est-ce qui, aujourd'hui, vous amène le plus d'inscrits — en toute honnêteté ?</li>
+  </ul>
+
+  <div class="why">
+    <span class="lbl">La thèse à leur proposer</span>
+    <p><strong>Le SEO capte une demande qui existe déjà. Instagram crée une demande qui n'existait pas.</strong> Un kiné qui tape « formation rachis Lyon » a déjà décidé de se former — le SEO le récupère. Un kiné qui scrolle n'avait rien décidé — c'est là qu'on intervient. Les deux canaux ne se concurrencent pas, ils se succèdent.</p>
+    <p>Et ils s'alimentent : les gestes et les témoignages qu'on tourne pour Instagram ont vocation à être posés sur les fiches formation. Une page produit avec la vidéo du formateur et deux témoignages de stagiaires convertit mieux qu'une page de texte — et retient plus longtemps, ce que Google mesure.</p>
+  </div>
+
+  <div class="why">
+    <span class="lbl">Le levier gratuit qu'on veut activer</span>
+    <p>Chaque formateur a son propre réseau professionnel. Un contenu qui met un formateur en valeur est un contenu qu'il partagera de lui-même, à une audience de confrères parfaitement ciblée. Avec une trentaine de formateurs au catalogue, c'est le multiplicateur de portée le moins cher qui existe — à condition de le leur demander, et de leur livrer le contenu prêt à publier. À intégrer au processus dès le premier tournage.</p>
+  </div>
+
+  <div class="answer"><span class="lbl">Réponse</span><div class="lines"></div></div>
+</div>
+
+<!-- clôture -->
+<section class="close">
+  <h2>Les trois chiffres à ne pas quitter la réunion sans avoir</h2>
+  <p class="lead">Le reste peut se compléter par mail. Ces trois-là conditionnent notre capacité à piloter au résultat plutôt qu'au ressenti — et donc la conversation de renouvellement au mois 3.</p>
+
+  <div class="must">
+    <div class="m">
+      <span class="k">Chiffre 1</span>
+      <div class="v">Places par session, et taux de remplissage actuel</div>
+      <p>Sans lui, « remplir les sessions » n'est pas un objectif, c'est une intention. Avec lui, on sait combien d'inscrits marginaux aller chercher.</p>
+    </div>
+    <div class="m">
+      <span class="k">Chiffre 2</span>
+      <div class="v">Sessions annulées faute d'inscrits l'an dernier</div>
+      <p>La douleur chiffrée. C'est notre objectif de trimestre le plus défendable, et le plus facile à démontrer une fois atteint.</p>
+    </div>
+    <div class="m">
+      <span class="k">Chiffre 3</span>
+      <div class="v">Taux de retour des anciens stagiaires</div>
+      <p>Il fixe la valeur vie client, donc ce que vaut réellement une inscription — et il révèle si une base dormante est exploitable.</p>
+    </div>
+  </div>
+
+  <div class="bonus">
+    <h4>Si le temps le permet</h4>
+    <ul>
+      <li><b>Concurrence :</b> qui sont vos deux concurrents les plus gênants, et qu'est-ce qu'ils font mieux que vous en ligne ?</li>
+      <li><b>Objections :</b> quelles sont les trois phrases qui reviennent quand un kiné hésite ? Ce sont nos trois prochains Reels BOFU.</li>
+      <li><b>Contenu existant :</b> avez-vous déjà des rushes, des photos de sessions, des témoignages écrits qu'on pourrait exploiter dès le premier mois ?</li>
+      <li><b>Interdits :</b> y a-t-il des sujets, des formateurs ou des lieux qu'on ne peut pas filmer ou nommer ?</li>
+    </ul>
+  </div>
+
+  <div class="rule-box">
+    <p>Et pour finir la réunion : « Si dans trois mois vous deviez nous dire que ça a marché, sur quoi vous vous baseriez ? »</p>
+    <p>La réponse à cette question est notre contrat réel. Elle prime sur tout ce qu'on aura écrit avant.</p>
+  </div>
+</section>
+
+<footer>
+  UPLYE — SAS au capital de 1 000 € · RCS Toulon 942 250 937 · SIRET 942 250 937 00011<br>
+  Enzo Folletete · enzo@uplyestudio.com · +33 7 44 95 45 86<br>
+  Document de travail interne. À utiliser en appui de la note de vision « Le média du geste ».
+</footer>
+
+</div>
