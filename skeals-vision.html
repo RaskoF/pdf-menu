@@ -1,0 +1,669 @@
+<title>Skeals — Le média du geste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#EBEEEC;
+  --surface:#FAFCFA;
+  --surface-2:#F1F4F2;
+  --ink:#0E1513;
+  --ink-soft:#525E59;
+  --ink-faint:#7C8985;
+  --rule:#D0D8D4;
+  --rule-strong:#A9B5B0;
+  --accent:#0A5647;
+  --accent-soft:#DCE9E4;
+  --accent-ink:#083F34;
+  --signal:#A63A28;
+  --signal-soft:#F4DFDA;
+  --gold:#8E6412;
+  --gold-soft:#F0E6CF;
+  --shadow:0 1px 2px rgba(14,21,19,.05), 0 8px 24px -16px rgba(14,21,19,.24);
+
+  --f-display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0B100F;
+    --surface:#141A18;
+    --surface-2:#1A2220;
+    --ink:#E4EAE7;
+    --ink-soft:#9AA8A3;
+    --ink-faint:#74827D;
+    --rule:#26302C;
+    --rule-strong:#3A4742;
+    --accent:#48C7A2;
+    --accent-soft:#12312A;
+    --accent-ink:#8FE0C6;
+    --signal:#E58974;
+    --signal-soft:#331A15;
+    --gold:#D9AE55;
+    --gold-soft:#2E2412;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0B100F;
+  --surface:#141A18;
+  --surface-2:#1A2220;
+  --ink:#E4EAE7;
+  --ink-soft:#9AA8A3;
+  --ink-faint:#74827D;
+  --rule:#26302C;
+  --rule-strong:#3A4742;
+  --accent:#48C7A2;
+  --accent-soft:#12312A;
+  --accent-ink:#8FE0C6;
+  --signal:#E58974;
+  --signal-soft:#331A15;
+  --gold:#D9AE55;
+  --gold-soft:#2E2412;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(18px,4.5vw,44px)}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--rule);padding:clamp(32px,6vw,64px) 0 clamp(26px,4vw,40px)}
+.eyebrow{
+  font-family:var(--f-mono);font-size:11.5px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);
+}
+.masthead h1{
+  font-family:var(--f-display);font-weight:800;
+  font-size:clamp(38px,7.2vw,74px);line-height:.98;letter-spacing:-.025em;
+  margin:16px 0 0;text-wrap:balance;
+}
+.masthead h1 em{font-style:normal;color:var(--accent)}
+.deck{
+  font-size:clamp(18px,2.2vw,21px);color:var(--ink-soft);
+  max-width:60ch;margin:20px 0 0;line-height:1.5;
+}
+.stamp{
+  display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:30px;
+  font-family:var(--f-mono);font-size:12px;color:var(--ink-faint);
+}
+.stamp b{color:var(--ink-soft);font-weight:500}
+
+/* ---------- nav ---------- */
+nav.toc{
+  position:sticky;top:0;z-index:20;background:var(--paper);
+  border-bottom:1px solid var(--rule);
+}
+.toc-inner{
+  display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin;
+  max-width:1120px;margin:0 auto;padding:0 clamp(18px,4.5vw,44px);
+}
+.toc a{
+  flex:0 0 auto;padding:11px 12px;text-decoration:none;color:var(--ink-faint);
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;white-space:nowrap;
+  border-bottom:2px solid transparent;transition:color .15s,border-color .15s;
+}
+.toc a:hover,.toc a:focus-visible{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* ---------- sections ---------- */
+section{border-bottom:1px solid var(--rule);padding:clamp(40px,6vw,66px) 0}
+section:last-of-type{border-bottom:0}
+.sec{display:grid;grid-template-columns:1fr;gap:22px}
+@media(min-width:900px){
+  .sec{grid-template-columns:148px minmax(0,1fr);gap:0 48px}
+  .rail{position:sticky;top:56px;align-self:start}
+}
+.rail{display:flex;flex-direction:column;gap:6px}
+.rail .num{
+  font-family:var(--f-display);font-weight:800;font-size:30px;line-height:1;
+  color:var(--accent);letter-spacing:-.02em;
+}
+.rail .lab{font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint)}
+.rail .dur{
+  font-family:var(--f-mono);font-size:11px;color:var(--ink-soft);
+  border:1px solid var(--rule-strong);border-radius:2px;padding:2px 6px;align-self:start;
+}
+.body{min-width:0}
+h2{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(25px,3.4vw,34px);line-height:1.12;letter-spacing:-.02em;
+  margin:0 0 16px;text-wrap:balance;
+}
+h3{
+  font-family:var(--f-display);font-weight:700;font-size:18px;line-height:1.25;
+  margin:34px 0 10px;letter-spacing:-.01em;
+}
+h4{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 10px;font-weight:600}
+p{margin:0 0 15px;max-width:68ch}
+ul,ol{margin:0 0 15px;padding-left:1.15em;max-width:68ch}
+li{margin-bottom:7px}
+li::marker{color:var(--accent)}
+strong{font-weight:600;color:var(--ink)}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+/* ---------- thesis ---------- */
+.thesis{
+  border-left:3px solid var(--accent);background:var(--accent-soft);
+  padding:22px 24px;margin:24px 0;border-radius:0 4px 4px 0;
+}
+.thesis p{
+  font-family:var(--f-display);font-weight:500;font-size:clamp(19px,2.4vw,23px);
+  line-height:1.32;margin:0;color:var(--accent-ink);letter-spacing:-.012em;max-width:none;
+}
+.thesis p + p{margin-top:12px}
+
+/* ---------- fact tiles ---------- */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0;border-radius:4px;overflow:hidden}
+.fact{background:var(--surface);padding:17px 18px 19px}
+.fact .n{font-family:var(--f-display);font-weight:800;font-size:29px;line-height:1.05;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+.fact .n.money{color:var(--gold)}
+.fact .n.pos{color:var(--accent)}
+.fact .t{font-size:14px;color:var(--ink-soft);line-height:1.35;margin-top:7px}
+
+/* ---------- generic table ---------- */
+.tw{overflow-x:auto;margin:22px 0;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px}
+th{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-faint);text-align:left;font-weight:600;
+  padding:11px 14px;border-bottom:1px solid var(--rule-strong);white-space:nowrap;
+}
+td{padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.45}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---------- pillars ---------- */
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:14px;margin:24px 0}
+.pillar{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:17px 18px;display:flex;flex-direction:column;gap:9px}
+.pillar .top{display:flex;align-items:center;gap:9px}
+.dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+.pillar .nm{font-family:var(--f-display);font-weight:700;font-size:16.5px;letter-spacing:-.01em}
+.pillar .stage{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;color:var(--ink-faint);margin-left:auto}
+.pillar p{font-size:14.5px;color:var(--ink-soft);margin:0;line-height:1.48;max-width:none}
+.pillar .ex{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-faint);border-top:1px dashed var(--rule);padding-top:9px;margin-top:auto;line-height:1.5}
+.c1{background:#0A5647}.c2{background:#8E6412}.c3{background:#3D6E8E}.c4{background:#A63A28}
+
+/* ---------- month grid ---------- */
+.month{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:19px;margin:24px 0}
+.cells{display:grid;grid-template-columns:repeat(auto-fit,minmax(78px,1fr));gap:6px;margin-top:12px}
+.cell{border-radius:3px;padding:9px 8px 10px;color:#fff;min-height:64px;display:flex;flex-direction:column;justify-content:space-between}
+.cell .k{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.08em;opacity:.82}
+.cell .v{font-family:var(--f-display);font-weight:700;font-size:12.5px;line-height:1.18}
+.stories{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px dashed var(--rule)}
+.sbar{display:flex;gap:4px}
+.sbar i{width:22px;height:9px;border-radius:2px;background:var(--rule-strong);display:block}
+.stories span{font-size:14px;color:var(--ink-soft)}
+
+/* ---------- funnel ---------- */
+.funnel{margin:24px 0;display:flex;flex-direction:column;gap:7px;align-items:center}
+.band{
+  background:var(--surface);border:1px solid var(--rule);border-left-width:4px;border-radius:3px;
+  padding:13px 16px;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;width:100%;
+}
+.band.b1{border-left-color:#0A5647}
+.band.b2{border-left-color:#3D6E8E;width:min(100%,86%)}
+.band.b3{border-left-color:#A63A28;width:min(100%,68%)}
+.band .st{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink-faint);flex:0 0 auto}
+.band .ttl{font-family:var(--f-display);font-weight:700;font-size:15.5px}
+.band .cnt{margin-left:auto;font-family:var(--f-mono);font-size:12.5px;color:var(--ink-soft);white-space:nowrap}
+.band .dsc{flex-basis:100%;font-size:14px;color:var(--ink-soft);line-height:1.45}
+
+/* ---------- timeline ---------- */
+.phases{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin:24px 0}
+@media(min-width:760px){.phases{grid-template-columns:repeat(3,1fr)}}
+.phase{background:var(--surface);padding:18px}
+.phase .p{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+.phase h5{font-family:var(--f-display);font-weight:700;font-size:16.5px;margin:8px 0 9px;letter-spacing:-.01em}
+.phase ul{padding-left:1.05em;margin:0;font-size:14px;color:var(--ink-soft)}
+.phase li{margin-bottom:6px}
+
+/* ---------- math ---------- */
+.math{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:20px 22px;margin:24px 0}
+.mrow{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px dashed var(--rule);font-size:15px}
+.mrow:last-of-type{border-bottom:0}
+.mrow .l{color:var(--ink-soft)}
+.mrow .r{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500}
+.mtotal{margin-top:14px;padding-top:15px;border-top:2px solid var(--ink);display:flex;justify-content:space-between;gap:16px;align-items:baseline;flex-wrap:wrap}
+.mtotal .l{font-family:var(--f-display);font-weight:700;font-size:17px}
+.mtotal .r{font-family:var(--f-display);font-weight:800;font-size:30px;color:var(--accent);letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+
+/* ---------- decisions ---------- */
+.decs{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin:22px 0}
+.dec{background:var(--surface);padding:14px 16px;display:flex;gap:13px;align-items:flex-start}
+.box{width:15px;height:15px;border:1.5px solid var(--rule-strong);border-radius:2px;flex:0 0 auto;margin-top:4px}
+.dec .txt{min-width:0}
+.dec .q{font-weight:600;font-size:15.5px;line-height:1.35}
+.dec .w{font-size:14px;color:var(--ink-soft);margin-top:3px;line-height:1.45}
+.who{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-faint);margin-left:auto;flex:0 0 auto;padding-top:5px;white-space:nowrap}
+
+/* ---------- risks ---------- */
+.risk{border:1px solid var(--rule);border-left:3px solid var(--signal);background:var(--surface);border-radius:0 4px 4px 0;padding:15px 17px;margin:12px 0}
+.risk .h{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.risk .h b{font-family:var(--f-display);font-weight:700;font-size:16px}
+.sev{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px;background:var(--signal-soft);color:var(--signal);white-space:nowrap}
+.sev.med{background:var(--gold-soft);color:var(--gold)}
+.risk p{font-size:14.5px;color:var(--ink-soft);margin:7px 0 0;max-width:none}
+.risk .fix{font-size:14.5px;margin:9px 0 0;color:var(--ink)}
+.risk .fix b{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:2px;font-weight:600}
+
+/* ---------- note ---------- */
+.note{
+  font-size:13.5px;color:var(--ink-faint);border-top:1px solid var(--rule);
+  padding-top:12px;margin-top:22px;max-width:70ch;line-height:1.5;
+}
+.note b{color:var(--ink-soft);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;display:block;margin-bottom:5px}
+
+footer{padding:38px 0 56px;color:var(--ink-faint);font-family:var(--f-mono);font-size:11.5px;line-height:1.7}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<nav class="toc"><div class="toc-inner">
+  <a href="#s1">01 · Cadre</a>
+  <a href="#s2">02 · Recadrage</a>
+  <a href="#s3">03 · Fenêtre 2026</a>
+  <a href="#s4">04 · Diagnostic</a>
+  <a href="#s5">05 · Vision</a>
+  <a href="#s6">06 · Machine</a>
+  <a href="#s7">07 · Calendrier</a>
+  <a href="#s8">08 · Mesure</a>
+  <a href="#s9">09 · Décisions</a>
+</div></nav>
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="eyebrow">Uplye Studio × Skeals · Note de vision · Réunion du 3 septembre, 15 h 00</div>
+  <h1>Le média<br>du <em>geste</em></h1>
+  <p class="deck">Skeals ne vend pas des posts. Skeals remplit des salles. Voici comment on transforme un compte catalogue en machine à remplir les sessions — et ce qu'on doit trancher aujourd'hui pour démarrer.</p>
+  <div class="stamp">
+    <span>Pour <b>Nicolas Lerousseau &amp; Valentin</b></span>
+    <span>Par <b>Enzo Folletete</b></span>
+    <span>Offre retenue <b>Équilibré — 1 041,67 € HT / mois</b></span>
+    <span>Durée <b>≈ 60 min</b></span>
+  </div>
+</header>
+
+<!-- 01 -->
+<section id="s1"><div class="sec">
+  <div class="rail"><div class="num">01</div><div class="lab">Le cadre</div><div class="dur">5 min</div></div>
+  <div class="body">
+    <h2>Ce qu'on signe, et ce que ça change</h2>
+    <p>Skeals part sur l'<strong>offre Équilibré</strong>. On abandonne « Tout délégué ». C'est un bon choix : la différence ne porte pas sur les réseaux sociaux — elle porte sur le podcast, et elle vous fait <em>gagner</em> du volume social.</p>
+
+    <div class="tw"><table>
+      <thead><tr><th>Poste</th><th>Tout délégué (abandonné)</th><th>Équilibré (retenu)</th></tr></thead>
+      <tbody>
+        <tr><td>Podcast</td><td>Clé en main, monté, masterisé, habillé, sous-titré — 400 € HT</td><td>Enregistrement 1 h/mois, dérushé et pré-monté. <strong>Skeals finalise</strong> — 141,67 € HT</td></tr>
+        <tr><td>Reels / semaine</td><td>2 Reels + 1 short podcast</td><td><strong>3 Reels</strong></td></tr>
+        <tr><td>Stories / semaine</td><td>2</td><td>2</td></tr>
+        <tr><td>Tournage sur place</td><td>2 demi-journées / mois</td><td>2 demi-journées / mois</td></tr>
+        <tr><td>Diffusion</td><td>Instagram + Facebook, réponses aux commentaires</td><td>Instagram + Facebook, réponses aux commentaires</td></tr>
+        <tr><td class="num">Total HT / mois</td><td class="num">1 200,00 €</td><td class="num"><strong>1 041,67 €</strong></td></tr>
+        <tr><td class="num">Total TTC / mois</td><td class="num">1 440,00 €</td><td class="num"><strong>1 250,00 €</strong></td></tr>
+      </tbody>
+    </table></div>
+
+    <p>Engagement <strong>3 mois</strong> renouvelables par périodes de 3 mois. Podcast prélevé via Azurpod, accompagnement par virement le 5 du mois. Hors périmètre : <strong>réponses aux messages privés</strong> et <strong>budget publicitaire</strong>.</p>
+
+    <div class="thesis"><p>Le passage en Équilibré vous fait passer de 2 à 3 Reels par semaine. Vous perdez le montage du podcast, vous gagnez 50 % de contenu vidéo social. Pour un business qui se joue sur la vidéo, c'est le bon arbitrage.</p></div>
+
+    <div class="note"><b>Point à confirmer</b>Skeals est-il assujetti à la TVA ? Beaucoup d'organismes de formation sont exonérés (art. 261-4-4°a du CGI) et ne récupèrent donc pas les 20 %. Le coût réel est alors 1 250 € et non 1 041,67 €. Ça ne change pas la décision, mais ça change le calcul de rentabilité en section 08.</div>
+  </div>
+</div></section>
+
+<!-- 02 -->
+<section id="s2"><div class="sec">
+  <div class="rail"><div class="num">02</div><div class="lab">Le recadrage</div><div class="dur">5 min</div></div>
+  <div class="body">
+    <h2>On ne compte pas les abonnés. On compte les sièges.</h2>
+    <p>C'est le point le plus important de la réunion, et il conditionne tout le reste. Skeals n'est pas une marque de contenu : c'est un business de <strong>remplissage de sessions datées et localisées</strong>. Une formation « Neurodynamique » à Nice les 15–16 mai a un nombre de places fini, une date butoir, et vaut zéro le 17 mai.</p>
+    <p>Ça a trois conséquences directes sur la stratégie :</p>
+    <ul>
+      <li><strong>La géographie compte.</strong> 10 000 abonnés à Lille ne remplissent pas une session à Hyères. On raisonne par bassin : PACA, Occitanie, Nouvelle-Aquitaine, AURA, Île-de-France.</li>
+      <li><strong>Le calendrier commande.</strong> L'édito se cale sur les dates de sessions et sur le calendrier de financement, pas sur les tendances Instagram.</li>
+      <li><strong>Le cycle est long.</strong> Un kiné s'inscrit en septembre pour une session en janvier. On ne jugera pas ce travail au mois 2.</li>
+    </ul>
+    <div class="thesis"><p>Notre indicateur nord n'est pas le nombre d'abonnés. C'est le <strong>taux de remplissage par session</strong> — et, en amont, le nombre de kinés qui arrivent sur une fiche formation en venant d'Instagram.</p></div>
+  </div>
+</div></section>
+
+<!-- 03 -->
+<section id="s3"><div class="sec">
+  <div class="rail"><div class="num">03</div><div class="lab">La fenêtre 2026</div><div class="dur">8 min</div></div>
+  <div class="body">
+    <h2>Vous avez le vent réglementaire dans le dos. Personne ne le raconte.</h2>
+    <p>2026 est une année inhabituellement favorable à Skeals, pour deux raisons qui ne viennent pas de vous — et qui ne dureront pas éternellement.</p>
+
+    <div class="facts">
+      <div class="fact"><div class="n money">532 €</div><div class="t">Versés au kiné par le DPC pour une formation de 14 h en présentiel (38 €/h × 14 h)</div></div>
+      <div class="fact"><div class="n pos">0 €</div><div class="t">Indemnisation DPC de l'e&#8209;learning en 2026. Le distanciel n'est plus indemnisé.</div></div>
+      <div class="fact"><div class="n money">900 €</div><div class="t">Plafond annuel FIF PL 2026 par kiné, contre 600 € auparavant — et 300 €/jour</div></div>
+      <div class="fact"><div class="n">198 €</div><div class="t">Reste à charge sur une formation à 798 € financée au FIF PL (798 − 2 × 300)</div></div>
+    </div>
+
+    <p><strong>Premièrement : le présentiel est désormais le seul format indemnisé.</strong> L'ANDPC ne verse plus rien pour l'e-learning en 2026. Skeals est <em>100 % présentiel</em>, par conviction pédagogique — ce choix, qui était un parti pris, devient un avantage économique pour l'apprenant. Vos concurrents e-learning viennent de perdre leur argument le plus fort.</p>
+
+    <p><strong>Deuxièmement : le FIF PL a relevé ses plafonds de 600 à 900 € par an.</strong> Après deux années de restriction, le budget formation d'un kiné libéral a augmenté de 50 %. L'argent est là, et il se réinitialise chaque 1<sup>er</sup> janvier.</p>
+
+    <p>Combinés, ces deux faits donnent l'accroche la plus forte de tout le dossier, et elle est strictement exacte :</p>
+
+    <div class="thesis">
+      <p>« Une formation Skeals coûte 798 €. Par le DPC, elle ne vous coûte rien — et l'agence vous verse 532 €. Vous n'achetez pas une formation. Vous êtes payé pour vous former. »</p>
+    </div>
+
+    <p>Cette phrase, aujourd'hui, n'existe nulle part sur votre Instagram. Elle devrait y être une fois par mois, tournée différemment à chaque fois.</p>
+
+    <h3>Le corollaire, souvent oublié</h3>
+    <p>Le DPC plafonne à <strong>14 h par an</strong> — soit exactement <em>une</em> formation Skeals de 2 jours. La deuxième passe par le FIF PL. Donc un kiné peut financer environ <strong>deux formations par an</strong>, pas plus. Le discours doit changer selon le moment :</p>
+    <ul>
+      <li><strong>Nouveau kiné (jamais formé chez vous)</strong> → « c'est gratuit et on vous paie ». Levée d'objection totale.</li>
+      <li><strong>Kiné déjà venu cette année</strong> → « il vous reste des droits FIF PL, ne les perdez pas au 31 décembre ». Urgence réelle, pas fabriquée.</li>
+    </ul>
+
+    <div class="note"><b>À valider avec Nicolas avant diffusion</b>Les montants ci-dessus sont issus des barèmes 2026 publiés (ANDPC : 38 €/h, 14 h max ; FIF PL : 300 €/j, 900 €/an) et recoupés avec le « reste à charge 198 € » affiché sur skeals.fr. Avant de publier un contenu qui cite un chiffre de financement, on fait valider par vous : c'est de l'information réglementaire, elle engage votre organisme.</div>
+  </div>
+</div></section>
+
+<!-- 04 -->
+<section id="s4"><div class="sec">
+  <div class="rail"><div class="num">04</div><div class="lab">Diagnostic</div><div class="dur">5 min</div></div>
+  <div class="body">
+    <h2>Où en est le compte aujourd'hui</h2>
+    <p>Environ <strong>1 550 abonnés</strong> pour <strong>136 publications</strong>. Ce ratio raconte une chose simple : le compte publie, mais il ne circule pas. Un contenu qui se partage entre kinés fait bien plus que 11 abonnés par publication.</p>
+    <p>Trois trous, par ordre d'impact :</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="top"><span class="dot c4"></span><span class="nm">Pas de visage</span></div>
+        <p>On ne sait pas qui est Skeals. Or vos formateurs sont des praticiens en poste — c'est votre actif le plus crédible, et il est invisible.</p>
+        <div class="ex">Actif dormant : ≈ 38 formations, autant d'experts filmables.</div>
+      </div>
+      <div class="pillar">
+        <div class="top"><span class="dot c4"></span><span class="nm">Pas de preuve</span></div>
+        <p>« 100 % des stagiaires recommandent » est affiché partout, mais aucun stagiaire ne le dit à l'écran. Une statistique ne convainc pas. Un confrère, si.</p>
+        <div class="ex">Zéro témoignage vidéo sur le site comme sur le compte.</div>
+      </div>
+      <div class="pillar">
+        <div class="top"><span class="dot c4"></span><span class="nm">Pas de valeur d'usage</span></div>
+        <p>Le compte annonce des formations. Il n'apprend rien. Un kiné n'a aucune raison de le suivre s'il n'y gagne pas quelque chose chaque semaine.</p>
+        <div class="ex">Compte catalogue → à transformer en compte média.</div>
+      </div>
+    </div>
+
+    <p>La bonne nouvelle : ces trois trous se rebouchent avec <em>exactement</em> la même matière première — les 2 demi-journées de tournage en formation prévues au contrat.</p>
+
+    <div class="note"><b>À vérifier ensemble à l'écran</b>Les chiffres du compte viennent d'une source publique indirecte, Instagram bloquant la consultation automatisée. On ouvre le compte ensemble en réunion pour figer le point de départ exact — c'est notre ligne de base pour les reportings.</div>
+  </div>
+</div></section>
+
+<!-- 05 -->
+<section id="s5"><div class="sec">
+  <div class="rail"><div class="num">05</div><div class="lab">La vision</div><div class="dur">10 min</div></div>
+  <div class="body">
+    <h2>Skeals devient l'endroit où un kiné apprend quelque chose chaque semaine</h2>
+    <p>Le positionnement éditorial tient en une ligne : <strong>on ne poste pas des formations, on poste des gestes.</strong> Chaque Reel doit rendre un kiné meilleur en 30 secondes — un test clinique, une correction de posture, une erreur fréquente, un raisonnement. C'est utile en soi, donc ça se regarde jusqu'au bout, donc ça se partage entre confrères, donc ça recrute.</p>
+    <p>Et c'est aussi le meilleur argument commercial qui soit : si 30 secondes valent le coup, deux jours en salle valent 798 €.</p>
+
+    <h3>Quatre piliers</h3>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="top"><span class="dot c1"></span><span class="nm">Le geste</span><span class="stage">TOFU</span></div>
+        <p>Une technique, un test, une erreur classique. Démontré par le formateur, filmé en salle. Le format signature, celui qui circule.</p>
+        <div class="ex">« Le test que 8 kinés sur 10 font à l'envers »</div>
+      </div>
+      <div class="pillar">
+        <div class="top"><span class="dot c2"></span><span class="nm">Le formateur</span><span class="stage">MOFU</span></div>
+        <p>Qui il est, où il exerce, pourquoi il enseigne ça. On transforme un nom de catalogue en personne à qui on a envie de confier deux jours.</p>
+        <div class="ex">« Jean, kiné à la Clinique de la Main du Trocadéro »</div>
+      </div>
+      <div class="pillar">
+        <div class="top"><span class="dot c3"></span><span class="nm">La salle</span><span class="stage">MOFU</span></div>
+        <p>Les mains dans la pratique, les binômes, l'ambiance. C'est la démonstration vivante de ce que le distanciel ne peut pas offrir.</p>
+        <div class="ex">Coulisses d'une session Pilates Matwork à Montpellier</div>
+      </div>
+      <div class="pillar">
+        <div class="top"><span class="dot c4"></span><span class="nm">L'accès</span><span class="stage">BOFU</span></div>
+        <p>Financement, dates, villes, témoignages de stagiaires. Le contenu qui lève la dernière objection et déclenche l'inscription.</p>
+        <div class="ex">« 798 €. Par le DPC : 0 €, et 532 € pour vous. »</div>
+      </div>
+    </div>
+
+    <h3>Un mois type</h3>
+    <div class="month">
+      <h4>12 Reels — répartition cible, ajustée chaque mois selon les sessions à remplir</h4>
+      <div class="cells">
+        <div class="cell c1"><span class="k">GESTE</span><span class="v">Test clinique</span></div>
+        <div class="cell c1"><span class="k">GESTE</span><span class="v">Technique</span></div>
+        <div class="cell c1"><span class="k">GESTE</span><span class="v">Erreur fréquente</span></div>
+        <div class="cell c1"><span class="k">GESTE</span><span class="v">Cas patient</span></div>
+        <div class="cell c1"><span class="k">GESTE</span><span class="v">Raisonnement</span></div>
+        <div class="cell c3"><span class="k">SALLE</span><span class="v">Coulisses</span></div>
+        <div class="cell c3"><span class="k">SALLE</span><span class="v">Pratique binôme</span></div>
+        <div class="cell c3"><span class="k">SALLE</span><span class="v">Ambiance ville</span></div>
+        <div class="cell c2"><span class="k">FORMATEUR</span><span class="v">Portrait</span></div>
+        <div class="cell c2"><span class="k">FORMATEUR</span><span class="v">Prise de parole</span></div>
+        <div class="cell c4"><span class="k">ACCÈS</span><span class="v">Financement</span></div>
+        <div class="cell c4"><span class="k">ACCÈS</span><span class="v">Témoignage</span></div>
+      </div>
+      <div class="stories">
+        <span class="sbar"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span><strong>8 stories</strong> — sondages, questions de pratique, rappels de dates, comptes à rebours d'inscription</span>
+      </div>
+    </div>
+
+    <h3>L'entonnoir, en volume réel</h3>
+    <div class="funnel">
+      <div class="band b1">
+        <span class="st">TOFU</span><span class="ttl">Attirer</span><span class="cnt">5 Reels / mois</span>
+        <span class="dsc">Le geste. On vise le kiné qui ne connaît pas Skeals. Objectif : partage entre confrères et portée hors abonnés.</span>
+      </div>
+      <div class="band b2">
+        <span class="st">MOFU</span><span class="ttl">Crédibiliser</span><span class="cnt">5 Reels / mois</span>
+        <span class="dsc">Le formateur et la salle. On vise le kiné qui vous a vu passer. Objectif : abonnement, confiance, visite du catalogue.</span>
+      </div>
+      <div class="band b3">
+        <span class="st">BOFU</span><span class="ttl">Déclencher</span><span class="cnt">2 Reels + stories</span>
+        <span class="dsc">L'accès. On vise le kiné qui hésite. Objectif : clic vers la fiche, DM, inscription. Volume faible, intention maximale.</span>
+      </div>
+    </div>
+    <p>Le rapport 10 / 2 n'est pas de la modestie commerciale : sur Instagram, un compte qui vend à chaque publication cesse d'être distribué. On <em>gagne</em> le droit de vendre deux fois par mois en étant utile dix fois.</p>
+  </div>
+</div></section>
+
+<!-- 06 -->
+<section id="s6"><div class="sec">
+  <div class="rail"><div class="num">06</div><div class="lab">La machine</div><div class="dur">7 min</div></div>
+  <div class="body">
+    <h2>Comment 2 demi-journées produisent un mois entier</h2>
+    <p>C'est la question qu'on nous pose toujours, et elle est légitime : 20 contenus par mois à partir de deux demi-journées sur place, ça ne marche que si le tournage est industrialisé. Ce n'est pas une visite avec une caméra — c'est un plan de tournage, avec un objectif chiffré par poste.</p>
+
+    <div class="tw"><table>
+      <thead><tr><th>Séquence</th><th>Durée sur place</th><th>Objectif de captation</th><th>Alimente</th></tr></thead>
+      <tbody>
+        <tr><td><strong>La banque de gestes</strong><br>Le formateur démontre en série, face caméra</td><td class="num">60–75 min</td><td class="num">6 à 8 gestes</td><td>Pilier Geste — 5 Reels + réserve</td></tr>
+        <tr><td><strong>L'interview formateur</strong><br>Parcours, pourquoi ce sujet, à qui ça s'adresse</td><td class="num">20 min</td><td class="num">1 portrait + 3 extraits</td><td>Pilier Formateur — 2 Reels</td></tr>
+        <tr><td><strong>Les témoignages</strong><br>Stagiaires en fin de journée, 3 questions fixes</td><td class="num">30 min</td><td class="num">4 à 6 témoignages</td><td>Pilier Accès — 2 Reels + réserve</td></tr>
+        <tr><td><strong>Le B-roll</strong><br>Mains, binômes, salle, ville, panneaux</td><td class="num">30 min</td><td class="num">Banque d'images</td><td>Pilier Salle + habillage de tout le reste</td></tr>
+      </tbody>
+    </table></div>
+
+    <p>Deux demi-journées ainsi menées produisent structurellement plus qu'un mois de diffusion. <strong>L'excédent n'est pas perdu : il constitue une réserve.</strong> C'est elle qui garantit le rythme les mois où le calendrier de sessions est creux, en août ou entre deux périodes.</p>
+
+    <h3>Les trois questions fixes pour les témoignages</h3>
+    <p>Toujours les mêmes, pour que ce soit montable en série et comparable d'une session à l'autre :</p>
+    <ol>
+      <li>« Vous êtes kiné où, et vous faites quoi au quotidien ? » — l'identification du spectateur.</li>
+      <li>« Qu'est-ce que vous allez appliquer dès lundi au cabinet ? » — la preuve d'utilité concrète.</li>
+      <li>« Vous l'avez financée comment ? » — la levée d'objection, dite par un pair et non par vous.</li>
+    </ol>
+    <p>La troisième question est celle qui vend. Un confrère qui explique tranquillement qu'il n'a rien payé et qu'il a touché 532 € vaut dix carrousels sur le financement.</p>
+
+    <div class="thesis"><p>Une demi-journée de tournage sans plan produit de jolies images. Une demi-journée de tournage avec un objectif chiffré par poste produit un mois de contenu et une réserve. On travaillera toujours de la seconde façon.</p></div>
+  </div>
+</div></section>
+
+<!-- 07 -->
+<section id="s7"><div class="sec">
+  <div class="rail"><div class="num">07</div><div class="lab">Calendrier</div><div class="dur">5 min</div></div>
+  <div class="body">
+    <h2>On se cale sur le calendrier de l'argent</h2>
+    <p>La saisonnalité de Skeals n'est pas celle d'Instagram. Elle est fixée par les enveloppes de financement, qui se rechargent au 1<sup>er</sup> janvier et se consomment dans l'année. Ça donne deux pics naturels, et démarrer en septembre nous place idéalement pour les prendre tous les deux.</p>
+
+    <div class="tw"><table>
+      <thead><tr><th>Période</th><th>État du marché</th><th>Angle éditorial dominant</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Sept. → nov.</strong></td><td>On construit l'audience et la réserve de contenu. Les kinés planifient leur fin d'année.</td><td>Geste et formateur. On installe la marque avant d'avoir quoi que ce soit à vendre.</td></tr>
+        <tr><td><strong>Nov. → déc.</strong><br><span style="color:var(--signal)">Pic 1</span></td><td>Droits FIF PL non consommés qui expirent au 31 décembre.</td><td>« Il vous reste des droits. » Urgence réelle, datée, vérifiable.</td></tr>
+        <tr><td><strong>Janvier</strong><br><span style="color:var(--signal)">Pic 2</span></td><td>Enveloppes rechargées : 900 € FIF PL + 14 h DPC. Le moment de l'année où le kiné a le plus de budget.</td><td>« Votre budget est rechargé. » On arrive avec une audience déjà construite depuis 4 mois.</td></tr>
+        <tr><td><strong>Fév. → juin</strong></td><td>Saison haute des sessions.</td><td>Remplissage par session : dates, villes, comptes à rebours, témoignages.</td></tr>
+        <tr><td><strong>Juillet → août</strong></td><td>Creux d'activité.</td><td>On puise dans la réserve. Formats de fond, best-of, préparation de la rentrée.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="thesis"><p>Signer en septembre plutôt qu'en janvier, ce n'est pas trois mois de perdus. C'est arriver au 1<sup>er</sup> janvier — le jour où tous les kinés de France retrouvent 900 € de budget formation — avec quatre mois d'audience d'avance sur ceux qui démarreront ce jour-là.</p></div>
+
+    <h3>Les trois phases sur 12 mois</h3>
+    <div class="phases">
+      <div class="phase">
+        <div class="p">Mois 1 → 3</div>
+        <h5>Poser les bases</h5>
+        <ul>
+          <li>Direction artistique reconnaissable en un coup d'œil</li>
+          <li>Rythme installé : 3 Reels + 2 stories / semaine</li>
+          <li>Première banque de gestes et de témoignages</li>
+          <li>Attribution branchée sur le formulaire d'inscription</li>
+          <li><strong>Jalon M3 :</strong> décision de renouvellement, sur données</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="p">Mois 4 → 8</div>
+        <h5>Monter en puissance</h5>
+        <ul>
+          <li>On double les formats qui performent, on coupe les autres</li>
+          <li>Nicolas installé comme visage de la marque</li>
+          <li>Bibliothèque de témoignages exploitable aussi sur le site</li>
+          <li><strong>Jalon M6 :</strong> premières inscriptions attribuables à Instagram</li>
+          <li>Fenêtre d'ouverture publicité, si les créas organiques le justifient</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="p">Mois 9 → 12</div>
+        <h5>Devenir la référence</h5>
+        <ul>
+          <li>Skeals reconnu comme le média de la formation kiné, pas seulement l'organisme</li>
+          <li>Les formateurs relaient : effet de réseau</li>
+          <li>Le contenu sert aussi le recrutement de nouveaux formateurs</li>
+          <li><strong>Jalon M12 :</strong> bilan annuel, remplissage par session avant / après</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 08 -->
+<section id="s8"><div class="sec">
+  <div class="rail"><div class="num">08</div><div class="lab">La mesure</div><div class="dur">7 min</div></div>
+  <div class="body">
+    <h2>Ce qu'on mesure, et à partir de quand</h2>
+    <p>Un reporting mensuel qui ne montre que des vues ne prouve rien et ne se renouvelle pas. On travaille sur trois niveaux, avec une répartition claire de qui pilote quoi.</p>
+
+    <div class="tw"><table>
+      <thead><tr><th>Niveau</th><th>Indicateurs</th><th>Piloté par</th><th>Visible à partir de</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 · Production &amp; portée</strong></td><td>Contenus publiés, portée, comptes non abonnés touchés, taux de rétention, abonnés nets</td><td>Uplye — engagement de moyens et de rythme</td><td class="num">Mois 1</td></tr>
+        <tr><td><strong>2 · Intention</strong><br><em>le pont</em></td><td>Clics sur le lien en bio, sessions Instagram sur les fiches formation, DM entrants, enregistrements et partages</td><td>Uplye + Skeals — c'est ici qu'on pilote réellement</td><td class="num">Mois 2–3</td></tr>
+        <tr><td><strong>3 · Business</strong></td><td>Inscriptions, taux de remplissage par session, source déclarée à l'inscription</td><td>Skeals — Uplye y contribue, ne le contrôle pas seul</td><td class="num">Mois 3–6</td></tr>
+      </tbody>
+    </table></div>
+
+    <p>Le niveau 2 est celui sur lequel on se juge honnêtement mois après mois. Le niveau 3 dépend aussi de votre calendrier, de vos prix et de votre process d'inscription — mais sans lui, on n'aura jamais de conversation sérieuse sur le retour sur investissement.</p>
+
+    <div class="thesis"><p>Une seule chose à faire côté Skeals, et elle ne coûte rien : ajouter <strong>« Comment nous avez-vous connus ? »</strong> au formulaire d'inscription, dès cette semaine. Sans ce champ, on discutera du renouvellement au ressenti. Avec, on en discutera sur des chiffres.</p></div>
+
+    <h3>Le seuil de rentabilité</h3>
+    <p>Autant le poser franchement, c'est la question que tout le monde a en tête.</p>
+    <div class="math">
+      <div class="mrow"><span class="l">Coût mensuel de l'accompagnement (TTC)</span><span class="r">1 250,00 €</span></div>
+      <div class="mrow"><span class="l">Prix d'une formation type (2 jours / 14 h)</span><span class="r">798,00 €</span></div>
+      <div class="mrow"><span class="l">Contenus produits par mois (12 Reels + 8 stories)</span><span class="r">20</span></div>
+      <div class="mrow"><span class="l">Coût par contenu publié</span><span class="r">62,50 €</span></div>
+      <div class="mtotal">
+        <span class="l">Inscriptions supplémentaires nécessaires pour l'équilibre</span>
+        <span class="r">1,6 / mois</span>
+      </div>
+    </div>
+    <p>Soit <strong>19 inscriptions supplémentaires sur douze mois</strong>. Réparties sur environ 38 formations, chacune proposée en plusieurs villes et à plusieurs dates, cela représente <em>moins d'une inscription supplémentaire par session</em>.</p>
+    <p>Et ce calcul est volontairement pessimiste : il ignore la valeur vie client. Avec 100 % de stagiaires qui recommandent, un kiné satisfait revient — le DPC finance sa première formation, le FIF PL la suivante — et il en parle à son cabinet. Le seuil réel est nettement en dessous de 1,6.</p>
+
+    <div class="note"><b>Précision</b>Le prix de 798 € est celui relevé sur la formation « Rééducation de la main » ; il sert d'ordre de grandeur, pas de moyenne du catalogue. On le remplacera par votre panier moyen réel dès que vous nous l'aurez communiqué.</div>
+  </div>
+</div></section>
+
+<!-- 09 -->
+<section id="s9"><div class="sec">
+  <div class="rail"><div class="num">09</div><div class="lab">Décisions</div><div class="dur">8 min</div></div>
+  <div class="body">
+    <h2>Ce qu'on tranche aujourd'hui</h2>
+    <p>Neuf points. Aucun n'est difficile, mais chacun bloque quelque chose s'il n'est pas réglé avant le premier tournage.</p>
+
+    <div class="decs">
+      <div class="dec"><span class="box"></span><span class="txt"><span class="q">Offre Équilibré confirmée, 3 mois, démarrage septembre</span><span class="w">Signature du devis et date de première facturation.</span></span><span class="who">Nicolas</span></div>
+      <div class="dec"><span class="box"></span><span class="txt"><span class="q">Calendrier des sessions sur septembre → novembre</span><span class="w">Sans les dates et les villes, on ne peut pas caler les 2 demi-journées de tournage. C'est le premier livrable attendu de votre côté.</span></span><span class="who">Skeals</span></div>
+      <div class="dec"><span class="box"></span><span class="txt"><span class="q">Cession de droit à l'image ajoutée à la feuille d'émargement</span><span class="w">On filme des stagiaires en situation. Sans signature, rien n'est publiable. Bloquant dès le premier tournage — on vous fournit le modèle.</span></span><span class="who">Skeals</span></div>
+      <div class="dec"><span class="box"></span><span class="txt"><span class="q">Qui monte le podcast, et sous quel délai ?</span><span class="w">C'est ce que l'offre Équilibré vous confie. Il faut un nom et un créneau récurrent.</span></span><span class="who">Skeals</span></div>
+      <div class="dec"><span class="box"></span><span class="txt"><span class="q">Qui produit les shorts du podcast ?</span><span class="w">Ils n'apparaissent plus au forfait dans l'offre 2. À arbitrer : côté Skeals, ou réintégration en option chiffrée.</span></span><span class="who">À trancher</span></div>
+      <div class="dec"><span class="box"></span><span class="txt"><span class="q">Qui répond aux messages privés, et en combien de temps ?</span><span class="w">Hors périmètre Uplye. C'est pourtant le canal où atterriront les questions de financement. Cible : réponse sous 4 h ouvrées.</span></span><span class="who">Skeals</span></div>
+      <div class="dec"><span class="box"></span><span class="txt"><span class="q">Nicolas et Valentin face caméra : oui, et à quelle fréquence ?</span><span class="w">Toute la phase 1 repose sur le personal branding. Un engagement d'une prise de parole par mois suffit, mais il faut le prendre aujourd'hui.</span></span><span class="who">Nicolas / Valentin</span></div>
+      <div class="dec"><span class="box"></span><span class="txt"><span class="q">Un valideur unique, réponse sous 48 h</span><span class="w">La régularité est la moitié du résultat. Un circuit de validation à plusieurs voix casse le rythme dès le mois 2.</span></span><span class="who">Skeals</span></div>
+      <div class="dec"><span class="box"></span><span class="txt"><span class="q">Accès Instagram, Facebook et Meta Business Suite</span><span class="w">Rôle administrateur, plus le champ « Comment nous avez-vous connus ? » ajouté au formulaire d'inscription.</span></span><span class="who">Skeals</span></div>
+    </div>
+
+    <h3>Les risques qu'on préfère nommer maintenant</h3>
+
+    <div class="risk">
+      <div class="h"><b>Le podcast orphelin</b><span class="sev">Élevé</span></div>
+      <p>En Équilibré, la finalisation du montage revient à Skeals. Si personne n'a le créneau récurrent, le podcast s'arrête au deuxième épisode — et il aura quand même été facturé.</p>
+      <p class="fix"><b>Parade</b>Un nom, un créneau bloqué, un délai de publication. Si ce n'est pas tenable, on rebascule le podcast en clé en main plutôt que de le laisser mourir.</p>
+    </div>
+
+    <div class="risk">
+      <div class="h"><b>Le droit à l'image</b><span class="sev">Élevé</span></div>
+      <p>Filmer des stagiaires, et parfois des modèles en situation de soin, sans cession écrite rend le contenu inexploitable. Le problème se découvre après le tournage, quand il est trop tard.</p>
+      <p class="fix"><b>Parade</b>Formulaire intégré à l'émargement dès la première session filmée. On fournit le modèle, vous le validez juridiquement.</p>
+    </div>
+
+    <div class="risk">
+      <div class="h"><b>La demande qui fuit par les DM</b><span class="sev med">Moyen</span></div>
+      <p>Un contenu qui parle de financement génère mécaniquement des questions en message privé. Hors périmètre Uplye, sans responsable côté Skeals, ces demandes — les plus chaudes de toutes — restent sans réponse.</p>
+      <p class="fix"><b>Parade</b>Un responsable nommé, réponse sous 4 h ouvrées, et trois réponses types préparées ensemble sur le DPC, le FIF PL et les dates.</p>
+    </div>
+
+    <div class="risk">
+      <div class="h"><b>Le jugement trop précoce</b><span class="sev med">Moyen</span></div>
+      <p>Le cycle d'achat est long : on s'inscrit en septembre pour une session en janvier. Juger l'accompagnement sur les inscriptions du mois 2 conduirait à arrêter juste avant que ça produise.</p>
+      <p class="fix"><b>Parade</b>Les trois niveaux d'indicateurs de la section 08, avec leur horizon d'apparition acté dès aujourd'hui. On se juge sur le niveau 2 à M3, sur le niveau 3 à M6.</p>
+    </div>
+
+    <h3>Et après</h3>
+    <p>La publicité reste hors périmètre, et c'est délibéré. On ne paie pas pour diffuser des créations dont on n'a pas encore la preuve qu'elles fonctionnent. À partir du mois 4, on saura quels formats performent en organique : ce sont ceux-là, et seulement ceux-là, qu'on passera en payant — avec un ciblage géographique par bassin de session, ce que l'organique ne sait pas faire.</p>
+  </div>
+</div></section>
+
+<footer>
+  UPLYE — SAS au capital de 1 000 € · RCS Toulon 942 250 937 · SIRET 942 250 937 00011 · TVA FR66 942250937<br>
+  Enzo Folletete · enzo@uplyestudio.com · +33 7 44 95 45 86<br>
+  Note de travail interne préparée pour la réunion Skeals du 3 septembre 2026. Les montants de financement citent les barèmes ANDPC et FIF PL 2026 et sont à faire valider par Skeals avant toute diffusion publique.
+</footer>
+
+</div>
