@@ -59,6 +59,8 @@ W = {
     "absolu": 2.0,        # jamais / toujours / personne / le seul
     "aveu": 3.0,          # echec, perte, peur, faillite — le carburant emotionnel
     "contre_intuitif": 2.4,  # « en fait », « tout le monde croit que »
+    "marche": 2.8,        # contre-verite de metier : « le netlinking c'est mort »
+    "perf": 2.4,          # resultat chiffre : positions, ROAS, CPC, trafic
     "adresse": 1.4,       # parle au spectateur, pas a l'invite
     "conseil": 1.2,       # formulation prescriptive
     "longueur": 1.8,      # duree et nombre de mots dans la fenetre utile
@@ -73,9 +75,40 @@ W = {
 
 RE_CHIFFRE = re.compile(
     r"(\d[\d\s.,]*\s*(?:%|euros?|€|k€|balles|millions?|milliards?|mille|ans?|mois|jours?|heures?|fois|clients?|salaries?|abonnes?))"
+    r"|(\d[\d\s.,]*\s*(?:k|K)?\s*(?:clics?|impressions?|visiteurs?|sessions?|mots?[- ]cles?|backlinks?|pages?|requetes?|conversions?|leads?))"
+    r"|(\b(?:x\s?\d+|top\s?\d+|position\s?\d+|page\s?\d+)\b)"     # x4, top 3, position 1
+    r"|(\d[\d\s.,]*\s*(?:€|euros?)\s*(?:/|par)\s*(?:mois|jour|an|clic|lead))"
     r"|(\d[\d\s.,]{2,})",
     re.I,
 )
+
+# --- registre SEO / SEA -----------------------------------------------------
+# Les contre-verites de metier remplacent l'aveu personnel comme carburant :
+# sur un episode technique, la tension vient de ce qui contredit la doxa du
+# secteur, pas de la confession intime.
+MOTS_MARCHE = [
+    "c'est mort", "ca ne marche plus", "ne marche plus", "c'est termine",
+    "personne ne le fait", "les agences", "ton agence", "votre agence",
+    "on te vend", "on vous vend", "on te fait payer", "arnaque", "vendu du vent",
+    "c'est du vent", "ca sert a rien", "ne sert a rien", "perte de temps",
+    "tu jettes ton argent", "tu paies pour", "vous payez pour",
+    "google s'en fout", "google te", "google va", "l'algorithme",
+    "core update", "penalise", "penalite", "desindexe", "blackliste",
+    "zero click", "zero clic", "ai overview", "aio", "sge",
+    "l'ia va", "l'ia ne va pas", "le seo est mort", "le referencement est mort",
+    "le trafic organique", "la longue traine", "l'intention de recherche",
+    "eeat", "e-e-a-t", "netlinking", "backlink", "cocon semantique",
+    "quality score", "enchere", "cpc", "roas", "cpa", "budget brule",
+    "mots-cles marque", "requete de marque", "match large", "broad match",
+]
+
+MOTS_PERF = [
+    "on est passe de", "on a multiplie", "en trois mois", "en six mois",
+    "premiere page", "premiere position", "top 3", "top 10",
+    "de trafic", "de visibilite", "de conversions", "de leads",
+    "cout par", "retour sur investissement", "rentabilite", "rentable",
+    "on a divise", "on a double", "on a triple", "j'ai fait passer",
+]
 
 MOTS_ABSOLUS = [
     "jamais", "toujours", "personne", "aucun", "aucune", "tout le monde",
@@ -325,6 +358,23 @@ def build_sentences(segments, max_gap=0.55, max_dur=14.0):
             flush()
             cur = []
 
+    # Recollage des relances emphatiques : « ... c'est mort. Complètement mort. »
+    # La ponctuation forte coupe juste avant la reprise, alors que c'est
+    # precisement elle qu'on veut garder dans l'extrait. On recolle une phrase
+    # tres courte a la precedente quand elle la suit sans respiration.
+    merged = []
+    for s in sentences:
+        if merged:
+            prev = merged[-1]
+            gap = s["start"] - prev["end"]
+            if s["n_words"] <= 4 and s["end"] - s["start"] <= 1.6 and gap <= 0.45:
+                prev["text"] = (prev["text"] + " " + s["text"]).strip()
+                prev["end"] = s["end"]
+                prev["n_words"] += s["n_words"]
+                continue
+        merged.append(s)
+    sentences = merged
+
     # silences avant / apres : condition d'une coupe propre
     for i, s in enumerate(sentences):
         s["gap_before"] = s["start"] - sentences[i - 1]["end"] if i else 3.0
@@ -368,6 +418,8 @@ def score_sentence(s, env_median, energy):
     add("absolu", count_hits(flat, MOTS_ABSOLUS), "absolu")
     add("aveu", count_hits(flat, MOTS_AVEU), "aveu/tension")
     add("contre_intuitif", count_hits(flat, MOTS_CONTRE_INTUITIF), "contre-intuitif")
+    add("marche", count_hits(flat, MOTS_MARCHE), "contre-verite metier")
+    add("perf", count_hits(flat, MOTS_PERF), "resultat chiffre")
     add("conseil", count_hits(flat, MOTS_CONSEIL), "conseil")
     if RE_ADRESSE.search(flat):
         score += W["adresse"]
