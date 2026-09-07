@@ -1,0 +1,617 @@
+<title>Dans cet épisode · Seb Rech</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+/* Système de document Uplye Studio — palette « salle d'étalonnage » :
+   neutre graphite légèrement chaud, accent tungstène, rouge marqueur Resolve. */
+:root{
+  --paper:#EDEAE4;
+  --surface:#F8F6F2;
+  --surface-2:#E4E0D7;
+  --ink:#16130E;
+  --ink-soft:#57514A;
+  --ink-faint:#847D73;
+  --rule:#D5D0C6;
+  --rule-strong:#ADA69A;
+  --accent:#A85B18;
+  --accent-soft:#F4E4D1;
+  --accent-ink:#7A4110;
+  --signal:#B02A2A;
+  --signal-soft:#F5DCD9;
+  --cool:#2E5E72;
+  --cool-soft:#DCE7EC;
+  --go:#4C6B2C;
+  --go-soft:#E2EBD5;
+  --shadow:0 1px 2px rgba(22,19,14,.05), 0 8px 24px -16px rgba(22,19,14,.26);
+
+  --f-display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#131211; --surface:#1B1917; --surface-2:#242220;
+    --ink:#EAE6DF; --ink-soft:#A49C91; --ink-faint:#7B746A;
+    --rule:#2E2B28; --rule-strong:#453F3A;
+    --accent:#E39A4E; --accent-soft:#33230F; --accent-ink:#F1BE84;
+    --signal:#E4796E; --signal-soft:#351B18;
+    --cool:#84B7CD; --cool-soft:#15272F;
+    --go:#9CBE72; --go-soft:#1D2714;
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 8px 24px -16px rgba(0,0,0,.85);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131211; --surface:#1B1917; --surface-2:#242220;
+  --ink:#EAE6DF; --ink-soft:#A49C91; --ink-faint:#7B746A;
+  --rule:#2E2B28; --rule-strong:#453F3A;
+  --accent:#E39A4E; --accent-soft:#33230F; --accent-ink:#F1BE84;
+  --signal:#E4796E; --signal-soft:#351B18;
+  --cool:#84B7CD; --cool-soft:#15272F;
+  --go:#9CBE72; --go-soft:#1D2714;
+  --shadow:0 1px 2px rgba(0,0,0,.45), 0 8px 24px -16px rgba(0,0,0,.85);
+}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);
+  font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(18px,4.5vw,44px)}
+
+.masthead{border-bottom:1px solid var(--rule);padding:clamp(32px,6vw,64px) 0 clamp(26px,4vw,40px)}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+.masthead h1{font-family:var(--f-display);font-weight:800;
+  font-size:clamp(38px,7.2vw,74px);line-height:.98;letter-spacing:-.025em;
+  margin:16px 0 0;text-wrap:balance}
+.masthead h1 em{font-style:normal;color:var(--accent)}
+.deck{font-size:clamp(18px,2.2vw,21px);color:var(--ink-soft);
+  max-width:60ch;margin:20px 0 0;line-height:1.5}
+.stamp{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:30px;
+  font-family:var(--f-mono);font-size:12px;color:var(--ink-faint)}
+.stamp b{color:var(--ink-soft);font-weight:500}
+
+nav.toc{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+.toc-inner{display:flex;gap:2px;overflow-x:auto;scrollbar-width:thin;
+  max-width:1120px;margin:0 auto;padding:0 clamp(18px,4.5vw,44px)}
+.toc a{flex:0 0 auto;padding:11px 12px;text-decoration:none;color:var(--ink-faint);
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;white-space:nowrap;
+  border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.toc a:hover,.toc a:focus-visible{color:var(--accent);border-bottom-color:var(--accent)}
+
+section{border-bottom:1px solid var(--rule);padding:clamp(40px,6vw,66px) 0}
+section:last-of-type{border-bottom:0}
+.sec{display:grid;grid-template-columns:1fr;gap:22px}
+@media(min-width:900px){.sec{grid-template-columns:148px minmax(0,1fr);gap:0 48px}
+  .rail{position:sticky;top:56px;align-self:start}}
+.rail{display:flex;flex-direction:column;gap:6px}
+.rail .num{font-family:var(--f-display);font-weight:800;font-size:30px;line-height:1;
+  color:var(--accent);letter-spacing:-.02em}
+.rail .lab{font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-faint)}
+.rail .dur{font-family:var(--f-mono);font-size:11px;color:var(--ink-soft);
+  border:1px solid var(--rule-strong);border-radius:2px;padding:2px 6px;align-self:start}
+.body{min-width:0}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(25px,3.4vw,34px);
+  line-height:1.12;letter-spacing:-.02em;margin:0 0 16px;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:700;font-size:18px;line-height:1.25;
+  margin:34px 0 10px;letter-spacing:-.01em}
+h4{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-faint);margin:0 0 10px;font-weight:600}
+p{margin:0 0 15px;max-width:68ch}
+ul,ol{margin:0 0 15px;padding-left:1.15em;max-width:68ch}
+li{margin-bottom:7px}
+li::marker{color:var(--accent)}
+strong{font-weight:600;color:var(--ink)}
+em.q{font-style:italic;color:var(--ink-soft)}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+code,.tc{font-family:var(--f-mono);font-size:.88em;font-variant-numeric:tabular-nums;
+  background:var(--surface-2);padding:1px 5px;border-radius:2px;white-space:nowrap}
+
+.thesis{border-left:3px solid var(--accent);background:var(--accent-soft);
+  padding:22px 24px;margin:24px 0;border-radius:0 4px 4px 0}
+.thesis p{font-family:var(--f-display);font-weight:500;font-size:clamp(19px,2.4vw,23px);
+  line-height:1.32;margin:0;color:var(--accent-ink);letter-spacing:-.012em;max-width:none}
+.thesis p + p{margin-top:12px}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin:26px 0;border-radius:4px;overflow:hidden}
+.fact{background:var(--surface);padding:17px 18px 19px}
+.fact .n{font-family:var(--f-display);font-weight:800;font-size:29px;line-height:1.05;
+  letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+.fact .n.hot{color:var(--accent)}
+.fact .n.red{color:var(--signal)}
+.fact .t{font-size:14px;color:var(--ink-soft);line-height:1.35;margin-top:7px}
+
+.tw{overflow-x:auto;margin:22px 0;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14.5px}
+th{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-faint);text-align:left;font-weight:600;padding:11px 14px;
+  border-bottom:1px solid var(--rule-strong);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.45}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---------- la timeline du pré-générique : pièce maîtresse ---------- */
+.tl{margin:28px 0;border:1px solid var(--rule);border-radius:4px;background:var(--surface);overflow:hidden}
+.tl-scroll{overflow-x:auto;padding:18px 18px 16px}
+.tl-inner{min-width:660px}
+.lane{display:grid;grid-template-columns:repeat(48,1fr);gap:2px;margin-bottom:2px}
+.lane-tag{font-family:var(--f-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-faint);margin:12px 0 5px}
+.lane-tag:first-child{margin-top:0}
+.blk{border-radius:2px;padding:9px 10px 10px;min-height:82px;display:flex;
+  flex-direction:column;gap:5px;border:1px solid transparent;overflow:hidden}
+.blk .k{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.09em;opacity:.9;white-space:nowrap}
+.blk .v{font-family:var(--f-display);font-weight:700;font-size:13.5px;line-height:1.14;letter-spacing:-.01em}
+.blk .d{font-size:12.5px;line-height:1.35;font-family:var(--f-body)}
+.v-hook{background:var(--signal-soft);border-color:var(--signal);color:var(--signal)}
+.v-hook .d,.v-hook .v{color:var(--ink)}
+.v-beat{background:var(--surface-2);border-color:var(--rule-strong);color:var(--ink-faint)}
+.v-burst{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink)}
+.v-burst .d{color:var(--ink)}
+.v-peak{background:var(--cool-soft);border-color:var(--cool);color:var(--cool)}
+.v-peak .d,.v-peak .v{color:var(--ink)}
+.v-turn{background:var(--go-soft);border-color:var(--go);color:var(--go)}
+.v-turn .d,.v-turn .v{color:var(--ink)}
+.strip{min-height:34px;padding:7px 10px;justify-content:center}
+.strip .v{font-size:12px;font-family:var(--f-mono);font-weight:500;letter-spacing:.02em}
+.mute{background:repeating-linear-gradient(135deg,var(--surface-2),var(--surface-2) 5px,transparent 5px,transparent 10px);
+  border:1px solid var(--rule);color:var(--ink-faint)}
+.ruler{display:grid;grid-template-columns:repeat(48,1fr);margin-top:10px;
+  border-top:1px solid var(--rule-strong);padding-top:5px}
+.ruler span{grid-column:span 8;font-family:var(--f-mono);font-size:10px;
+  color:var(--ink-faint);font-variant-numeric:tabular-nums}
+.ruler span:last-child{text-align:right}
+.tl-foot{border-top:1px solid var(--rule);background:var(--surface-2);padding:11px 18px;
+  font-family:var(--f-mono);font-size:11px;color:var(--ink-soft);line-height:1.6}
+
+/* ---------- les tests de sélection ---------- */
+.tests{display:flex;flex-direction:column;gap:1px;background:var(--rule);
+  border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin:24px 0}
+.test{background:var(--surface);padding:16px 18px}
+.test .hd{display:flex;gap:11px;align-items:baseline;flex-wrap:wrap}
+.test .tn{font-family:var(--f-mono);font-size:11px;color:var(--accent);font-weight:600;
+  letter-spacing:.08em;flex:0 0 auto}
+.test .tt{font-family:var(--f-display);font-weight:700;font-size:16.5px;letter-spacing:-.01em}
+.test .tq{font-size:14.5px;color:var(--ink-soft);margin:6px 0 0;line-height:1.5;max-width:68ch}
+.ex{display:grid;gap:6px;margin-top:11px}
+@media(min-width:620px){.ex{grid-template-columns:1fr 1fr}}
+.ex div{font-family:var(--f-mono);font-size:12px;line-height:1.5;padding:8px 10px;border-radius:2px}
+.ex .ok{background:var(--go-soft);color:var(--ink);border-left:2px solid var(--go)}
+.ex .ko{background:var(--signal-soft);color:var(--ink);border-left:2px solid var(--signal)}
+.ex b{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  display:block;margin-bottom:3px;font-weight:600}
+.ex .ok b{color:var(--go)}
+.ex .ko b{color:var(--signal)}
+
+/* ---------- liste rouge ---------- */
+.redlist{border:1px solid var(--rule);border-left:3px solid var(--signal);background:var(--surface);
+  border-radius:0 4px 4px 0;padding:17px 19px;margin:24px 0}
+.redlist h4{color:var(--signal)}
+.redlist ul{margin:0;padding-left:1.1em}
+.redlist li{font-size:14.5px;color:var(--ink-soft);margin-bottom:6px}
+.redlist li::marker{color:var(--signal)}
+.redlist li b{color:var(--ink)}
+
+/* ---------- passes de dérushage ---------- */
+.phases{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+  border-radius:4px;overflow:hidden;margin:24px 0}
+@media(min-width:760px){.phases{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.phases{grid-template-columns:repeat(4,1fr)}}
+.phase{background:var(--surface);padding:18px;display:flex;flex-direction:column;gap:9px}
+.phase .p{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+.phase h5{font-family:var(--f-display);font-weight:700;font-size:16.5px;margin:0;letter-spacing:-.01em}
+.phase p{font-size:14px;color:var(--ink-soft);margin:0;line-height:1.48;max-width:none}
+.phase .t{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-faint);
+  border-top:1px dashed var(--rule);padding-top:9px;margin-top:auto}
+
+/* ---------- spécifications ---------- */
+.specs{display:flex;flex-direction:column;gap:1px;background:var(--rule);
+  border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin:22px 0}
+.spec{background:var(--surface);padding:12px 16px;display:flex;gap:16px;
+  align-items:baseline;flex-wrap:wrap}
+.spec .l{font-family:var(--f-display);font-weight:700;font-size:14.5px;flex:0 0 auto;min-width:150px}
+.spec .r{font-size:14px;color:var(--ink-soft);line-height:1.45;min-width:0;flex:1}
+.spec .r b{font-family:var(--f-mono);font-size:12.5px;color:var(--accent);
+  font-variant-numeric:tabular-nums;font-weight:500}
+
+/* ---------- réemploi ---------- */
+.funnel{margin:24px 0;display:flex;flex-direction:column;gap:7px;align-items:center}
+.band{background:var(--surface);border:1px solid var(--rule);border-left-width:4px;border-radius:3px;
+  padding:13px 16px;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;width:100%}
+.band.b1{border-left-color:var(--accent)}
+.band.b2{border-left-color:var(--cool);width:min(100%,86%)}
+.band.b3{border-left-color:var(--go);width:min(100%,70%)}
+.band .st{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;color:var(--ink-faint);flex:0 0 auto}
+.band .ttl{font-family:var(--f-display);font-weight:700;font-size:15.5px}
+.band .cnt{margin-left:auto;font-family:var(--f-mono);font-size:12.5px;color:var(--ink-soft);white-space:nowrap}
+.band .dsc{flex-basis:100%;font-size:14px;color:var(--ink-soft);line-height:1.45}
+
+/* ---------- décisions ---------- */
+.decs{display:flex;flex-direction:column;gap:1px;background:var(--rule);
+  border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin:22px 0}
+.dec{background:var(--surface);padding:14px 16px;display:flex;gap:13px;align-items:flex-start}
+.box{width:15px;height:15px;border:1.5px solid var(--rule-strong);border-radius:2px;flex:0 0 auto;margin-top:4px}
+.dec .txt{min-width:0}
+.dec .q{font-weight:600;font-size:15.5px;line-height:1.35}
+.dec .w{font-size:14px;color:var(--ink-soft);margin-top:3px;line-height:1.45}
+.who{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-faint);
+  margin-left:auto;flex:0 0 auto;padding-top:5px;white-space:nowrap}
+
+.note{font-size:13.5px;color:var(--ink-faint);border-top:1px solid var(--rule);
+  padding-top:12px;margin-top:22px;max-width:70ch;line-height:1.5}
+.note b{color:var(--ink-soft);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.11em;
+  text-transform:uppercase;display:block;margin-bottom:5px}
+.note.warn{border-top-color:var(--signal)}
+.note.warn b{color:var(--signal)}
+
+footer{padding:38px 0 56px;color:var(--ink-faint);font-family:var(--f-mono);font-size:11.5px;line-height:1.7}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<nav class="toc"><div class="toc-inner">
+  <a href="#s1">01 · Parti pris</a>
+  <a href="#s2">02 · Architecture</a>
+  <a href="#s3">03 · 48 secondes</a>
+  <a href="#s4">04 · 6 tests</a>
+  <a href="#s5">05 · Dérushage</a>
+  <a href="#s6">06 · Grammaire</a>
+  <a href="#s7">07 · Réemploi</a>
+  <a href="#s8">08 · Trancher</a>
+</div></nav>
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="eyebrow">Uplye Studio × Sébastien Rech · Stratégie de montage · Épisode 1</div>
+  <h1>Dans cet<br><em>épisode</em></h1>
+  <p class="deck">Une méthode pour sortir les moments forts d'un rush de 90 minutes et en faire un pré-générique de 48 secondes qui retient. Ce document sert de conducteur de montage : ordre, critères, specs de coupe, et l'outil de dérushage qui va avec.</p>
+  <div class="stamp">
+    <span>Client <b>Sébastien Rech</b></span>
+    <span>Rush <b>SEB-RECH-PODCAST 1</b></span>
+    <span>Références <b>Elevator Goods · Anthony Bourbon</b></span>
+    <span>Livrable <b>Pré-générique + conducteur</b></span>
+  </div>
+</header>
+
+<!-- 01 -->
+<section id="s1"><div class="sec">
+  <div class="rail"><div class="num">01</div><div class="lab">Le parti pris</div></div>
+  <div class="body">
+    <h2>Tes deux références ne disent pas la même chose. C'est une bonne nouvelle.</h2>
+
+    <p>Les deux vidéos que tu m'as envoyées viennent de deux écoles opposées, et le piège serait de les mélanger à parts égales.</p>
+
+    <div class="tw"><table>
+      <thead><tr><th>Référence</th><th>Ce qu'elle fait bien</th><th>Ce qu'on lui prend</th><th>Ce qu'on laisse</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Elevator Goods</strong><br><em class="q">« Vince Nijhof's $100M+ Ecom Playbook »</em></td>
+          <td>Production haute, multicam propre, cadres tenus, étalonnage chaud. Le montage sert la <strong>crédibilité</strong> : on croit ce que dit l'invité parce que l'image est sérieuse.</td>
+          <td>Le cadre, l'étalonnage, la respiration entre les idées, la discipline du plan de coupe.</td>
+          <td>Le rythme parfois lent sur les passages techniques : en France, sur une audience YouTube, ça décroche plus vite.</td>
+        </tr>
+        <tr>
+          <td><strong>Anthony Bourbon</strong><br><em class="q">« Les 3 erreurs qui vous empêcheront de devenir riche »</em></td>
+          <td>Rétention. Coupe nerveuse, sous-titres gros et lisibles, adresse directe, punchlines mises en avant sans pudeur.</td>
+          <td>La cadence de coupe, la lisibilité des sous-titres, l'art de poser une punchline nue.</td>
+          <td>La densité d'effets. Whoosh sur chaque transition, zooms permanents : ça marque une chaîne « énergie », ça abîme une chaîne « expertise ».</td>
+        </tr>
+      </tbody>
+    </table></div>
+
+    <div class="thesis">
+      <p>On prend le <strong>cadre et l'étalonnage</strong> de la référence américaine, le <strong>rythme et la lisibilité</strong> de la référence française — et on concentre tout l'attirail punchy dans les 48 premières secondes.</p>
+      <p>Le pré-générique a le droit d'être plus agressif que l'épisode. C'est une bande-annonce, pas un échantillon représentatif.</p>
+    </div>
+
+    <p>C'est le principe structurant de tout le document. Un pré-générique nerveux suivi d'un épisode posé, ce n'est pas une incohérence : c'est le contrat de lecture. Le spectateur accepte un montage cut à 48 secondes s'il sait qu'ensuite on le laisse respirer. L'inverse — une intro molle suivie d'un épisode qui s'agite — ne pardonne pas.</p>
+
+    <div class="note warn"><b>Ce que je n'ai pas pu vérifier</b>Je n'ai pas eu accès au rush (il est en local sur ton poste) ni au visionnage des deux vidéos : YouTube bloque la lecture depuis mon environnement. La lecture des deux références ci-dessus s'appuie sur leurs métadonnées et sur le format connu des deux chaînes — pas sur un visionnage image par image. Tu m'as pointé <span class="tc">3:32</span> sur la première et <span class="tc">8:07</span> sur la seconde : dis-moi ce qu'il y a exactement à ces deux endroits, c'est probablement là que se trouve le geste précis que tu veux reproduire, et ça peut faire bouger la section 06.</div>
+  </div>
+</div></section>
+
+<!-- 02 -->
+<section id="s2"><div class="sec">
+  <div class="rail"><div class="num">02</div><div class="lab">Architecture</div></div>
+  <div class="body">
+    <h2>L'ordre de l'épisode, et l'erreur qui coûte le plus cher</h2>
+
+    <p>Avant de parler du pré-générique, il faut fixer où il se place. La faute la plus fréquente sur un épisode 1, c'est de commencer par le générique.</p>
+
+    <div class="tw"><table>
+      <thead><tr><th>Bloc</th><th>Durée</th><th>Fonction</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pré-générique « Dans cet épisode »</strong></td><td class="num">0:00 → 0:48</td><td>Donner une raison de rester. Ouvrir des boucles, n'en fermer aucune.</td></tr>
+        <tr><td>Générique</td><td class="num">0:48 → 0:57</td><td>Identité de marque. <strong>9 secondes, pas 20.</strong> Il arrive une fois qu'on a mérité l'attention.</td></tr>
+        <tr><td>Plantage</td><td class="num">0:57 → 1:30</td><td>Qui est l'invité, pourquoi lui, pourquoi maintenant. Trois phrases, pas trois minutes.</td></tr>
+        <tr><td>Corps, en chapitres</td><td class="num">1:30 → fin</td><td>Blocs de 6 à 10 min, chacun ouvert par un carton titre. Ce sont aussi les chapitres YouTube.</td></tr>
+        <tr><td>Sortie</td><td class="num">2 dernières min</td><td>On finit sur une punchline de l'invité, jamais sur <em class="q">« merci d'avoir écouté »</em>. Le call-to-action passe en incrustation, pas en discours.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="facts">
+      <div class="fact"><div class="n hot">48 s</div><div class="t">Cible du pré-générique. Plafond absolu : 60 s.</div></div>
+      <div class="fact"><div class="n">6</div><div class="t">Extraits maximum. Au-delà, plus rien ne marque.</div></div>
+      <div class="fact"><div class="n red">0</div><div class="t">Réponse donnée en intro. On ne montre que la question.</div></div>
+      <div class="fact"><div class="n">9 s</div><div class="t">Générique. Il passe après l'accroche, jamais avant.</div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- 03 -->
+<section id="s3"><div class="sec">
+  <div class="rail"><div class="num">03</div><div class="lab">Les 48 secondes</div><div class="dur">le cœur</div></div>
+  <div class="body">
+    <h2>Le conducteur du pré-générique, seconde par seconde</h2>
+
+    <p>Cinq blocs, trois pistes. Ce conducteur est fait pour être posé tel quel sur la timeline : les durées sont des points de départ, pas des dogmes, mais l'<strong>ordre</strong> et le <strong>retrait de la musique avant le sommet</strong> ne se négocient pas.</p>
+
+    <div class="tl">
+      <div class="tl-scroll"><div class="tl-inner">
+
+        <div class="lane-tag">Piste image · extraits</div>
+        <div class="lane">
+          <div class="blk v-hook" style="grid-column:1/span 6">
+            <div class="k">00:00 — 00:06</div>
+            <div class="v">Hameçon</div>
+            <div class="d">Un seul extrait, le plus brutal de l'épisode. Image nue.</div>
+          </div>
+          <div class="blk v-beat" style="grid-column:7/span 1">
+            <div class="k">·06</div>
+            <div class="v">Beat</div>
+          </div>
+          <div class="blk v-burst" style="grid-column:8/span 23">
+            <div class="k">00:07 — 00:30</div>
+            <div class="v">Rafale · 4 extraits de 3 à 6 s</div>
+            <div class="d">Un sujet différent par extrait, donc quatre boucles ouvertes. Punch-in progressif d'un extrait au suivant.</div>
+          </div>
+          <div class="blk v-peak" style="grid-column:31/span 10">
+            <div class="k">00:30 — 00:40</div>
+            <div class="v">Sommet</div>
+            <div class="d">Le plus gros chiffre, ou l'aveu le plus personnel. Le plan le plus serré.</div>
+          </div>
+          <div class="blk v-turn" style="grid-column:41/span 8">
+            <div class="k">00:40 — 00:48</div>
+            <div class="v">Bascule</div>
+            <div class="d">Carton titre, nom de l'invité, logo. Entrée dans l'épisode.</div>
+          </div>
+        </div>
+
+        <div class="lane-tag">Piste musique</div>
+        <div class="lane">
+          <div class="blk strip mute" style="grid-column:1/span 7"><div class="v">silence total</div></div>
+          <div class="blk strip v-burst" style="grid-column:8/span 23"><div class="v">musique in · ducking −12 dB sous la voix</div></div>
+          <div class="blk strip mute" style="grid-column:31/span 10"><div class="v">retrait 1 s avant le sommet</div></div>
+          <div class="blk strip v-turn" style="grid-column:41/span 8"><div class="v">reprise · résolution</div></div>
+        </div>
+
+        <div class="lane-tag">Piste habillage</div>
+        <div class="lane">
+          <div class="blk strip v-hook" style="grid-column:1/span 6"><div class="v">sous-titre sobre, pas d'animation</div></div>
+          <div class="blk strip mute" style="grid-column:7/span 1"><div class="v">—</div></div>
+          <div class="blk strip v-burst" style="grid-column:8/span 33"><div class="v">sous-titres mot à mot · 1 mot accentué max par extrait</div></div>
+          <div class="blk strip v-turn" style="grid-column:41/span 8"><div class="v">carton DANS CET ÉPISODE</div></div>
+        </div>
+
+        <div class="ruler"><span>0 s</span><span>8 s</span><span>16 s</span><span>24 s</span><span>32 s</span><span>40 s</span></div>
+      </div></div>
+      <div class="tl-foot">Le silence de 0 à 7 s est l'élément le plus important de la timeline. Une punchline montée nue, sans musique, frappe plus fort qu'une punchline sur nappe — et le contraste au moment où la musique entre fait démarrer le morceau à 7 s comme s'il démarrait à zéro.</div>
+    </div>
+
+    <h3>Trois règles qui décident du résultat</h3>
+    <ul>
+      <li><strong>L'ordre du pré-générique n'est jamais l'ordre de l'épisode.</strong> On classe par intensité croissante. Si ta meilleure phrase est à <span class="tc">01:12:40</span> du rush, elle passe à <span class="tc">00:00:00</span> du montage.</li>
+      <li><strong>Aucun extrait ne donne sa réponse.</strong> <em class="q">« J'ai perdu 400 000 € en dix-huit mois »</em> reste. <em class="q">« …et j'ai remonté la boîte en changeant de fournisseur »</em> saute : c'est le payoff, il appartient à l'épisode.</li>
+      <li><strong>Le retrait de la musique avant le sommet.</strong> Couper la nappe une seconde avant la phrase la plus forte fait plus d'effet que n'importe quel impact sonore. Le silence est un effet, et c'est le seul gratuit.</li>
+    </ul>
+  </div>
+</div></section>
+
+<!-- 04 -->
+<section id="s4"><div class="sec">
+  <div class="rail"><div class="num">04</div><div class="lab">Les 6 tests</div></div>
+  <div class="body">
+    <h2>Comment on décide qu'une phrase est un moment fort</h2>
+    <p>Un extrait doit passer les six. Cinq sur six, il part en réserve pour un short. Quatre sur six, on l'oublie.</p>
+
+    <div class="tests">
+      <div class="test">
+        <div class="hd"><span class="tn">T1</span><span class="tt">Autonomie</span></div>
+        <p class="tq">L'extrait tient-il debout sans rien de ce qui précède ? Une phrase qui démarre sur <em class="q">donc</em>, <em class="q">du coup</em>, <em class="q">et là</em>, ou sur un pronom sans antécédent, oblige le spectateur à reconstruire un contexte qu'il n'a pas.</p>
+        <div class="ex">
+          <div class="ok"><b>Passe</b>« La première boîte, je l'ai plantée en huit mois. »</div>
+          <div class="ko"><b>Recale</b>« Et du coup lui, il m'a dit que c'était pas possible. »</div>
+        </div>
+      </div>
+      <div class="test">
+        <div class="hd"><span class="tn">T2</span><span class="tt">Boucle ouverte</span></div>
+        <p class="tq">Après l'extrait, le spectateur a-t-il une question en tête ? Si la phrase se suffit et clôt le sujet, elle a déjà tout donné — elle n'a rien à faire en intro.</p>
+        <div class="ex">
+          <div class="ok"><b>Passe</b>« Le jour où j'ai compris ça, j'ai tout arrêté. »</div>
+          <div class="ko"><b>Recale</b>« Il faut être régulier, c'est la clé du succès. »</div>
+        </div>
+      </div>
+      <div class="test">
+        <div class="hd"><span class="tn">T3</span><span class="tt">Concret</span></div>
+        <p class="tq">Un chiffre, une date, un lieu, un nom. Le concret est ce qui distingue un témoignage d'un discours de motivation.</p>
+        <div class="ex">
+          <div class="ok"><b>Passe</b>« J'avais 1 200 € sur mon compte et trois salariés à payer. »</div>
+          <div class="ko"><b>Recale</b>« J'ai traversé une période financière compliquée. »</div>
+        </div>
+      </div>
+      <div class="test">
+        <div class="hd"><span class="tn">T4</span><span class="tt">Tension</span></div>
+        <p class="tq">Aveu, regret, désaccord, opinion clivante, échec chiffré. L'émotion passe avant l'information : on retient une intro pour ce qu'elle fait ressentir, pas pour ce qu'elle apprend.</p>
+        <div class="ex">
+          <div class="ok"><b>Passe</b>« Je ne le referais pas. Franchement, non. »</div>
+          <div class="ko"><b>Recale</b>« On a mis en place un process assez efficace. »</div>
+        </div>
+      </div>
+      <div class="test">
+        <div class="hd"><span class="tn">T5</span><span class="tt">Le test du visage</span></div>
+        <p class="tq">C'est celui qu'on oublie, et il élimine facilement un tiers des candidats. Au moment exact de la phrase, l'image est-elle exploitable ? Regard, posture, pas de gorgée d'eau, pas de main devant la bouche, pas de raccord impossible avec le plan suivant. <strong>Un texte parfait sur une image ratée ne se monte pas.</strong></p>
+      </div>
+      <div class="test">
+        <div class="hd"><span class="tn">T6</span><span class="tt">Sortable</span></div>
+        <p class="tq">Diction propre, pas de bafouillage irréparable, et rien qui engage juridiquement : nom d'un tiers mis en cause, chiffre confidentiel, marque nommée négativement. En cas de doute, on demande à Sébastien avant montage, pas après diffusion.</p>
+      </div>
+    </div>
+
+    <div class="redlist">
+      <h4>Liste rouge — ce qui ne va jamais en pré-générique</h4>
+      <ul>
+        <li><b>La présentation de l'invité.</b> Elle appartient au plantage, après le générique.</li>
+        <li><b>Les remerciements et les politesses de plateau.</b> <em class="q">« Merci d'être là »</em> n'a jamais retenu personne.</li>
+        <li><b>La conclusion de l'épisode.</b> C'est le payoff. Le spoiler tue la raison de rester.</li>
+        <li><b>Les blagues d'entre-soi.</b> Drôles dans la pièce, opaques à l'écran.</li>
+        <li><b>Deux extraits sur le même sujet.</b> Ça referme une boucle au lieu d'en ouvrir deux.</li>
+        <li><b>Une question de l'animateur.</b> L'intro donne la parole à l'invité. La question sera dans l'épisode.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<!-- 05 -->
+<section id="s5"><div class="sec">
+  <div class="rail"><div class="num">05</div><div class="lab">Dérushage</div><div class="dur">≈ 1 h 30</div></div>
+  <div class="body">
+    <h2>Quatre passes, et une machine pour la première</h2>
+    <p>Écouter 90 minutes de rush à la recherche de six phrases, c'est une demi-journée. Le découpage en passes ramène ça à une heure et demie, et surtout il sépare les décisions : on ne juge jamais le texte et l'image en même temps.</p>
+
+    <div class="phases">
+      <div class="phase">
+        <div class="p">Passe 0 · machine</div>
+        <h5>Repérage automatique</h5>
+        <p>Le script transcrit le rush, découpe en phrases et note chaque phrase sur les critères T1 à T4. Il sort une shortlist de 25 candidats horodatés, répartis sur toute la durée.</p>
+        <div class="t">15 min de calcul, 0 min de ton temps</div>
+      </div>
+      <div class="phase">
+        <div class="p">Passe 1 · oreille</div>
+        <h5>Validation au son</h5>
+        <p>Tu écoutes les 25 candidats dans l'ordre du score, sans regarder l'image. Tu gardes une douzaine de <em>oui</em>. Le reste part en banque à shorts.</p>
+        <div class="t">≈ 20 min</div>
+      </div>
+      <div class="phase">
+        <div class="p">Passe 2 · œil</div>
+        <h5>Le test du visage</h5>
+        <p>Sur les douze retenus seulement, tu vérifies l'image. C'est là que la liste tombe à six ou sept. Ne fais jamais cette passe avant la précédente : tu perdrais du temps sur des phrases que tu allais couper.</p>
+        <div class="t">≈ 15 min</div>
+      </div>
+      <div class="phase">
+        <div class="p">Passe 3 · ordre</div>
+        <h5>Montage à l'aveugle</h5>
+        <p>Tu assembles les six en <strong>son seul</strong>, sans image ni habillage, et tu écoutes les yeux fermés. Si le rythme tient en audio, il tiendra en image. L'inverse est faux.</p>
+        <div class="t">≈ 30 min</div>
+      </div>
+    </div>
+
+    <h3>L'outil de repérage</h3>
+    <p>Le script <code>tools/podcast_punchlines.py</code> est dans le dépôt, à côté de ce document. Il prend le rush, en sort la shortlist et les marqueurs à importer directement dans la timeline.</p>
+
+    <div class="specs">
+      <div class="spec"><div class="l">Ce qu'il fait</div><div class="r">Extraction audio <b>ffmpeg</b>, transcription horodatée au mot <b>faster-whisper</b>, découpage en phrases sur les silences, notation sur chiffres, absolus, aveux, contre-intuition, adresse directe, énergie vocale et isolabilité de la coupe.</div></div>
+      <div class="spec"><div class="l">Ce qu'il sort</div><div class="r"><b>.md</b> shortlist lisible avec les signaux détectés · <b>.csv</b> pour cocher ce que tu retiens · <b>.edl</b> de marqueurs colorés pour DaVinci Resolve · <b>.srt</b> à déposer sur la timeline pour voir les candidats en place dans n'importe quel logiciel.</div></div>
+      <div class="spec"><div class="l">Code couleur</div><div class="r"><b>rouge</b> rangs 1 à 6, le cœur de l'intro · <b>jaune</b> rangs 7 à 14, la réserve · <b>bleu</b> le reste, banque à shorts.</div></div>
+      <div class="spec"><div class="l">Lancement</div><div class="r"><b>python3 tools/podcast_punchlines.py --input SEB-RECH-PODCAST-1.mp4 --fps 25</b></div></div>
+    </div>
+
+    <div class="thesis"><p>Le script ne monte pas à ta place, et il ne voit pas l'image. Il transforme 90 minutes d'écoute en 15 minutes de vérification. Les passes 1 à 3 restent entièrement éditoriales.</p></div>
+
+    <div class="note"><b>Réglage par client</b>Les lexiques et les poids sont en haut du fichier, en clair et commentés. Après l'épisode 1, on ajuste : si le script te remonte trop de conseils génériques, on baisse le poids <span class="tc">conseil</span> ; s'il rate les moments drôles, on ajoute une famille. Le montage de l'épisode 2 démarre alors avec un outil calibré sur la voix de Sébastien.</div>
+  </div>
+</div></section>
+
+<!-- 06 -->
+<section id="s6"><div class="sec">
+  <div class="rail"><div class="num">06</div><div class="lab">Grammaire</div></div>
+  <div class="body">
+    <h2>Les réglages de coupe, d'habillage et de mix</h2>
+    <p>Valeurs de départ, à tenir sur tout le pré-générique pour qu'il ait l'air d'un objet et pas d'une compilation.</p>
+
+    <div class="specs">
+      <div class="spec"><div class="l">Point de coupe</div><div class="r"><b>2 à 4 images</b> de queue après le dernier mot, pas plus. On coupe aussi la respiration d'entrée : l'extrait démarre sur la consonne, pas sur l'inspiration.</div></div>
+      <div class="spec"><div class="l">Enchaînement</div><div class="r">L-cut systématique : l'audio de l'extrait suivant attaque <b>4 à 6 images</b> avant son image. C'est ce qui fait qu'une rafale s'enchaîne au lieu de se juxtaposer.</div></div>
+      <div class="spec"><div class="l">Punch-in</div><div class="r"><b>4 à 8 %</b>, jamais plus, et posé <em>sur</em> la punchline — pas avant. Un zoom qui anticipe la phrase la désamorce.</div></div>
+      <div class="spec"><div class="l">Sous-titres</div><div class="r"><b>1 à 3 mots</b> à l'écran, centrés au tiers bas, dans la zone de sécurité à <b>10 %</b>. Pas de ponctuation. Un seul mot en couleur d'accent par extrait, sinon l'accent ne veut plus rien dire.</div></div>
+      <div class="spec"><div class="l">Effets sonores</div><div class="r">Au maximum <b>un whoosh par transition</b>, et pas sur toutes : deux ou trois sur les cinq blocs. Un seul impact, réservé au sommet.</div></div>
+      <div class="spec"><div class="l">Musique</div><div class="r">Entrée à <b>7 s</b>, ducking <b>−12 dB</b> sous la voix, retrait total <b>1 s</b> avant le sommet, reprise sur la bascule.</div></div>
+      <div class="spec"><div class="l">Mix</div><div class="r">Intégré <b>−14 LUFS</b>, true peak <b>−1 dBTP</b> pour YouTube. Le pré-générique se mesure avec le reste de l'épisode, pas séparément : une intro plus forte que le corps s'entend immédiatement.</div></div>
+      <div class="spec"><div class="l">Étalonnage</div><div class="r">La <b>même LUT</b> sur l'intro et sur l'épisode. Un pré-générique plus contrasté ou plus saturé crée une rupture au moment précis où l'on veut de la continuité.</div></div>
+      <div class="spec"><div class="l">Format</div><div class="r"><b>16:9 · 25 fps</b> pour la version longue. Le tournage doit rester recadrable en <b>9:16</b> : marges à gauche et à droite, invité pas collé au bord du cadre.</div></div>
+    </div>
+
+    <div class="note"><b>Une seule licence sonore</b>Choisis un morceau et garde-le sur toute la saison, en variant seulement le point d'entrée. La reconnaissance sonore d'un podcast se construit sur la répétition, et ça évite de renégocier une licence à chaque épisode.</div>
+  </div>
+</div></section>
+
+<!-- 07 -->
+<section id="s7"><div class="sec">
+  <div class="rail"><div class="num">07</div><div class="lab">Réemploi</div></div>
+  <div class="body">
+    <h2>Le dérushage est fait une fois, il sert trois fois</h2>
+    <p>C'est l'argument à porter à Sébastien, et c'est ce qui rend le temps de dérushage rentable : les extraits sélectionnés pour l'intro sont déjà validés comme accroches. Un short, c'est exactement ça — une accroche autonome de moins de 60 secondes.</p>
+
+    <div class="funnel">
+      <div class="band b1">
+        <span class="st">SORTIE 1</span><span class="ttl">Pré-générique</span><span class="cnt">6 extraits · 48 s</span>
+        <span class="dsc">Le cœur de la shortlist, monté par intensité croissante.</span>
+      </div>
+      <div class="band b2">
+        <span class="st">SORTIE 2</span><span class="ttl">Shorts verticaux</span><span class="cnt">6 à 10 · 20 à 55 s</span>
+        <span class="dsc">Un short par extrait de l'intro, plus la réserve jaune. Le hook est déjà validé, les sous-titres déjà écrits : il reste le recadrage 9:16 et l'export.</span>
+      </div>
+      <div class="band b3">
+        <span class="st">SORTIE 3</span><span class="ttl">Chapitres et métadonnées</span><span class="cnt">1 épisode</span>
+        <span class="dsc">Les cartons de chapitre deviennent les timestamps de la description YouTube, et la transcription complète alimente le descriptif et l'article si Sébastien en publie un.</span>
+      </div>
+    </div>
+
+    <div class="thesis"><p>Un tournage, une passe de dérushage, trois livrables. À l'épisode 2, l'outil est calibré et la même passe coûte moitié moins de temps.</p></div>
+  </div>
+</div></section>
+
+<!-- 08 -->
+<section id="s8"><div class="sec">
+  <div class="rail"><div class="num">08</div><div class="lab">À trancher</div></div>
+  <div class="body">
+    <h2>Ce dont j'ai besoin pour verrouiller le conducteur</h2>
+    <p>Le document tient sans ces réponses — mais chacune fait bouger une section précise.</p>
+
+    <div class="decs">
+      <div class="dec"><div class="box"></div><div class="txt">
+        <div class="q">Le registre : expertise ou énergie ?</div>
+        <div class="w">C'est l'arbitrage de la section 01. Si Sébastien se positionne en référent de son domaine, on tient la réserve sur les effets. S'il vise la rétention pure, on charge davantage. On ne peut pas faire les deux à moitié.</div>
+      </div><span class="who">Seb</span></div>
+      <div class="dec"><div class="box"></div><div class="txt">
+        <div class="q">Ce qu'il y a à 3:32 et 8:07 dans tes deux références</div>
+        <div class="w">Tu as pointé deux timecodes précis. Je n'ai pas pu visionner les vidéos. Décris-moi le geste de montage à ces endroits — c'est sans doute ce que tu veux vraiment reproduire.</div>
+      </div><span class="who">Toi</span></div>
+      <div class="dec"><div class="box"></div><div class="txt">
+        <div class="q">Le logiciel de montage</div>
+        <div class="w">Le script sort déjà un EDL de marqueurs pour Resolve et un SRT universel. Si tu montes sur Premiere ou Final Cut, dis-le-moi : j'ajoute l'export au bon format plutôt que de te faire passer par le SRT.</div>
+      </div><span class="who">Toi</span></div>
+      <div class="dec"><div class="box"></div><div class="txt">
+        <div class="q">Le dispositif de tournage</div>
+        <div class="w">Nombre de caméras, durée du rush, cadence, et si le cadre est recadrable en 9:16. Ça conditionne la section 06 et la faisabilité de la sortie 2.</div>
+      </div><span class="who">Toi</span></div>
+      <div class="dec"><div class="box"></div><div class="txt">
+        <div class="q">La charte</div>
+        <div class="w">Logo, typographie, couleurs, et le morceau de générique. S'il n'y a rien de figé, je propose une piste avec le montage de l'épisode 1 — c'est le bon moment pour la fixer, avant qu'elle ne soit contrainte par dix épisodes déjà en ligne.</div>
+      </div><span class="who">Seb</span></div>
+      <div class="dec"><div class="box"></div><div class="txt">
+        <div class="q">Les shorts sont-ils dans le périmètre ?</div>
+        <div class="w">La sortie 2 est presque gratuite une fois le dérushage fait, mais elle n'est pas gratuite du tout si elle n'est pas prévue au devis. À cadrer avant l'épisode 1, pas après.</div>
+      </div><span class="who">Toi + Seb</span></div>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  Uplye Studio · Stratégie de montage SEB-RECH-PODCAST 1 · Document de travail, révisable après l'épisode 1.<br>
+  Outil de dérushage : <code>tools/podcast_punchlines.py</code> — lexiques et poids modifiables en tête de fichier.
+</div></footer>
+
+</div>
