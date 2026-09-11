@@ -28,6 +28,7 @@ d'abord si les sources changent. Dépendance : `pandas`.
 | `output/hors-perimetre.csv` | contacts valides hors 83/13 (06, 84, 75…) |
 | `output/recap.md` | rapport de nettoyage complet |
 | `campaigns/azurpod-*.csv` | les 7 campagnes prêtes à importer |
+| `campaigns/azurpod-agences-formations.csv` | **fusion agences + formations, 350 contacts** |
 | `campaigns/audit-campagnes.md` | audit du découpage (volumes, personas, alertes) |
 
 ## Les 7 campagnes
@@ -41,6 +42,15 @@ d'abord si les sources changent. Dépendance : `pandas`.
 | AZURPOD - SANTE/ESTHETIQUE | 2d | **0** | 0 |
 | AZURPOD - TECH | 2e | 16 | 7 |
 | AZURPOD - CENTRES DE FORMATION | 3 | 117 | 116 |
+
+### Périmètre retenu pour le premier envoi
+
+Agences + centres de formation uniquement, en 83 et 13 :
+`campaigns/azurpod-agences-formations.csv`, **350 contacts / 350 emails uniques /
+322 entreprises**, dont 332 au persona cible, 189 avec téléphone et 350 avec
+LinkedIn. La colonne `campaign` permet de rescinder le fichier : utiliser les
+deux CSV de campagne pour l'envoi (mesure par audience), le fichier fusionné
+pour un import unique en CRM.
 
 Les fichiers des campagnes portent deux colonnes de plus que les CSV nettoyés :
 `campaign` (nom exact de la campagne) et `persona_fit` (`cible` / `hors_cible`).

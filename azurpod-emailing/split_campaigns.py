@@ -15,6 +15,7 @@ Usage : python3 split_campaigns.py
 """
 
 import csv
+import re
 from collections import Counter, OrderedDict
 from pathlib import Path
 
@@ -40,6 +41,14 @@ PERSONAS = {
     "3": {"direction", "direction_generique", "pedagogie", "marketing_comm"},
 }
 
+# Fusion livree en plus des campagnes : les deux cercles retenus pour le premier
+# envoi, dans un seul fichier (import unique, CRM, base de travail).
+FUSION = {
+    "fichier": "azurpod-agences-formations.csv",
+    "cercles": ["1", "3"],
+    "libelle": "Agences + centres de formation",
+}
+
 CAMPAGNES = OrderedDict([
     ("1",  ("AZURPOD - AGENCES",                  "azurpod-agences-cercle1.csv",
             "Agences de com, marketing, pub, digital, prod, web, RP, branding")),
@@ -58,6 +67,13 @@ CAMPAGNES = OrderedDict([
 ])
 
 
+# Intitules mixtes : un poste range dans une fonction hors cible alors qu'il
+# porte explicitement une responsabilite marketing ou communication reste une
+# cible ("Concepteur E-learning / Responsable de la Communication" est classe
+# creation a cause de "Concepteur", mais c'est bien un contact communication).
+RATTRAPAGE_PERSONA = re.compile(r"\b(communication|marketing)", re.IGNORECASE)
+
+
 def famille(cercle):
     """'2a' -> '2' : le cercle porteur des regles de persona."""
     return cercle[0]
@@ -69,7 +85,7 @@ def exporter(df, chemin):
         quoting=csv.QUOTE_MINIMAL, lineterminator="\n")
 
 
-def ecrire_audit(parts, contacts, chemin):
+def ecrire_audit(parts, contacts, chemin, fusion):
     total = sum(len(p) for p in parts.values())
     cibles = sum(int((p["persona_fit"] == "cible").sum()) for p in parts.values())
     vides = [c for c, p in parts.items() if not len(p)]
@@ -207,20 +223,23 @@ def ecrire_audit(parts, contacts, chemin):
       "Studio3615, Sylab Films). Le label Apollo est imprecis, pas la segmentation.")
     A("")
 
-    A("### 4.3 Faux `hors_cible` reperes a la relecture")
+    A("### 4.3 Rattrapage des intitules mixtes")
     A("")
-    A("Le classement `persona_fit` repose sur l'intitule de poste ; deux intitules "
-      "mixtes tombent du mauvais cote et doivent etre repasses en `cible` :")
+    A("Le classement `persona_fit` repose sur l'intitule de poste. Deux intitules "
+      "mixtes tombaient du mauvais cote et sont desormais **rattrapes "
+      "automatiquement** : tout poste portant explicitement \"communication\" ou "
+      "\"marketing\" reste une cible, meme si sa fonction dominante est hors cible.")
     A("")
-    A("- `Directrice des Operations Communication et Formation` (Sacres Francais, AGENCES) : "
-      "classee *pedagogie* a cause du mot \"Formation\", alors que c'est une fonction "
-      "communication d'agence.")
+    A("- `Directrice des Operations Communication et Formation` (Sacres Francais, "
+      "AGENCES) : classee *pedagogie* a cause du mot \"Formation\", alors que c'est "
+      "une fonction communication d'agence.")
     A("- `Concepteur E-learning / Responsable de la Communication` (AECD, CENTRES DE "
-      "FORMATION) : classee *creation* a cause de \"Concepteur\", alors que la seconde "
-      "moitie de l'intitule est bien une fonction communication.")
+      "FORMATION) : classee *creation* a cause de \"Concepteur\", alors que la "
+      "seconde moitie de l'intitule est bien une fonction communication.")
     A("")
-    A("Les 27 autres `hors_cible` sont des exclusions justifiees (commerciaux, RH, "
-      "DSI, direction des operations).")
+    hors_total = int((contacts["persona_fit"] == "hors_cible").sum())
+    A("Les %d `hors_cible` restants sont des exclusions justifiees : commerciaux, "
+      "RH, DSI, directions techniques et directions des operations." % hors_total)
     A("")
     A("### 4.4 Doublons inter-campagnes")
     A("")
@@ -268,12 +287,42 @@ def ecrire_audit(parts, contacts, chemin):
             dep.get("83", 0), dep.get("13", 0)))
     A("")
 
-    A("## 6. Fichiers produits")
+    A("## 6. Fichier fusionne : agences + centres de formation")
+    A("")
+    A("`%s` regroupe les deux cercles retenus pour le premier envoi, "
+      "perimetre 83 et 13 inchange." % FUSION["fichier"])
+    A("")
+    cible_f = int((fusion["persona_fit"] == "cible").sum())
+    A("| Indicateur | Valeur |")
+    A("|---|---|")
+    A("| Contacts | **%d** |" % len(fusion))
+    A("| Emails uniques | %d |" % fusion["email"].nunique())
+    A("| Entreprises distinctes | %d |" % fusion["company"].nunique())
+    A("| Persona cible | %d |" % cible_f)
+    A("| Hors persona | %d |" % (len(fusion) - cible_f))
+    A("| Avec telephone | %d |" % int((fusion["phone"] != "").sum()))
+    A("| Avec LinkedIn | %d |" % int((fusion["linkedin_url"] != "").sum()))
+    A("| Departement 83 | %d |" % int((fusion["department"] == "83").sum()))
+    A("| Departement 13 | %d |" % int((fusion["department"] == "13").sum()))
+    A("")
+    A("Repartition par campagne :")
+    A("")
+    A("| Campagne | Contacts | Persona cible |")
+    A("|---|---|---|")
+    for nom, g in fusion.groupby("campaign", sort=False):
+        A("| %s | %d | %d |" % (nom, len(g), int((g["persona_fit"] == "cible").sum())))
+    A("")
+    A("La colonne `campaign` permet de rescinder le fichier a tout moment : "
+      "utiliser les deux CSV de campagne pour l'envoi (mesure par audience), "
+      "ce fichier fusionne pour un import unique en CRM ou une base de travail.")
+    A("")
+    A("## 7. Fichiers produits")
     A("")
     A("| Fichier | Campagne | Lignes |")
     A("|---|---|---|")
     for cercle, (nom, fichier, _) in CAMPAGNES.items():
         A("| `%s` | %s | %d |" % (fichier, nom, len(parts[cercle])))
+    A("| `%s` | %s | %d |" % (FUSION["fichier"], FUSION["libelle"], len(fusion)))
     A("")
     A("Colonnes : `%s`." % ", ".join(COLONNES_CAMPAGNE))
     A("")
@@ -300,8 +349,10 @@ def main():
 
     contacts["campaign"] = contacts["cercle"].map(lambda c: CAMPAGNES[c][0])
     contacts["persona_fit"] = [
-        "cible" if b in PERSONAS[famille(c)] else "hors_cible"
-        for b, c in zip(contacts["_bucket"], contacts["cercle"])
+        "cible" if (b in PERSONAS[famille(c)] or RATTRAPAGE_PERSONA.search(t))
+        else "hors_cible"
+        for b, c, t in zip(contacts["_bucket"], contacts["cercle"],
+                           contacts["job_title"])
     ]
 
     parts = OrderedDict()
@@ -315,7 +366,14 @@ def main():
         print("%-38s %4d contacts (%d cible)%s" % (
             nom, len(p), int((p["persona_fit"] == "cible").sum()), marque))
 
-    ecrire_audit(parts, contacts, OUT / "audit-campagnes.md")
+    fusion = contacts[contacts["cercle"].isin(FUSION["cercles"])].copy()
+    fusion = fusion.sort_values(["campaign", "persona_fit", "company"], kind="stable")
+    exporter(fusion, OUT / FUSION["fichier"])
+    print("\n%-38s %4d contacts (%d cible) - %d entreprises" % (
+        FUSION["libelle"], len(fusion),
+        int((fusion["persona_fit"] == "cible").sum()), fusion["company"].nunique()))
+
+    ecrire_audit(parts, contacts, OUT / "audit-campagnes.md", fusion)
     print("\naudit-campagnes.md ecrit dans %s" % OUT)
 
 

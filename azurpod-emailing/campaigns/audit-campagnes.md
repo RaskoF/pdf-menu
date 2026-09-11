@@ -6,14 +6,14 @@ Source : `output/all-contacts-clean.csv` (367 contacts, departements 83 et 13).
 
 | Campagne | Cercle | Contacts | Persona cible | Hors persona | Statut |
 |---|---|---|---|---|---|
-| AZURPOD - AGENCES | 1 | 233 | 214 | 19 | prete |
+| AZURPOD - AGENCES | 1 | 233 | 215 | 18 | prete |
 | AZURPOD - CONSEIL/AUDIT | 2a | 1 | 1 | 0 | volume insuffisant (1 cible) |
 | AZURPOD - HOTELLERIE/RESTAURATION | 2b | 0 | 0 | 0 | **VIDE - non lancable** |
 | AZURPOD - IMMOBILIER RESIDENTIEL | 2c | 0 | 0 | 0 | **VIDE - non lancable** |
 | AZURPOD - SANTE/ESTHETIQUE | 2d | 0 | 0 | 0 | **VIDE - non lancable** |
 | AZURPOD - TECH | 2e | 16 | 7 | 9 | volume insuffisant (7 cibles) |
-| AZURPOD - CENTRES DE FORMATION | 3 | 117 | 116 | 1 | prete |
-| **Total** | | **367** | **338** | **29** | |
+| AZURPOD - CENTRES DE FORMATION | 3 | 117 | 117 | 0 | prete |
+| **Total** | | **367** | **340** | **27** | |
 
 Une campagne est dite *prete* a partir de 10 contacts au persona cible : en dessous, le volume ne permet pas de mesurer un taux de reponse exploitable.
 
@@ -53,7 +53,7 @@ Personas retenus, d'apres le brief de segmentation :
 | production | 2 | cible |
 | pedagogie | 1 | **hors cible** |
 
-Hors persona (19) : Directeur Méthodes et Process (Adrexo), Directeur Data (Adrexo), Directeur Technique et des Opérations (Appstronaute), Directrice des Projets (Artkom), Directeur des Systèmes D’information. Accréditations, Accueil du Public, Billetterie. (FIDMarseille, Festival International de Cinéma), Directrice Data Science (HOPPS GROUP), Technical Director (IDP360°), Directeur Pôle Innovation (Infostrates), International Sales Director (J.F. REY), Directeur de Grands Comptes (M COM), Director of Operations (MARS Marketing), Business Development Director (Marsatwork).
+Hors persona (18) : Directeur Méthodes et Process (Adrexo), Directeur Data (Adrexo), Directeur Technique et des Opérations (Appstronaute), Directrice des Projets (Artkom), Directeur des Systèmes D’information. Accréditations, Accueil du Public, Billetterie. (FIDMarseille, Festival International de Cinéma), Directrice Data Science (HOPPS GROUP), Technical Director (IDP360°), Directeur Pôle Innovation (Infostrates), International Sales Director (J.F. REY), Directeur de Grands Comptes (M COM), Director of Operations (MARS Marketing), Business Development Director (Marsatwork).
 
 ### AZURPOD - CONSEIL/AUDIT
 
@@ -82,10 +82,8 @@ Hors persona (9) : Payroll Manager (ACD), Senior Engineering Manager (Boond), Ke
 | pedagogie | 47 | cible |
 | direction | 39 | cible |
 | marketing_comm | 29 | cible |
-| direction_generique | 1 | cible |
 | creation | 1 | **hors cible** |
-
-Hors persona (1) : Concepteur E-learning / Responsable de la Communication (AECD Association pour l'éducation cognitive et le développement).
+| direction_generique | 1 | cible |
 
 ## 4. Alertes qualite
 
@@ -116,14 +114,14 @@ A traiter comme un segment a part ou a exclure du premier envoi.
   - `Marseille` / `Director IT at Water Group` (AZURPOD - AGENCES, 120 salaries, aucun site web) : le nom d'entreprise est un nom de ville ou l'intitule designe une autre societe.
 - 14 contacts du cercle 1 portent une industrie Apollo non creative (`information technology & services`, `management consulting`, `retail`). Verification faite : ce sont bien des agences (Simplement - Agence Web Marseille, Studio3615, Sylab Films). Le label Apollo est imprecis, pas la segmentation.
 
-### 4.3 Faux `hors_cible` reperes a la relecture
+### 4.3 Rattrapage des intitules mixtes
 
-Le classement `persona_fit` repose sur l'intitule de poste ; deux intitules mixtes tombent du mauvais cote et doivent etre repasses en `cible` :
+Le classement `persona_fit` repose sur l'intitule de poste. Deux intitules mixtes tombaient du mauvais cote et sont desormais **rattrapes automatiquement** : tout poste portant explicitement "communication" ou "marketing" reste une cible, meme si sa fonction dominante est hors cible.
 
 - `Directrice des Operations Communication et Formation` (Sacres Francais, AGENCES) : classee *pedagogie* a cause du mot "Formation", alors que c'est une fonction communication d'agence.
 - `Concepteur E-learning / Responsable de la Communication` (AECD, CENTRES DE FORMATION) : classee *creation* a cause de "Concepteur", alors que la seconde moitie de l'intitule est bien une fonction communication.
 
-Les 27 autres `hors_cible` sont des exclusions justifiees (commerciaux, RH, DSI, direction des operations).
+Les 27 `hors_cible` restants sont des exclusions justifiees : commerciaux, RH, DSI, directions techniques et directions des operations.
 
 ### 4.4 Doublons inter-campagnes
 
@@ -155,7 +153,32 @@ Ces contacts ont des fonctions distinctes (un dirigeant et une responsable marke
 | AZURPOD - TECH | 16 | 12 | 16 | 16 | 3 | 13 |
 | AZURPOD - CENTRES DE FORMATION | 117 | 59 | 117 | 117 | 11 | 106 |
 
-## 6. Fichiers produits
+## 6. Fichier fusionne : agences + centres de formation
+
+`azurpod-agences-formations.csv` regroupe les deux cercles retenus pour le premier envoi, perimetre 83 et 13 inchange.
+
+| Indicateur | Valeur |
+|---|---|
+| Contacts | **350** |
+| Emails uniques | 350 |
+| Entreprises distinctes | 322 |
+| Persona cible | 332 |
+| Hors persona | 18 |
+| Avec telephone | 189 |
+| Avec LinkedIn | 350 |
+| Departement 83 | 26 |
+| Departement 13 | 324 |
+
+Repartition par campagne :
+
+| Campagne | Contacts | Persona cible |
+|---|---|---|
+| AZURPOD - AGENCES | 233 | 215 |
+| AZURPOD - CENTRES DE FORMATION | 117 | 117 |
+
+La colonne `campaign` permet de rescinder le fichier a tout moment : utiliser les deux CSV de campagne pour l'envoi (mesure par audience), ce fichier fusionne pour un import unique en CRM ou une base de travail.
+
+## 7. Fichiers produits
 
 | Fichier | Campagne | Lignes |
 |---|---|---|
@@ -166,6 +189,7 @@ Ces contacts ont des fonctions distinctes (un dirigeant et une responsable marke
 | `azurpod-sante-esthetique-cercle2d.csv` | AZURPOD - SANTE/ESTHETIQUE | 0 |
 | `azurpod-tech-cercle2e.csv` | AZURPOD - TECH | 16 |
 | `azurpod-centres-formation-cercle3.csv` | AZURPOD - CENTRES DE FORMATION | 117 |
+| `azurpod-agences-formations.csv` | Agences + centres de formation | 350 |
 
 Colonnes : `first_name, last_name, email, phone, company, job_title, linkedin_url, website, city, postal_code, department, employee_count, industry, cercle, campaign, persona_fit`.
 
