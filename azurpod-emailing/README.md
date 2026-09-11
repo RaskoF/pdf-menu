@@ -6,11 +6,14 @@ Nettoyage des 3 scrapes Apollo pour la campagne cold emailing Azurpod
 ## Lancer
 
 ```bash
-python3 azurpod-emailing/clean_leads.py                       # périmètre 83 + 13 (défaut)
-python3 azurpod-emailing/clean_leads.py --departements 83,13,06  # élargi aux Alpes-Maritimes
+cd azurpod-emailing
+python3 clean_leads.py                     # nettoyage, périmètre 83 + 13 (défaut)
+python3 clean_leads.py --departements 83,13,06   # élargi aux Alpes-Maritimes
+python3 split_campaigns.py                 # découpe en 7 campagnes
 ```
 
-Dépendance : `pandas`.
+`split_campaigns.py` lit `output/all-contacts-clean.csv` : relancer `clean_leads.py`
+d'abord si les sources changent. Dépendance : `pandas`.
 
 ## Arborescence
 
@@ -24,6 +27,27 @@ Dépendance : `pandas`.
 | `output/all-contacts-clean.csv` | les 3 cercles fusionnés |
 | `output/hors-perimetre.csv` | contacts valides hors 83/13 (06, 84, 75…) |
 | `output/recap.md` | rapport de nettoyage complet |
+| `campaigns/azurpod-*.csv` | les 7 campagnes prêtes à importer |
+| `campaigns/audit-campagnes.md` | audit du découpage (volumes, personas, alertes) |
+
+## Les 7 campagnes
+
+| Campagne | Cercle | Contacts | Persona cible |
+|---|---|---|---|
+| AZURPOD - AGENCES | 1 | 233 | 214 |
+| AZURPOD - CONSEIL/AUDIT | 2a | 1 | 1 |
+| AZURPOD - HOTELLERIE/RESTAURATION | 2b | **0** | 0 |
+| AZURPOD - IMMOBILIER RESIDENTIEL | 2c | **0** | 0 |
+| AZURPOD - SANTE/ESTHETIQUE | 2d | **0** | 0 |
+| AZURPOD - TECH | 2e | 16 | 7 |
+| AZURPOD - CENTRES DE FORMATION | 3 | 117 | 116 |
+
+Les fichiers des campagnes portent deux colonnes de plus que les CSV nettoyés :
+`campaign` (nom exact de la campagne) et `persona_fit` (`cible` / `hors_cible`).
+Filtrer sur `cible` pour le premier envoi.
+
+**2b, 2c et 2d sont vides** : le scrape Apollo du cercle 2 ne couvre que la tech.
+Voir `campaigns/audit-campagnes.md` § 2 pour les filtres Apollo à utiliser.
 
 ## Schéma de sortie
 
@@ -44,9 +68,13 @@ Prêt à charger dans Instantly / Lemlist / Smartlead.
   Phone`, `Mobile Phone`, `Home Phone` vides à 100 %). Seul `Corporate Phone`
   (le standard) est exploitable, normalisé en `+33XXXXXXXXX` ; les 82 numéros à
   indicatif étranger sont vidés.
-- **Dédup entreprise** : un contact par entreprise **et par bucket de fonction**
-  (direction, marketing/comm, pédagogie, création, production, commercial,
-  opérations, tech, RH), pour garder un Founder *et* une Directrice marketing.
+- **Dédup entreprise** : un contact par entreprise **et par bucket de fonction**.
+  Les buckets sont évalués du plus spécifique au plus générique : marqueurs de
+  direction explicites (founder, CEO, gérant…), puis fonctions métier
+  (pédagogie, création, production, marketing/comm, commercial, RH, tech,
+  opérations), puis direction générique (`Director`, `Directrice`,
+  `Responsable`, `Head of` sans fonction identifiable). Un Founder *et* une
+  Directrice marketing de la même structure sont donc tous deux conservés.
 - **`cercle`** : `1` / `3` en dur, `2a`-`2e` classifiés par industrie Apollo puis
   mots-clés. L'export du cercle 2 ne couvre que le 2e.
 

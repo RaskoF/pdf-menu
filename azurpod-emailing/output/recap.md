@@ -7,16 +7,16 @@ Perimetre retenu : departements 83 + 13.
 
 | Cercle | Lignes source | Lignes finales | Taux de conservation |
 |---|---|---|---|
-| Cercle 1 - Agences | 248 | 229 | 92.3 % |
+| Cercle 1 - Agences | 248 | 233 | 94.0 % |
 | Cercle 2 - TPE/PME/ETI | 19 | 17 | 89.5 % |
 | Cercle 3 - Centres de formation | 197 | 117 | 59.4 % |
-| **Total** | **464** | **363** | **78.2 %** |
+| **Total** | **464** | **367** | **79.1 %** |
 
 Detail des lignes ecartees, par etape :
 
 | Cercle | Sans email | Non verifie | Generique | Doublon email | Doublon entreprise | Hors perimetre |
 |---|---|---|---|---|---|---|
-| Cercle 1 - Agences | 0 | 0 | 0 | 1 | 16 | 2 |
+| Cercle 1 - Agences | 0 | 0 | 0 | 1 | 12 | 2 |
 | Cercle 2 - TPE/PME/ETI | 0 | 0 | 0 | 0 | 2 | 0 |
 | Cercle 3 - Centres de formation | 0 | 0 | 0 | 0 | 0 | 80 |
 
@@ -24,15 +24,15 @@ Detail des lignes ecartees, par etape :
 
 | Cercle | 83 (Var) | 13 (Bouches-du-Rhone) | Total |
 |---|---|---|---|
-| Cercle 1 - Agences | 15 | 214 | 229 |
+| Cercle 1 - Agences | 15 | 218 | 233 |
 | Cercle 2 - TPE/PME/ETI | 3 | 14 | 17 |
 | Cercle 3 - Centres de formation | 11 | 106 | 117 |
-| **Total** | **29** | **334** | **363** |
+| **Total** | **29** | **338** | **367** |
 
 Origine du departement retenu (Apollo n'exporte aucune colonne code postal) :
 
-- code postal siege : 237 contacts
-- ville du contact : 126 contacts
+- code postal siege : 240 contacts
+- ville du contact : 127 contacts
 
 ## 3. Repartition par sous-segment - cercle 2
 
@@ -51,12 +51,12 @@ L'industrie Apollo prime ; les mots-cles ne servent de repli que si l'industrie 
 
 | Industrie | Contacts | Part |
 |---|---|---|
-| marketing & advertising | 124 | 54.1 % |
-| media production | 30 | 13.1 % |
-| public relations & communications | 21 | 9.2 % |
-| graphic design | 18 | 7.9 % |
-| design | 18 | 7.9 % |
-| information technology & services | 7 | 3.1 % |
+| marketing & advertising | 127 | 54.5 % |
+| media production | 30 | 12.9 % |
+| public relations & communications | 21 | 9.0 % |
+| graphic design | 18 | 7.7 % |
+| design | 18 | 7.7 % |
+| information technology & services | 8 | 3.4 % |
 | online media | 3 | 1.3 % |
 | retail | 2 | 0.9 % |
 | management consulting | 2 | 0.9 % |
@@ -84,7 +84,7 @@ L'industrie Apollo prime ; les mots-cles ne servent de repli que si l'industrie 
 
 | Cercle | Doublons email | Doublons entreprise | Entreprises avec 2+ contacts conserves |
 |---|---|---|---|
-| Cercle 1 - Agences | 1 | 16 | 48 |
+| Cercle 1 - Agences | 1 | 12 | 55 |
 | Cercle 2 - TPE/PME/ETI | 0 | 2 | 4 |
 | Cercle 3 - Centres de formation | 0 | 0 | 0 |
 
@@ -94,10 +94,10 @@ Regle entreprise : un seul contact par entreprise **et par bucket de fonction**.
 
 | Cercle | Avec telephone | Sans telephone | Taux de couverture |
 |---|---|---|---|
-| Cercle 1 - Agences | 127 | 102 | 55.5 % |
+| Cercle 1 - Agences | 130 | 103 | 55.8 % |
 | Cercle 2 - TPE/PME/ETI | 12 | 5 | 70.6 % |
 | Cercle 3 - Centres de formation | 59 | 58 | 50.4 % |
-| **Total** | **198** | **165** | **54.5 %** |
+| **Total** | **201** | **166** | **54.8 %** |
 
 ## 7. Alertes
 
@@ -136,7 +136,7 @@ Il s'agit de standards d'entreprise a indicatif etranger (+1, +49, +55, +41) att
 
 | Cercle | Sans LinkedIn | Sans site web | Sans code postal | dont CP siege neutralise | Sans effectif |
 |---|---|---|---|---|---|
-| Cercle 1 - Agences | 0 | 4 | 54 | 2 | 0 |
+| Cercle 1 - Agences | 0 | 4 | 55 | 2 | 0 |
 | Cercle 2 - TPE/PME/ETI | 0 | 0 | 15 | 15 | 0 |
 | Cercle 3 - Centres de formation | 0 | 0 | 57 | 31 | 0 |
 
@@ -174,10 +174,10 @@ Le plus gros gisement est le **06** (Nice, Cannes, Antibes, Valbonne), concentre
 
 | Fichier | Contenu | Lignes |
 |---|---|---|
-| `cercle1-agences-clean.csv` | Cercle 1 - Agences | 229 |
+| `cercle1-agences-clean.csv` | Cercle 1 - Agences | 233 |
 | `cercle2-tpe-pme-eti-clean.csv` | Cercle 2 - TPE/PME/ETI | 17 |
 | `cercle3-formation-clean.csv` | Cercle 3 - Centres de formation | 117 |
-| `all-contacts-clean.csv` | Les 3 cercles fusionnes | 363 |
+| `all-contacts-clean.csv` | Les 3 cercles fusionnes | 367 |
 | `hors-perimetre.csv` | Contacts valides hors 83/13 | 82 |
 
 Format : UTF-8 sans BOM, separateur virgule, guillemets minimaux (`csv.QUOTE_MINIMAL`), colonnes dans l'ordre : `first_name, last_name, email, phone, company, job_title, linkedin_url, website, city, postal_code, department, employee_count, industry, cercle`.

@@ -150,36 +150,54 @@ MOTSCLES_SOUS_SEGMENT = [
 # Buckets de fonction : deux contacts d'une meme entreprise sont conserves
 # seulement si leurs postes relevent de buckets differents.
 BUCKETS_FONCTION = [
-    ("direction", ["founder", "fondateur", "co founder", "cofounder", "ceo",
-                   "president", "presidente", "owner", "gerant", "gerante",
-                   "managing director", "directeur general", "general manager",
-                   "dirigeant", "associe", "partner", "chief executive"]),
-    ("marketing_comm", ["marketing", "communication", "cmo", "brand", "growth",
-                        "digital", "social media", "content", "acquisition",
-                        "relations presse", "press"]),
-    ("creation", ["creative", "artistic", "artistique", "design", "directeur de creation",
-                  "dircom creatif", "concepteur"]),
+    # Marqueurs de direction explicites : ils priment, un fondateur reste un
+    # decideur meme quand son intitule mentionne une fonction (CPO & Co-Founder).
+    ("direction", ["founder", "fondateur", "fondatrice", "co founder", "cofounder",
+                   "ceo", "president", "presidente", "owner", "gerant", "gerante",
+                   "managing director", "directeur general", "directrice generale",
+                   "general manager", "dirigeant", "dirigeante", "associe", "associee",
+                   "partner", "chief executive", "chief", "cofondateur", "cofondatrice",
+                   "co fondateur", "co fondatrice"]),
+    # Fonctions metier : plus specifiques que "Director" seul, donc evaluees avant
+    # le bucket de direction generique.
+    ("pedagogie", ["pedagogique", "pedagogie", "formation", "formateur", "formatrice",
+                   "educational", "academic", "training", "enseignement", "referent",
+                   "coach", "institutor", "conferenciere", "conferencier",
+                   "apprentissage", "scolaire"]),
+    ("creation", ["creative", "artistic", "artistique", "design", "creation",
+                  "concepteur", "conceptrice", "3d", "vfx", "motion", "illustration",
+                  "graphiste", "directeur de creation"]),
     ("production", ["production", "producteur", "productrice", "realisateur",
-                    "studio manager", "post production"]),
-    ("pedagogie", ["pedagogique", "pedagogie", "formation", "educational",
-                   "academic", "training", "enseignement", "referent"]),
+                    "realisatrice", "studio manager", "post production", "tournage"]),
+    ("marketing_comm", ["marketing", "communication", "cmo", "brand", "growth",
+                        "digital", "social media", "content", "contenus",
+                        "acquisition", "relations presse", "press", "seo", "sea",
+                        "strategy", "strategie", "planification", "programmation",
+                        "media", "medias", "publicite", "influence", "rp"]),
     ("commercial", ["sales", "commercial", "business development", "account",
-                    "key account", "territory", "revenue", "cro", "partnership"]),
+                    "key account", "territory", "revenue", "cro", "partnership",
+                    "clientele", "grands comptes", "comptes"]),
     ("rh", ["human resources", "ressources humaines", "recruitment", "recrutement",
             "talent", "people"]),
     ("tech", ["cto", "technical", "technique", "engineering", "engineer",
               "developpeur", "developer", "product", "data", "it manager",
-              "systeme", "devops"]),
+              "systeme", "systemes", "devops", "informatique", "innovation"]),
     ("operations", ["operation", "operationnel", "coo", "project manager",
                     "projet", "office manager", "administratif", "logistique",
-                    "payroll", "paie", "finance", "cfo", "gestion"]),
+                    "payroll", "paie", "finance", "financial", "cfo", "gestion",
+                    "methodes", "process"]),
+    # Direction generique, en dernier : "Director", "Directrice", "Responsable",
+    # "Head of" sans fonction identifiable. Ce sont des decideurs, pas du bruit.
+    ("direction_generique", ["director", "directeur", "directrice", "direction",
+                             "responsable", "head", "manager", "deputy",
+                             "vice president", "vp"]),
 ]
 
 # Priorite de conservation a l'interieur d'une entreprise.
 PRIORITE_BUCKET = {
-    "direction": 0, "marketing_comm": 1, "pedagogie": 2, "creation": 3,
-    "production": 4, "commercial": 5, "operations": 6, "tech": 7, "rh": 8,
-    "autre": 9,
+    "direction": 0, "direction_generique": 1, "marketing_comm": 2, "pedagogie": 3,
+    "creation": 4, "production": 5, "commercial": 6, "operations": 7, "tech": 8,
+    "rh": 9, "autre": 10,
 }
 
 
