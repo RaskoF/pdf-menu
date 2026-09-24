@@ -1,0 +1,69 @@
+{
+  "source": "Notion — « Rapport #1 », base « Rapports SEO — Mensuel »",
+  "page_url": "https://app.notion.com/p/34543143fe4a8091911dc694949571e9",
+  "extrait_le": "2026-09-24",
+  "periode_courante": {"debut": "2026-05-26", "fin": "2026-06-24", "jours": 30},
+  "periode_comparaison": {"debut": "2026-03-26", "fin": "2026-05-25", "jours": 61,
+    "note": "divisee par 2 dans le rapport pour obtenir un equivalent mensuel"},
+  "avertissement": "C'est le SEUL rapport enregistre dans Notion. Il ne couvre pas 20/04 -> 05/07 comme l'indique le brief.",
+  "search_console": {
+    "clics": {"courant": 1620, "comparaison_mensuelle": 1585, "evolution_pct": 2.2},
+    "impressions": {"courant": 16800, "comparaison_mensuelle": 11850, "evolution_pct": 41.8},
+    "ctr_pct": {"courant": 9.6, "comparaison_mensuelle": 13.4, "evolution_pts": -3.8},
+    "position_moyenne": {"courant": 7.0, "comparaison_mensuelle": 6.1, "evolution_pts": -0.9},
+    "requetes_uniques_30j": 630
+  },
+  "ga4": {
+    "sessions": {"courant": 2200, "comparaison": 1900, "evolution_pct": 19.3},
+    "utilisateurs_actifs": {"courant": 1400, "comparaison": 1173, "evolution_pct": 19.3},
+    "nouveaux_utilisateurs": {"courant": 1300, "comparaison": 1087, "evolution_pct": 19.6},
+    "sessions_google_organic": {"courant": 908, "comparaison": 757, "evolution_pct": 20.1},
+    "sessions_bing_organic": {"courant": 141, "comparaison": 95, "evolution_pct": 54.9},
+    "sessions_direct": {"courant": 1100, "comparaison": 925, "evolution_pct": 18.9},
+    "duree_engagement_moyenne_s": {"courant": 83, "comparaison": 73, "evolution_pct": 12.0},
+    "evenements": {"courant": 20000, "comparaison": 16160, "evolution_pct": 23.8}
+  },
+  "clarity": {
+    "dead_clicks_pct": 8.03,
+    "rage_clicks_pct": 0.16,
+    "quick_backs_pct": 5.95,
+    "defilement_excessif_pct": 0.03,
+    "scroll_depth_moyen_pct": 54.91,
+    "note": "aucune periode de comparaison disponible dans le rapport #1"
+  },
+  "conversions": {
+    "total_evenements": 42,
+    "contact_submitted": 41,
+    "demo_requested": 1,
+    "par_source": [
+      {"source": "(direct)", "medium": "(none)", "conversions": 35, "part_pct": 83},
+      {"source": "google", "medium": "organic", "conversions": 5, "part_pct": 12},
+      {"source": "bing", "medium": "organic", "conversions": 1, "part_pct": 2},
+      {"source": "chatgpt.com", "medium": "referral", "conversions": 1, "part_pct": 2}
+    ]
+  },
+  "top_pages": [
+    {"page": "/", "clics": 683, "clics_comp": 674, "evolution_pct": 1.3, "position": 4.9, "position_comp": 3.8},
+    {"page": "/systems/fusion-absolute", "clics": 291, "clics_comp": 230, "evolution_pct": 26.5, "position": 5.4, "position_comp": 5.2},
+    {"page": "/systems/e-box", "clics": 206, "clics_comp": 232, "evolution_pct": -11.2, "position": 4.7, "position_comp": 5.2},
+    {"page": "/systems/newton", "clics": 143, "clics_comp": 152, "evolution_pct": -5.9, "position": 5.3, "position_comp": 4.5},
+    {"page": "/uv-instrument/uv-lamps", "clics": 118, "clics_comp": 107, "evolution_pct": 10.3, "position": 6.0, "position_comp": 6.0},
+    {"page": "/uv-instrument/uv-irradiators", "clics": 49, "clics_comp": 53, "evolution_pct": -7.5, "position": 5.1, "position_comp": 5.5},
+    {"page": "/uv-instrument/uv-darkrooms", "clics": 38, "clics_comp": 36, "evolution_pct": 5.6, "position": 6.3, "position_comp": 5.4},
+    {"page": "/uv-instrument/uv-pads", "clics": 33, "clics_comp": 33, "evolution_pct": 0.0, "position": 6.4, "position_comp": 5.9},
+    {"page": "/uv-instrument/uv-radiometers", "clics": 24, "clics_comp": null, "evolution_pct": null, "position": 15.5, "position_comp": 2.9},
+    {"page": "/uv-instrument/uv-tubes", "clics": 21, "clics_comp": 28, "evolution_pct": -25.0, "position": 10.2, "position_comp": 7.0}
+  ],
+  "marches": {
+    "us": {"impressions_30j": 3386, "clics_30j": 50, "ctr_pct": 1.5, "position": 10.2},
+    "fr": {"position": 3.7, "ctr_pct": 19.6},
+    "de": {"position": 5.9, "ctr_pct": 16.6}
+  },
+  "call_10_juillet": {
+    "demandes_juin": 42,
+    "demandes_systemes": 28,
+    "leads_newton": 6,
+    "leads_fusion_absolute": 11,
+    "leads_gel_doc": 8
+  }
+}

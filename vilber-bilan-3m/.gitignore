@@ -1,0 +1,11 @@
+.env
+data/raw/**
+!data/raw/.gitkeep
+data/raw_fixtures/
+data/consolidated/*.csv
+data/consolidated/*.json
+report/tableaux-generes.md
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*_token.json

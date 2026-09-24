@@ -1,0 +1,30 @@
+{
+  "source": "Notion — base « Visuweb - SEO KPIs & Objectifs »",
+  "data_source_url": "collection://34543143-fe4a-8070-9d97-000bece2f626",
+  "page_url": "https://app.notion.com/p/34543143fe4a80d093f5dfc37a52fd87",
+  "extrait_le": "2026-09-24",
+  "trimestre": "Q2 2026",
+  "echeance": "2026-07-20",
+  "avertissement": "Valeurs relevees telles quelles dans Notion. Plusieurs divergent du brief d'analyse — voir docs/ECARTS-BRIEF.md avant de les citer au client.",
+  "kpis": [
+    {"objectif": "Clics organiques / mois", "baseline": "1 817", "cible": "3 600-3 800", "resultat": null, "statut": "En cours"},
+    {"objectif": "Impressions organiques / mois", "baseline": "26 417", "cible": "32 000", "resultat": null, "statut": "En cours"},
+    {"objectif": "CTR moyen (12 mois glissants)", "baseline": "6,9 %", "cible": "8,5 %", "resultat": "7,6 %", "statut": "Non atteint"},
+    {"objectif": "Position moyenne (12 mois glissants)", "baseline": "16,3", "cible": "12", "resultat": null, "statut": "Atteint"},
+    {"objectif": "% clics branded (vilber + vilber lourmat)", "baseline": "27,2 %", "cible": "24 %", "resultat": "28,2 %", "statut": "Non atteint"},
+    {"objectif": "Mots-cles positionnes (worldwide)", "baseline": "64", "cible": "100", "resultat": null, "statut": "En cours"},
+    {"objectif": "Mots-cles en top 10 (worldwide)", "baseline": "~10", "cible": "20", "resultat": null, "statut": "En cours"},
+    {"objectif": "Mots-cles en top 3 (worldwide)", "baseline": "0", "cible": "3-5", "resultat": null, "statut": "En cours"},
+    {"objectif": "Sessions organic / mois", "baseline": "1 860", "cible": "2 600-2 900", "resultat": null, "statut": "En cours"},
+    {"objectif": "Active users organic / mois", "baseline": "1 250", "cible": "2 500-2 700", "resultat": null, "statut": "En cours"},
+    {"objectif": "Ratio sessions / UA organic", "baseline": "1,48", "cible": "> 1,6", "resultat": "1,61", "statut": "Atteint"},
+    {"objectif": "Leads totaux / mois", "baseline": "18,75", "cible": "25-30", "resultat": "~40", "statut": "Atteint"},
+    {"objectif": "Leads Fusion / mois", "baseline": "2,25", "cible": "4-7", "resultat": "~10", "statut": "Atteint"},
+    {"objectif": "Leads Newton / mois", "baseline": "1,5", "cible": "2-4", "resultat": "~6", "statut": "Atteint"},
+    {"objectif": "Leads trackes dans GA4", "baseline": "0 %", "cible": "100 %", "resultat": "100 %", "statut": "Atteint"},
+    {"objectif": "Articles publies sur le trimestre", "baseline": "0", "cible": "12", "resultat": "12", "statut": "Atteint"},
+    {"objectif": "Optimisations on-page sur le trimestre", "baseline": "0", "cible": "6", "resultat": "6", "statut": "Atteint"},
+    {"objectif": "Mentions IA (toutes plateformes)", "baseline": "23", "cible": "50", "resultat": null, "statut": "En cours"},
+    {"objectif": "Sessions ChatGPT / mois", "baseline": "38", "cible": "80+", "resultat": null, "statut": "En cours"}
+  ]
+}

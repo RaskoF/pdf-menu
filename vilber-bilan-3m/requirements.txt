@@ -1,0 +1,17 @@
+# Coeur
+pandas>=2.2
+matplotlib>=3.8
+requests>=2.32
+tabulate>=0.9          # pandas.to_markdown, utilise par le notebook
+
+# Google Search Console
+google-api-python-client>=2.140
+google-auth>=2.34
+google-auth-oauthlib>=1.2
+
+# Google Analytics 4
+google-analytics-data>=0.18
+
+# Notebook
+jupyterlab>=4.2
+ipykernel>=6.29
