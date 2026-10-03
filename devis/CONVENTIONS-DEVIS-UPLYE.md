@@ -35,6 +35,8 @@ Référence à relire avant chaque nouveau devis. À enrichir au fil des projets
 ## Paiement
 - Standard : 50 % à la signature, 50 % à la livraison (ou 50/25/25 selon le projet).
 - Cas budget serré : paiement en 4 fois sans frais sur 4 mois, 1re échéance à la signature.
+  Exceptionnel, à présenter comme tel. Proposé seulement si les 4 échéances tombent dans l’année civile
+  (ex. signature au plus tard fin octobre pour finir en décembre). Sinon : 50 % / 50 %.
 
 ## Publicité Meta
 - Le set-up des campagnes peut être offert (encart « Offert »).
