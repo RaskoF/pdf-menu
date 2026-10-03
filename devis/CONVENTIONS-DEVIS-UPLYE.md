@@ -26,3 +26,17 @@ Référence à relire avant chaque nouveau devis. À enrichir au fil des projets
 - **Droits :** après livraison et paiement complet, vous détenez les droits d'utilisation des fichiers livrés.
 - **Paiement :** <échéancier propre au devis>. Règlement par virement.
 - **Annulation :** en cas d'arrêt après le début des travaux, la partie réalisée reste due.
+
+## Tarifs de référence (prix barré → prix remisé, HT)
+- Vidéo publicitaire (concept, script/copywriting, tournage, montage 9:16) : 750 € → 500 €
+- Shooting photo (40-50 photos retouchées) : 350 € → 250 €
+- Afficher le prix d'origine + la ligne « Réduction » dans Prospero.
+
+## Paiement
+- Standard : 50 % à la signature, 50 % à la livraison (ou 50/25/25 selon le projet).
+- Cas budget serré : paiement en 4 fois sans frais sur 4 mois, 1re échéance à la signature.
+
+## Publicité Meta
+- Le set-up des campagnes peut être offert (encart « Offert »).
+- Toujours préciser que le budget média n'est pas inclus et recommander un montant
+  (géré par le client sur son propre compte publicitaire), avec un bilan à l'issue.
