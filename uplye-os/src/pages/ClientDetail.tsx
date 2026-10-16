@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { ArrowLeft, Plus, PencilSimple } from '@phosphor-icons/react'
+import { ArrowLeft, Plus, PencilSimple, Gift, ArrowSquareOut } from '@phosphor-icons/react'
 import { useStore, nextNumber } from '../store'
-import type { Devis } from '../types'
+import type { Devis, Referral } from '../types'
 import { fmt, fmtDate, initials, totalHT, uid } from '../utils'
 import { Avatar, Kpi, StagePill } from '../components/ui'
+import { REF_STATUS, rewardOf } from '../components/referral'
 
 export default function ClientDetail() {
   const { id } = useParams()
@@ -27,6 +28,10 @@ export default function ClientDetail() {
     ...(d.signedAt ? [{ at: d.signedAt, t: `Devis signé · ${fmt(totalHT(d))} HT` }] : []),
   ]).sort((a, b) => b.at.localeCompare(a.at)).slice(0, 8)
 
+  const refs = state.referrals.filter((r) => r.referrerId === c.id)
+  const referredBy = state.referrals.find((r) => r.company === c.name)
+  const updRef = (r: Referral, patch: Partial<Referral>) => dispatch({ type: 'upsert', coll: 'referrals', item: { ...r, ...patch } })
+
   const newDevis = () => {
     const d: Devis = { id: uid(), number: nextNumber(state.devis), clientId: c.id, title: 'Nouveau devis', intro: '', owner: 'E', activity: 'Studio', stage: 'brouillon', lines: [], validityDays: 30, schedule: '40/30/30', createdAt: new Date().toISOString(), openedCount: 0 }
     dispatch({ type: 'upsertDevis', devis: d }); nav(`/devis/${d.id}`)
@@ -45,6 +50,7 @@ export default function ClientDetail() {
           </div>
           <div className="mt-2 text-ink2">{c.contact.name} · {c.contact.phone} · {c.address}</div>
         </div>
+        <Link to={`/portail/${c.id}`} className="btn-secondary"><ArrowSquareOut size={18} />Espace client</Link>
         <button className="btn-secondary"><PencilSimple size={18} />Modifier</button>
         <button className="btn-primary" onClick={newDevis}><Plus size={18} weight="bold" />Nouveau devis</button>
       </div>
@@ -82,6 +88,26 @@ export default function ClientDetail() {
           </div>
         </div>
         <div className="space-y-5">
+          <div className="card p-5">
+            <div className="flex items-center gap-2"><Gift size={18} /><div className="h-sec flex-1">Parrainage · {refs.length}</div>{referredBy && <span className="pill bg-y1 text-ink">Filleul</span>}</div>
+            <div className="mt-3 divide-y divide-line border-t border-line">
+              {refs.map((r) => (
+                <div key={r.id} className="py-3">
+                  <div className="flex items-center gap-2"><span className="flex-1 font-semibold">{r.company}</span><span className="text-[12px] text-ink2">{r.name}</span>{(r.status === 'signe' || r.status === 'perdu') && <span className={`pill ${REF_STATUS[r.status].cls}`}>{REF_STATUS[r.status].label}</span>}</div>
+                  <div className="mt-1 flex items-center gap-2 text-[13px] text-ink2">
+                    <span className="flex-1">{r.reward === 'credit' ? '10 % crédit' : '5 % commission'}{r.status === 'signe' && <> · <b className="text-ink">{fmt(rewardOf(r))}</b> sur {fmt(r.amountHT)} HT</>}</span>
+                    {r.status !== 'signe' && <select className="field !w-auto !py-0.5 text-[12px]" value={r.status} onChange={(e) => updRef(r, { status: e.target.value as Referral['status'] })}>
+                      {Object.entries(REF_STATUS).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
+                    </select>}
+                    {r.status === 'signe' && !r.settled && <button className="font-semibold text-ink" onClick={() => updRef(r, { settled: true })}>{r.reward === 'credit' ? 'Crédit utilisé' : 'Marquer versée'}</button>}
+                    {r.settled && <span className="pill bg-g1 text-g7">Réglé</span>}
+                  </div>
+                  {r.status !== 'signe' && r.status !== 'perdu' && <div className="mt-2 flex gap-2"><input className="field !py-1 text-[13px]" type="number" placeholder="Devis signé ? Montant HT puis Entrée" onKeyDown={(e) => { const v = Number((e.target as HTMLInputElement).value); if (e.key === 'Enter' && v > 0) updRef(r, { status: 'signe', amountHT: v }) }} /></div>}
+                </div>
+              ))}
+              {!refs.length && <div className="py-4 text-center text-[13px] text-ink2">Aucun filleul pour l’instant.</div>}
+            </div>
+          </div>
           <div className="card p-5">
             <div className="h-sec">Historique</div>
             <div className="mt-4 space-y-4">

@@ -45,6 +45,19 @@ npm run dev        # puis ouvrir http://localhost:5173
 - **Équipe** : fiches membres, charge de la semaine, absences, invitation (préparée, non envoyée), tableau « qui voit quoi ».
 - **Catalogue** : prestations, prix et unité, temps interne et coûts directs, marge estimée, utilisation dans les devis,
   archivage. L'éditeur de devis lit ce catalogue. Règles de sécurité : voir `SECURITY.md` à la racine du dépôt.
+- **Planning par calques** : afficher / cacher Uplye Studio, Azurpod, Uplye Academy et Interne (mémorisé), ligne
+  « Studio Azurpod » avec les sessions de la semaine.
+- **Rappels d'échéance** : badges « En retard / aujourd'hui / demain » sur le Kanban, cloche de notifications
+  (barre latérale) et alertes du Dashboard.
+- **Validation des changements sensibles** : quand Alexis modifie l'échéance, la durée ou l'assigné d'une tâche
+  (fiche ou glisser dans le planning), le changement part en demande ; un admin l'accepte ou le refuse depuis la
+  cloche, et Alexis est notifié. Alexis ne peut ni supprimer de tâche ni changer l'étape d'un projet.
+- **Projets en Kanban** : bascule Cartes / Kanban par étape (préproduction → livré), glisser-déposer pour les admins.
+- **Process (SOP)** : trames R1 / R2, relance devis, tournage, montage, Azurpod, onboarding, offboarding, facturation.
+  Étapes éditables par les admins, « Suivre ce process » crée une checklist (ex. « Onboarding Alexis »).
+- **Espace client** (`#/portail/<id-client>`, bouton « Espace client » sur la fiche) : projets avec avancement,
+  factures, et **parrainage** : lien et code, recommandation d'un filleul, choix 5 % en commission ou 10 % en crédit,
+  suivi des gains. Côté OS, la fiche client liste les filleuls, le passage en signé et le règlement.
 
 ## Stack
 

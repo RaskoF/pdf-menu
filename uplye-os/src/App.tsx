@@ -16,6 +16,8 @@ import AzurpodPage from './pages/AzurpodPage'
 import EventsPage from './pages/EventsPage'
 import TeamPage from './pages/TeamPage'
 import CataloguePage from './pages/CataloguePage'
+import SopPage from './pages/SopPage'
+import ClientPortal from './pages/ClientPortal'
 import { useStore } from './store'
 
 function Soon() {
@@ -38,6 +40,7 @@ function Shell() {
   const loc = useLocation()
   // la page devis côté client s'affiche sans la barre latérale de l'OS
   if (/^\/devis\/[^/]+\/client/.test(loc.pathname)) return <Routes><Route path="/devis/:id/client" element={<DevisClientView />} /></Routes>
+  if (/^\/portail\//.test(loc.pathname)) return <Routes><Route path="/portail/:id" element={<AdminOnly><ClientPortal /></AdminOnly>} /></Routes>
   return (
     <div className="flex h-full">
       <Sidebar />
@@ -48,6 +51,7 @@ function Shell() {
           <Route path="/azurpod" element={<AzurpodPage />} />
           <Route path="/evenements" element={<AdminOnly><EventsPage /></AdminOnly>} />
           <Route path="/equipe" element={<TeamPage />} />
+          <Route path="/sop" element={<SopPage />} />
           <Route path="/catalogue" element={<AdminOnly><CataloguePage /></AdminOnly>} />
           <Route path="/devis" element={<AdminOnly><DevisPage /></AdminOnly>} />
           <Route path="/devis/:id" element={<AdminOnly><DevisEditor /></AdminOnly>} />

@@ -42,7 +42,7 @@ export default function ProjectDetail() {
       {/* étapes cliquables */}
       <div className="card mt-6 flex items-center gap-2 p-3">
         {PROJECT_STEPS.map((s, i) => (
-          <button key={s.id} onClick={() => save({ status: s.id })}
+          <button key={s.id} disabled={state.me === 'X'} title={state.me === 'X' ? 'Géré par Enzo et Allan' : undefined} onClick={() => save({ status: s.id })}
             className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2.5 font-medium ${i === stepIdx ? 'bg-accent' : i < stepIdx ? 'bg-g1 text-g7' : 'text-ink2 hover:bg-hover'}`}>
             {i < stepIdx && <Check size={14} weight="bold" />}{s.label}
           </button>

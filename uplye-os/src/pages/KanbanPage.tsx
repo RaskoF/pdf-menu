@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Plus, UsersThree, Folder, Clock } from '@phosphor-icons/react'
 import { useStore } from '../store'
 import type { Person, Task, TaskStatus } from '../types'
-import { PEOPLE, fmtDate } from '../utils'
+import { DUE_LABEL, PEOPLE, dueState, fmtDate } from '../utils'
 import { FilterSelect, PersonAvatar, TASK_STATUSES, TypePill } from '../components/ui'
 import TaskModal, { newTask } from '../components/TaskModal'
 
@@ -38,13 +38,17 @@ export default function KanbanPage() {
               <div className="flex items-center gap-2 px-1.5 py-1.5"><span className={`pill ${s.cls}`}>{s.label}</span><span className="flex-1" /><span className="font-mono text-[11px] text-ink2">{items.length} · {items.reduce((a, t) => a + t.hours, 0)} h</span></div>
               <div className="mt-1 flex flex-col gap-2">
                 {items.map((t) => {
-                  const late = t.status !== 'done' && new Date(t.due) < new Date(new Date().toDateString())
+                  const ds = dueState(t.due, t.status === 'done')
+                  const late = ds === 'late'
                   return (
                     <div key={t.id} draggable onDragStart={(e) => e.dataTransfer.setData('text/plain', t.id)} onClick={() => setEdit(t)}
                       className="cursor-grab rounded-xl bg-surface p-3 hover:ring-1 hover:ring-line2 active:cursor-grabbing">
                       <div className="tag truncate">{pname(t.projectId)}</div>
                       <div className="mt-1 font-semibold leading-snug">{t.title}</div>
-                      <div className="mt-2"><TypePill t={t.type} /></div>
+                      <div className="mt-2 flex flex-wrap gap-1.5"><TypePill t={t.type} />
+                        {ds && <span className={`pill !text-[11px] ${late ? 'bg-r1 text-r7' : 'bg-o1 text-o7'}`}>{DUE_LABEL[ds]}</span>}
+                        {t.pending && <span className="pill bg-y1 !text-[11px]">Changement à valider</span>}
+                      </div>
                       <div className="mt-2 flex items-center gap-2 whitespace-nowrap">
                         <span className="flex-1" />
                         <span className="flex items-center gap-1 font-mono text-[11px] text-ink2"><Clock size={12} />{t.hours} h</span>

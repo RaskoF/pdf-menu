@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Plus } from '@phosphor-icons/react'
 import { useStore } from '../store'
-import type { Activity, Person, Project, Task } from '../types'
+import type { Activity, Person, Project, ProjectStatus, Task } from '../types'
 import { HOURLY_COST, PEOPLE, fmt, fmtDate, pct, uid } from '../utils'
 import { ActivityPill, Kpi, Modal, PersonAvatar, ProjectStatusPill, PROJECT_STEPS, Segmented } from '../components/ui'
 
@@ -20,6 +20,15 @@ export default function ProjectsPage() {
   const { state, dispatch } = useStore()
   const nav = useNavigate()
   const [filter, setFilter] = useState<'actifs' | 'livres' | 'tous'>('actifs')
+  const [view, setView] = useState<'cartes' | 'kanban'>(() => { try { return (localStorage.getItem('projets-view') as 'cartes' | 'kanban') || 'cartes' } catch { return 'cartes' } })
+  const [over, setOver] = useState<ProjectStatus | null>(null)
+  const canMove = state.me !== 'X' // le statut d'un projet est piloté par les admins
+  const switchView = (v: 'cartes' | 'kanban') => { setView(v); try { localStorage.setItem('projets-view', v) } catch { /* ignoré */ } }
+  const dropOn = (status: ProjectStatus, e: React.DragEvent) => {
+    e.preventDefault(); setOver(null)
+    const p = state.projects.find((x) => x.id === e.dataTransfer.getData('text/plain'))
+    if (p && canMove) dispatch({ type: 'upsert', coll: 'projects', item: { ...p, status } })
+  }
   const [adding, setAdding] = useState(false)
   const list = state.projects.filter((p) => filter === 'tous' || (filter === 'livres' ? p.status === 'livre' : p.status !== 'livre'))
   const active = state.projects.filter((p) => p.status !== 'livre')
@@ -40,8 +49,41 @@ export default function ProjectsPage() {
         <Kpi label="Marge moyenne" value={`${avgMargin} %`} hint={`après coûts directs et heures à ${HOURLY_COST} €/h`} />
         <Kpi label="Heures planifiées" value={`${state.tasks.filter((t) => t.status !== 'done').reduce((s, t) => s + t.hours, 0)} h`} hint="tâches restantes" />
       </div>}
-      <div className="mt-6"><Segmented value={filter} onChange={setFilter} options={[{ id: 'actifs', label: 'En cours' }, { id: 'livres', label: 'Livrés' }, { id: 'tous', label: 'Tous' }]} /></div>
-      <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-3">
+      <div className="mt-6 flex items-center gap-3">
+        <Segmented value={view} onChange={switchView} options={[{ id: 'cartes', label: 'Cartes' }, { id: 'kanban', label: 'Kanban' }]} />
+        {view === 'cartes' && <Segmented value={filter} onChange={setFilter} options={[{ id: 'actifs', label: 'En cours' }, { id: 'livres', label: 'Livrés' }, { id: 'tous', label: 'Tous' }]} />}
+        {view === 'kanban' && !canMove && <span className="text-[13px] text-ink2">Lecture seule : le statut des projets est géré par Enzo et Allan.</span>}
+      </div>
+      {view === 'kanban' && (
+        <div className="mt-4 flex items-start gap-3">
+          {PROJECT_STEPS.map((col) => {
+            const items = state.projects.filter((p) => p.status === col.id)
+            return (
+              <div key={col.id} onDragOver={(e) => { e.preventDefault(); if (canMove) setOver(col.id) }} onDragLeave={() => setOver(null)} onDrop={(e) => dropOn(col.id, e)}
+                className={`min-w-0 flex-1 rounded-2xl p-2.5 ${over === col.id ? 'bg-hover ring-2 ring-accent' : 'bg-col'}`}>
+                <div className="flex items-center px-1.5 py-1.5"><span className="flex-1 font-semibold">{col.label}</span><span className="font-mono text-[11px] text-ink2">{items.length}{state.me !== 'X' ? ` · ${fmt(items.reduce((t, p) => t + p.budget, 0))}` : ''}</span></div>
+                <div className="mt-1 flex flex-col gap-2">
+                  {items.map((p) => {
+                    const st = projectStats(p, state.tasks)
+                    const isLate = p.status !== 'livre' && new Date(p.due) < new Date()
+                    return (
+                      <div key={p.id} draggable={canMove} onDragStart={(e) => e.dataTransfer.setData('text/plain', p.id)} onClick={() => nav(`/projets/${p.id}`)}
+                        className={`${canMove ? 'cursor-grab' : 'cursor-pointer'} rounded-xl bg-surface p-3 hover:ring-1 hover:ring-line2`}>
+                        <div className="flex items-center gap-1.5"><ActivityPill activity={p.activity} /><span className="flex-1" /><PersonAvatar p={p.owner} size={22} /></div>
+                        <div className="mt-2 font-semibold leading-snug">{p.name}</div>
+                        <div className="text-[13px] text-ink2">{client(p.clientId)}</div>
+                        <div className="mt-2 h-1.5 rounded-full bg-app"><div className="h-full rounded-full bg-g7" style={{ width: `${st.progress}%` }} /></div>
+                        <div className="mt-2 flex justify-between text-[12px]"><span className="text-ink2">{st.progress} % des tâches</span><span className={isLate ? 'font-semibold text-r7' : 'text-ink2'}>{fmtDate(p.due)}</span></div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+      {view === 'cartes' && <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-3">
         {list.map((p) => {
           const st = projectStats(p, state.tasks)
           const isLate = p.status !== 'livre' && new Date(p.due) < new Date()
@@ -65,7 +107,7 @@ export default function ProjectsPage() {
             </button>
           )
         })}
-      </div>
+      </div>}
       {adding && <NewProject onClose={() => setAdding(false)} onCreate={(p) => { dispatch({ type: 'upsert', coll: 'projects', item: p }); nav(`/projets/${p.id}`) }} />}
     </div>
   )

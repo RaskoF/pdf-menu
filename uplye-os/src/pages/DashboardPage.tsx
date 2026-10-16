@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Warning, Clock, Microphone, FilmStrip, CheckCircle, ArrowRight } from '@phosphor-icons/react'
 import { useStore } from '../store'
 import type { Task } from '../types'
-import { PEOPLE, fmt, fmtDate, lastMonths, monthKey, monthLabel, relative, totalHT, weekStart } from '../utils'
+import { PEOPLE, dueState, fmt, fmtDate, lastMonths, monthKey, monthLabel, relative, totalHT, weekStart } from '../utils'
 import { Kpi, PersonAvatar, StagePill, TypePill } from '../components/ui'
 import BarChart from '../components/BarChart'
 import { useState } from 'react'
@@ -38,6 +38,10 @@ export default function DashboardPage() {
     const h = state.tasks.filter((t) => t.assignee === p && inWeek(t.due)).reduce((s, t) => s + t.hours, 0)
     if (h > PEOPLE[p].capacity) alerts.push({ text: `${PEOPLE[p].name} est en surcharge cette semaine (${h} h / ${PEOPLE[p].capacity} h)`, to: '/planning' })
   }
+  const soon = state.tasks.filter((t) => (admin || t.assignee === me) && ['today', 'tomorrow'].includes(dueState(t.due, t.status === 'done') ?? ''))
+  if (soon.length) alerts.push({ text: `${soon.length} tâche${soon.length > 1 ? 's' : ''} à rendre aujourd’hui ou demain`, to: '/kanban' })
+  const requests = state.tasks.filter((t) => t.pending)
+  if (admin && requests.length) alerts.push({ text: `${requests.length} changement${requests.length > 1 ? 's' : ''} d’Alexis à valider`, to: '/kanban' })
   const blocked = state.tasks.filter((t) => t.status === 'blocked')
   if (blocked.length) alerts.push({ text: `${blocked.length} tâche${blocked.length > 1 ? 's' : ''} bloquée${blocked.length > 1 ? 's' : ''}`, to: '/kanban' })
   const toEdit = state.bookings.filter((b) => b.deliverable === 'a_monter' && b.status !== 'annulee')

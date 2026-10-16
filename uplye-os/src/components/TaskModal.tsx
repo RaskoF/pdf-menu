@@ -3,6 +3,7 @@ import { useStore } from '../store'
 import type { Person, Task, TaskStatus, TaskType } from '../types'
 import { PEOPLE, uid } from '../utils'
 import { Modal, TASK_STATUSES } from './ui'
+import { describe, notif, sensitiveDiff } from './requests'
 
 export function newTask(projectId?: string): Task {
   return { id: uid(), projectId, title: '', assignee: 'X', status: 'todo', type: 'Montage', hours: 2, due: new Date(Date.now() + 3 * 86400000).toISOString() }
@@ -13,7 +14,18 @@ export default function TaskModal({ task, onClose }: { task: Task; onClose: () =
   const { state, dispatch } = useStore()
   const [t, setT] = useState(task)
   const exists = state.tasks.some((x) => x.id === task.id)
-  const save = () => { if (!t.title.trim()) return; dispatch({ type: 'upsert', coll: 'tasks', item: t }); onClose() }
+  const restricted = state.me === 'X' && exists
+  const diff = restricted ? sensitiveDiff(task, t) : null
+  const [reason, setReason] = useState('')
+  const save = () => {
+    if (!t.title.trim()) return
+    if (diff) {
+      // le changement sensible reste en attente : la tâche garde ses valeurs actuelles jusqu'à validation
+      dispatch({ type: 'upsert', coll: 'tasks', item: { ...t, due: task.due, hours: task.hours, assignee: task.assignee, pending: { ...diff, by: 'X', at: new Date().toISOString(), reason } } })
+      dispatch({ type: 'upsert', coll: 'notifs', item: notif('admins', `Alexis demande un changement sur « ${t.title} » : ${describe(task, diff)}${reason ? ` (${reason})` : ''}`, '/kanban', 'demande') })
+    } else dispatch({ type: 'upsert', coll: 'tasks', item: t })
+    onClose()
+  }
   return (
     <Modal title={exists ? 'Modifier la tâche' : 'Nouvelle tâche'} onClose={onClose}>
       <div className="space-y-3">
@@ -36,12 +48,19 @@ export default function TaskModal({ task, onClose }: { task: Task; onClose: () =
             <input type="number" min={0.5} step={0.5} value={t.hours} onChange={(e) => setT({ ...t, hours: Math.max(0.5, Number(e.target.value)) })} className="field !w-20 text-right" />
           </div>
         </L>
+        {task.pending && <div className="rounded-xl bg-y1 p-3 text-[13px]">Changement en attente de validation : {describe(task, task.pending)}.</div>}
+        {diff && (
+          <div className="rounded-xl border border-o7/30 bg-o1 p-3 text-[13px] text-o7">
+            L’échéance, la durée et l’assignation sont validées par Enzo ou Allan. Ta demande leur sera envoyée.
+            <input className="field mt-2 !bg-surface" value={reason} onChange={(e) => setReason(e.target.value)} placeholder="Pourquoi ? (ex. retours client arrivés en retard)" />
+          </div>
+        )}
       </div>
       <div className="mt-5 flex items-center gap-2">
-        {exists && <button className="btn-ghost text-r7" onClick={() => { dispatch({ type: 'remove', coll: 'tasks', id: t.id }); onClose() }}>Supprimer</button>}
+        {exists && !restricted && <button className="btn-ghost text-r7" onClick={() => { dispatch({ type: 'remove', coll: 'tasks', id: t.id }); onClose() }}>Supprimer</button>}
         <span className="flex-1" />
         <button className="btn-secondary" onClick={onClose}>Annuler</button>
-        <button className="btn-primary" disabled={!t.title.trim()} onClick={save}>{exists ? 'Enregistrer' : 'Créer la tâche'}</button>
+        <button className="btn-primary" disabled={!t.title.trim()} onClick={save}>{diff ? 'Demander la validation' : exists ? 'Enregistrer' : 'Créer la tâche'}</button>
       </div>
     </Modal>
   )

@@ -86,6 +86,7 @@ export interface Task {
   type: TaskType
   hours: number
   due: string
+  pending?: ChangeRequest
 }
 
 export interface Invoice {
@@ -131,3 +132,14 @@ export interface EventItem { id: string; name: string; type: EventType; date: st
 
 export interface Absence { id: string; from: string; to: string; label: string }
 export interface Member { id: Person; email: string; phone: string; skills: string[]; contract: string; since: string; absences: Absence[] }
+
+// Demande de modification soumise à validation d'un admin (ex. Alexis qui décale une échéance).
+export interface ChangeRequest { due?: string; hours?: number; assignee?: Person; by: Person; at: string; reason?: string }
+export interface Notification { id: string; at: string; to: 'admins' | Person; text: string; link: string; read: boolean; kind: 'demande' | 'info' }
+
+export interface SopStep { id: string; text: string; detail?: string }
+export interface Sop { id: string; title: string; category: 'Commercial' | 'Production' | 'Azurpod' | 'Équipe' | 'Admin'; goal: string; owner: Person; duration: string; updatedAt: string; steps: SopStep[] }
+export interface SopRun { id: string; sopId: string; label: string; startedAt: string; done: string[]; by: Person }
+
+export type ReferralReward = 'commission' | 'credit'
+export interface Referral { id: string; referrerId: string; name: string; company: string; email: string; status: 'invite' | 'devis' | 'signe' | 'perdu'; amountHT: number; reward: ReferralReward; settled: boolean; createdAt: string }

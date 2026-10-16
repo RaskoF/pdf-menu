@@ -77,3 +77,12 @@ export function weekStart(offset = 0) {
   return d
 }
 export const atHour = (day: Date, h: number) => { const d = new Date(day); d.setHours(Math.floor(h), (h % 1) * 60, 0, 0); return d.toISOString() }
+
+// Rappel d'échéance pour une tâche non terminée
+export function dueState(due: string, done: boolean): 'late' | 'today' | 'tomorrow' | null {
+  if (done) return null
+  const d = new Date(due); const t = new Date(); t.setHours(0, 0, 0, 0)
+  const diff = Math.floor((new Date(d.toDateString()).getTime() - t.getTime()) / 86400000)
+  return diff < 0 ? 'late' : diff === 0 ? 'today' : diff === 1 ? 'tomorrow' : null
+}
+export const DUE_LABEL = { late: 'En retard', today: 'Échéance aujourd’hui', tomorrow: 'Échéance demain' } as const

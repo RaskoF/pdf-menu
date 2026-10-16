@@ -1,13 +1,14 @@
 import { NavLink } from 'react-router-dom'
 import {
   MagnifyingGlass, SquaresFour, CalendarBlank, Kanban, ChartBar, FileText, UsersThree, Handshake,
-  Folder, Microphone, Users, Tag, ChartLine, Sparkle, Bell, GearSix, ArrowCounterClockwise,
+  Folder, Microphone, Users, Tag, ChartLine, Sparkle, Bell, BookOpenText, ArrowCounterClockwise,
 } from '@phosphor-icons/react'
 import { useState, type ReactNode } from 'react'
 import { PersonAvatar } from './ui'
 import { PEOPLE } from '../utils'
 import type { Person } from '../types'
 import { useStore } from '../store'
+import NotificationsPanel, { notifCount } from './NotificationsPanel'
 
 const Item = ({ to, icon, label }: { to: string; icon: ReactNode; label: string }) => (
   <NavLink to={to} className={({ isActive }) =>
@@ -21,6 +22,8 @@ export default function Sidebar() {
   const { state, dispatch } = useStore()
   const admin = state.me !== 'X'
   const [armed, setArmed] = useState(false)
+  const [notifOpen, setNotifOpen] = useState(false)
+  const count = notifCount(state)
   const s = 20
   return (
     <aside className="flex h-full w-[248px] shrink-0 flex-col bg-side px-4 py-6 text-ondark">
@@ -46,6 +49,7 @@ export default function Sidebar() {
         <Item to="/azurpod" icon={<Microphone size={s} />} label="Azurpod" />
         <Group label="Admin" />
         <Item to="/equipe" icon={<Users size={s} />} label="Équipe" />
+        <Item to="/sop" icon={<BookOpenText size={s} />} label="Process (SOP)" />
         {admin && <Item to="/catalogue" icon={<Tag size={s} />} label="Catalogue" />}
         {admin && <Item to="/finance" icon={<ChartLine size={s} />} label="Finance" />}
       </nav>
@@ -53,25 +57,28 @@ export default function Sidebar() {
         <Sparkle size={18} className="text-accent" /> <span className="flex-1">Assistant IA</span>
         <span className="rounded bg-white/10 px-1.5 font-mono text-[10px] text-ondarkm">⌘J</span>
       </div>
-      <div className="mt-3 flex items-center gap-3 border-t border-white/10 px-2 pt-4">
+      <div className="mt-3 flex items-center gap-2 border-t border-white/10 px-2 pt-4">
         <PersonAvatar p={state.me} size={32} />
-        <div className="flex-1 leading-tight">
+        <div className="min-w-0 flex-1 leading-tight">
           <div className="font-semibold">{PEOPLE[state.me].name}</div>
           {/* sélecteur de démo pour tester chaque rôle */}
           <select aria-label="Voir en tant que" value={state.me} onChange={(e) => dispatch({ type: 'setMe', me: e.target.value as Person })}
-            className="-ml-1 bg-transparent text-[12px] text-ondarkm">
+            className="-ml-1 w-full max-w-full truncate bg-transparent text-[12px] text-ondarkm">
             <option value="E" className="text-ink">Admin · voir en Enzo</option>
             <option value="A" className="text-ink">Admin · voir en Allan</option>
             <option value="X" className="text-ink">Production · voir en Alexis</option>
           </select>
         </div>
-        <Bell size={18} className="text-ondarkm" /><GearSix size={18} className="text-ondarkm" />
+        <button onClick={() => setNotifOpen(true)} className="relative rounded-lg p-1 text-ondarkm hover:text-ondark" aria-label="Notifications">
+          <Bell size={18} />{count > 0 && <span className="absolute -right-1 -top-1 grid h-4 min-w-4 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-ink">{count}</span>}
+        </button>
       </div>
       {/* confirmation dans la page : les boîtes confirm() natives ne s'affichent pas partout */}
       <button onClick={() => { if (armed) { dispatch({ type: 'reset' }); setArmed(false) } else { setArmed(true); setTimeout(() => setArmed(false), 4000) } }}
         className={`mt-3 flex items-center gap-1.5 px-2 text-[12px] ${armed ? 'text-accent' : 'text-ondarkm hover:text-ondark'}`}>
         <ArrowCounterClockwise size={13} />{armed ? 'Cliquer à nouveau pour tout remettre à zéro' : 'Remettre les données de démo'}
       </button>
+      {notifOpen && <NotificationsPanel onClose={() => setNotifOpen(false)} />}
     </aside>
   )
 }
