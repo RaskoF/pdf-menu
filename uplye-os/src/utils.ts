@@ -64,3 +64,16 @@ export function lastMonths(n: number, from = new Date()) {
   return out
 }
 export const pct = (a: number, b: number) => (b ? Math.round((a / b) * 100) : 0)
+
+export const FORMULAS: Record<'Standard' | 'Clé en main' | 'Pré-montage', { rate: number; desc: string }> = {
+  Standard: { rate: 150, desc: 'Studio + 2 caméras, fichiers bruts' },
+  'Pré-montage': { rate: 220, desc: 'Studio + montage multicaméra' },
+  'Clé en main': { rate: 300, desc: 'Montage, habillage et 3 extraits verticaux' },
+}
+export const STUDIO_HOURS = { open: 9, close: 19 } // créneaux réservables
+export function weekStart(offset = 0) {
+  const d = new Date(); d.setHours(0, 0, 0, 0)
+  d.setDate(d.getDate() - ((d.getDay() + 6) % 7) + offset * 7)
+  return d
+}
+export const atHour = (day: Date, h: number) => { const d = new Date(day); d.setHours(Math.floor(h), (h % 1) * 60, 0, 0); return d.toISOString() }

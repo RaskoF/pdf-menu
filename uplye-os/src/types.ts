@@ -102,3 +102,20 @@ export interface Expense { id: string; date: string; label: string; category: Ex
 
 export type SubCategory = 'Local' | 'Logiciels' | 'Assurance' | 'Banque & compta' | 'Marketing' | 'Télécom'
 export interface Subscription { id: string; label: string; category: SubCategory; monthlyHT: number; active: boolean; note?: string }
+
+export type Formula = 'Standard' | 'Clé en main' | 'Pré-montage'
+export type BookingStatus = 'confirmee' | 'terminee' | 'annulee'
+export type Deliverable = 'aucun' | 'a_monter' | 'livre'
+export interface Booking {
+  id: string
+  clientId: string
+  start: string // ISO, début de session
+  hours: number
+  formula: Formula
+  status: BookingStatus
+  deliverable: Deliverable
+  packId?: string // heures décomptées d'un pack au lieu d'être facturées
+  amountHT: number
+  title: string
+}
+export interface Pack { id: string; clientId: string; label: string; hoursTotal: number; priceHT: number; expiresAt: string }

@@ -33,7 +33,14 @@ npm run dev        # puis ouvrir http://localhost:5173
   indicateurs, meilleurs clients), factures à encaisser avec relance et prévision de trésorerie sur 3 mois,
   charges fixes et abonnements, marge par projet.
 
-Dashboard, Événements, Azurpod, Équipe et Catalogue affichent « pas encore développé ».
+- **Dashboard** : chiffres du mois, alertes (factures et projets en retard, surcharge, tâches bloquées, sessions à monter),
+  « Ma journée », semaine à venir, devis à relancer, charge de l'équipe.
+- **Azurpod** : agenda du studio (clic sur un créneau libre pour réserver, conflits et horaires vérifiés),
+  formules Standard / Pré-montage / Clé en main, sessions et livrables, packs d'heures avec heures restantes.
+- **Rôles** : le sélecteur sous le nom (barre latérale) permet de voir l'app en Enzo, Allan ou Alexis. En vue
+  Production (Alexis), devis, clients, finance et montants sont masqués et leurs pages bloquées.
+
+Événements, Équipe et Catalogue affichent « pas encore développé ». Règles de sécurité : voir `SECURITY.md`.
 
 ## Stack
 

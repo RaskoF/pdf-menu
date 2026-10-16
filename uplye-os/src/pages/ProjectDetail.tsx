@@ -49,12 +49,12 @@ export default function ProjectDetail() {
         ))}
       </div>
 
-      <div className="mt-5 grid grid-cols-4 gap-4">
+      {state.me !== 'X' && <div className="mt-5 grid grid-cols-4 gap-4">
         <Kpi label="Budget" value={fmt(p.budget)} hint="CA HT du projet" />
         <Kpi label="Coûts" value={fmt(st.cost)} hint={`${fmt(st.direct)} directs + ${st.hours} h × ${HOURLY_COST} €`} />
         <Kpi label="Marge" value={`${st.marginPct} %`} hint={fmt(st.margin)} hintClass={st.marginPct < 30 ? 'text-r7' : 'text-g7'} />
         <Kpi label="Avancement" value={`${st.progress} %`} hint={`${st.ts.filter((t) => t.status === 'done').length} tâches faites sur ${st.ts.length}`} />
-      </div>
+      </div>}
 
       <div className="mt-5 grid grid-cols-[1fr_380px] items-start gap-5">
         <div className="card p-5">
@@ -74,7 +74,7 @@ export default function ProjectDetail() {
             {!st.ts.length && <div className="py-6 text-center text-ink2">Aucune tâche. Ajoute la première.</div>}
           </div>
         </div>
-        <div className="space-y-5">
+        {state.me !== 'X' && <div className="space-y-5">
           <div className="card p-5">
             <div className="h-sec">Coûts directs</div>
             <div className="mt-3 space-y-2">
@@ -100,7 +100,7 @@ export default function ProjectDetail() {
               {!invoices.length && <div className="text-ink2">Aucune facture liée.</div>}
             </div>
           </div>
-        </div>
+        </div>}
       </div>
       {edit && <TaskModal task={edit} onClose={() => setEdit(null)} />}
     </div>

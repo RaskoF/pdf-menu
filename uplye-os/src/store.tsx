@@ -1,15 +1,17 @@
 import { createContext, useContext, useEffect, useReducer, type ReactNode } from 'react'
-import type { Client, Devis, Expense, Invoice, Project, Stage, Subscription, Task } from './types'
+import type { Booking, Client, Devis, Expense, Invoice, Pack, Person, Project, Stage, Subscription, Task } from './types'
 import { SEED_CLIENTS, SEED_DEVIS } from './data'
-import { SEED_EXPENSES, SEED_INVOICES, SEED_PROJECTS, SEED_SUBS, SEED_TASKS } from './dataOps'
+import { SEED_BOOKINGS, SEED_EXPENSES, SEED_INVOICES, SEED_PACKS, SEED_PROJECTS, SEED_SUBS, SEED_TASKS } from './dataOps'
 import { scheduleParts, totalHT, uid } from './utils'
 
 export interface State {
   devis: Devis[]; clients: Client[]
   projects: Project[]; tasks: Task[]; invoices: Invoice[]; expenses: Expense[]; subs: Subscription[]
+  bookings: Booking[]; packs: Pack[]
+  me: Person // personne connectée (pour tester les vues par rôle)
 }
-type Coll = 'projects' | 'tasks' | 'invoices' | 'expenses' | 'subs'
-type Item = Project | Task | Invoice | Expense | Subscription
+type Coll = 'projects' | 'tasks' | 'invoices' | 'expenses' | 'subs' | 'bookings' | 'packs'
+type Item = Project | Task | Invoice | Expense | Subscription | Booking | Pack
 type Action =
   | { type: 'upsertDevis'; devis: Devis }
   | { type: 'deleteDevis'; id: string }
@@ -17,12 +19,13 @@ type Action =
   | { type: 'upsertClient'; client: Client }
   | { type: 'upsert'; coll: Coll; item: Item }
   | { type: 'remove'; coll: Coll; id: string }
+  | { type: 'setMe'; me: Person }
   | { type: 'reset' }
 
 const KEY = 'uplye-os-demo-v2'
 const seed = (): State => structuredClone({
   devis: SEED_DEVIS, clients: SEED_CLIENTS, projects: SEED_PROJECTS, tasks: SEED_TASKS,
-  invoices: SEED_INVOICES, expenses: SEED_EXPENSES, subs: SEED_SUBS,
+  invoices: SEED_INVOICES, expenses: SEED_EXPENSES, subs: SEED_SUBS, bookings: SEED_BOOKINGS, packs: SEED_PACKS, me: 'E' as Person,
 })
 
 function load(): State {
@@ -97,6 +100,8 @@ function reducer(s: State, a: Action): State {
     }
     case 'remove':
       return { ...s, [a.coll]: (s[a.coll] as Item[]).filter((x) => x.id !== a.id) }
+    case 'setMe':
+      return { ...s, me: a.me }
     case 'reset':
       return seed()
   }

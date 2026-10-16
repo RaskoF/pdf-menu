@@ -1,4 +1,4 @@
-import type { Expense, ExpenseCategory, Invoice, Project, Subscription, Task } from './types'
+import type { Booking, Expense, ExpenseCategory, Invoice, Pack, Project, Subscription, Task } from './types'
 import { daysAgo, daysFromNow, lastMonths } from './utils'
 
 // Données fictives de démonstration pour la gestion de projet et la finance.
@@ -98,3 +98,29 @@ months.forEach((m, mi) => {
     if (v > 20) SEED_EXPENSES.push({ id: id('e'), date: `${m}-12T10:00:00.000Z`, label, category, amountHT: v })
   }
 })
+
+// Azurpod : sessions de la semaine passée, de cette semaine et de la suivante.
+const slot = (dayOffset: number, h: number) => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7) + dayOffset); d.setHours(h, 0, 0, 0); return d.toISOString() }
+export const SEED_PACKS: Pack[] = [
+  { id: 'pk1', clientId: 'cl6', label: 'Pack studio 10 h', hoursTotal: 10, priceHT: 648, expiresAt: daysFromNow(150) },
+  { id: 'pk2', clientId: 'cl4', label: 'Pack studio 10 h', hoursTotal: 10, priceHT: 648, expiresAt: daysFromNow(200) },
+]
+const B = (clientId: string, title: string, day: number, h: number, hours: number, formula: Booking['formula'], status: Booking['status'], deliverable: Booking['deliverable'], packId?: string): Booking =>
+  ({ id: id('b'), clientId, title, start: slot(day, h), hours, formula, status, deliverable, packId, amountHT: packId ? 0 : hours * ({ Standard: 150, 'Pré-montage': 220, 'Clé en main': 300 })[formula] })
+const RAW_BOOKINGS: Booking[] = [
+  B('cl6', 'Présentation des biens · épisode 1', -5, 10, 2, 'Standard', 'terminee', 'livre', 'pk1'),
+  B('cl3', 'Podcast coaching sportif', -4, 14, 1, 'Clé en main', 'terminee', 'a_monter'),
+  B('cl4', 'Le droit en 15 minutes · épisode 1', -3, 9, 2, 'Pré-montage', 'terminee', 'livre', 'pk2'),
+  B('cl6', 'Présentation des biens · épisode 2', 1, 11, 2, 'Standard', 'confirmee', 'aucun', 'pk1'),
+  B('cl2', 'Interview du chef', 2, 15, 1.5, 'Clé en main', 'confirmee', 'aucun'),
+  B('cl8', 'Témoignages anciens élèves', 3, 10, 3, 'Pré-montage', 'confirmee', 'aucun'),
+  B('cl7', 'Recettes de la Calanque', 4, 14, 1, 'Standard', 'confirmee', 'aucun'),
+  B('cl4', 'Le droit en 15 minutes · épisode 2', 8, 9, 2, 'Pré-montage', 'confirmee', 'aucun', 'pk2'),
+  B('cl6', 'Présentation des biens · épisode 3', 9, 11, 2, 'Standard', 'confirmee', 'aucun', 'pk1'),
+  B('cl3', 'Podcast coaching · épisode 2', 10, 16, 1, 'Clé en main', 'confirmee', 'aucun'),
+]
+// les sessions déjà passées sont terminées ; celles avec montage restent « à monter » s'il n'y a pas eu de livraison
+export const SEED_BOOKINGS: Booking[] = RAW_BOOKINGS.map((b) =>
+  new Date(b.start) < new Date() && b.status === 'confirmee'
+    ? { ...b, status: 'terminee', deliverable: b.formula === 'Standard' ? 'aucun' : b.deliverable === 'aucun' ? 'a_monter' : b.deliverable }
+    : b)

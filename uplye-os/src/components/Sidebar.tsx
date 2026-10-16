@@ -4,7 +4,9 @@ import {
   Folder, Microphone, Users, Tag, ChartLine, Sparkle, Bell, GearSix, ArrowCounterClockwise,
 } from '@phosphor-icons/react'
 import { useState, type ReactNode } from 'react'
-import { Avatar } from './ui'
+import { PersonAvatar } from './ui'
+import { PEOPLE } from '../utils'
+import type { Person } from '../types'
 import { useStore } from '../store'
 
 const Item = ({ to, icon, label }: { to: string; icon: ReactNode; label: string }) => (
@@ -16,7 +18,8 @@ const Item = ({ to, icon, label }: { to: string; icon: ReactNode; label: string 
 const Group = ({ label }: { label: string }) => <div className="mt-3 mb-1 px-3 font-mono text-[10px] uppercase tracking-wide text-ondarkm">{label}</div>
 
 export default function Sidebar() {
-  const { dispatch } = useStore()
+  const { state, dispatch } = useStore()
+  const admin = state.me !== 'X'
   const [armed, setArmed] = useState(false)
   const s = 20
   return (
@@ -28,29 +31,40 @@ export default function Sidebar() {
       </div>
       <nav className="mt-2 flex-1 overflow-y-auto">
         <Group label="Pilotage" />
-        <Item to="/bientot/dashboard" icon={<SquaresFour size={s} />} label="Dashboard" />
+        <Item to="/dashboard" icon={<SquaresFour size={s} />} label="Dashboard" />
         <Item to="/planning" icon={<CalendarBlank size={s} />} label="Planning" />
         <Item to="/kanban" icon={<Kanban size={s} />} label="Kanban" />
         <Item to="/workload" icon={<ChartBar size={s} />} label="Workload" />
-        <Group label="Commercial" />
-        <Item to="/devis" icon={<FileText size={s} weight="fill" />} label="Devis" />
-        <Item to="/clients" icon={<UsersThree size={s} />} label="Clients" />
-        <Item to="/bientot/evenements" icon={<Handshake size={s} />} label="Événements" />
+        {admin && <>
+          <Group label="Commercial" />
+          <Item to="/devis" icon={<FileText size={s} weight="fill" />} label="Devis" />
+          <Item to="/clients" icon={<UsersThree size={s} />} label="Clients" />
+          <Item to="/bientot/evenements" icon={<Handshake size={s} />} label="Événements" />
+        </>}
         <Group label="Production" />
         <Item to="/projets" icon={<Folder size={s} />} label="Projets" />
-        <Item to="/bientot/azurpod" icon={<Microphone size={s} />} label="Azurpod" />
+        <Item to="/azurpod" icon={<Microphone size={s} />} label="Azurpod" />
         <Group label="Admin" />
         <Item to="/bientot/equipe" icon={<Users size={s} />} label="Équipe" />
-        <Item to="/bientot/catalogue" icon={<Tag size={s} />} label="Catalogue" />
-        <Item to="/finance" icon={<ChartLine size={s} />} label="Finance" />
+        {admin && <Item to="/bientot/catalogue" icon={<Tag size={s} />} label="Catalogue" />}
+        {admin && <Item to="/finance" icon={<ChartLine size={s} />} label="Finance" />}
       </nav>
       <div className="mt-3 flex items-center gap-2 rounded-xl border border-accent/30 bg-accent/10 px-3.5 py-2.5 font-medium">
         <Sparkle size={18} className="text-accent" /> <span className="flex-1">Assistant IA</span>
         <span className="rounded bg-white/10 px-1.5 font-mono text-[10px] text-ondarkm">⌘J</span>
       </div>
       <div className="mt-3 flex items-center gap-3 border-t border-white/10 px-2 pt-4">
-        <Avatar text="E" size={32} />
-        <div className="flex-1 leading-tight"><div className="font-semibold">Enzo</div><div className="text-[12px] text-ondarkm">Admin</div></div>
+        <PersonAvatar p={state.me} size={32} />
+        <div className="flex-1 leading-tight">
+          <div className="font-semibold">{PEOPLE[state.me].name}</div>
+          {/* sélecteur de démo pour tester chaque rôle */}
+          <select aria-label="Voir en tant que" value={state.me} onChange={(e) => dispatch({ type: 'setMe', me: e.target.value as Person })}
+            className="-ml-1 bg-transparent text-[12px] text-ondarkm">
+            <option value="E" className="text-ink">Admin · voir en Enzo</option>
+            <option value="A" className="text-ink">Admin · voir en Allan</option>
+            <option value="X" className="text-ink">Production · voir en Alexis</option>
+          </select>
+        </div>
         <Bell size={18} className="text-ondarkm" /><GearSix size={18} className="text-ondarkm" />
       </div>
       {/* confirmation dans la page : les boîtes confirm() natives ne s'affichent pas partout */}

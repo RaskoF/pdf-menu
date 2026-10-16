@@ -34,12 +34,12 @@ export default function ProjectsPage() {
         <h1 className="h-page">Projets</h1>
         <button className="btn-primary" onClick={() => setAdding(true)}><Plus size={18} weight="bold" />Nouveau projet</button>
       </div>
-      <div className="mt-6 grid grid-cols-4 gap-4">
+      {state.me !== 'X' && <div className="mt-6 grid grid-cols-4 gap-4">
         <Kpi label="Projets en cours" value={active.length} hint={`${late.length} en retard`} hintClass={late.length ? 'text-r7' : 'text-ink2'} />
         <Kpi label="CA en production" value={fmt(prod)} hint="HT, projets non livrés" />
         <Kpi label="Marge moyenne" value={`${avgMargin} %`} hint={`après coûts directs et heures à ${HOURLY_COST} €/h`} />
         <Kpi label="Heures planifiées" value={`${state.tasks.filter((t) => t.status !== 'done').reduce((s, t) => s + t.hours, 0)} h`} hint="tâches restantes" />
-      </div>
+      </div>}
       <div className="mt-6"><Segmented value={filter} onChange={setFilter} options={[{ id: 'actifs', label: 'En cours' }, { id: 'livres', label: 'Livrés' }, { id: 'tous', label: 'Tous' }]} /></div>
       <div className="mt-4 grid grid-cols-2 gap-4 xl:grid-cols-3">
         {list.map((p) => {
@@ -53,8 +53,13 @@ export default function ProjectsPage() {
               <div className="text-ink2">{client(p.clientId)}</div>
               <div className="mt-4 flex gap-1">{PROJECT_STEPS.map((s, i) => <span key={s.id} className={`h-1.5 flex-1 rounded-full ${i < stepIdx ? 'bg-g7' : i === stepIdx ? 'bg-accent' : 'bg-line'}`} />)}</div>
               <div className="mt-4 grid grid-cols-3 gap-2 text-[13px]">
-                <div><div className="tag">Budget</div><div className="mt-0.5 font-semibold">{fmt(p.budget)}</div></div>
-                <div><div className="tag">Marge</div><div className={`mt-0.5 font-semibold ${st.marginPct < 30 ? 'text-r7' : 'text-g7'}`}>{st.marginPct} %</div></div>
+                {state.me !== 'X' ? <>
+                  <div><div className="tag">Budget</div><div className="mt-0.5 font-semibold">{fmt(p.budget)}</div></div>
+                  <div><div className="tag">Marge</div><div className={`mt-0.5 font-semibold ${st.marginPct < 30 ? 'text-r7' : 'text-g7'}`}>{st.marginPct} %</div></div>
+                </> : <>
+                  <div><div className="tag">Tâches</div><div className="mt-0.5 font-semibold">{st.ts.length}</div></div>
+                  <div><div className="tag">Avancement</div><div className="mt-0.5 font-semibold">{st.progress} %</div></div>
+                </>}
                 <div><div className="tag">Échéance</div><div className={`mt-0.5 font-semibold ${isLate ? 'text-r7' : ''}`}>{fmtDate(p.due)}</div></div>
               </div>
             </button>
