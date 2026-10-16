@@ -1,6 +1,6 @@
 # Consignes pour ce dépôt
 
-- Le prototype Uplye OS est dans `uplye-os/` (voir `uplye-os/README.md`).
-- Avant toute modification touchant aux données, aux comptes, à la banque, à la comptabilité, aux fichiers clients
-  ou aux intégrations, lire et respecter `uplye-os/SECURITY.md`.
-- Le prototype n'utilise que des données fictives : ne jamais y mettre de vraies données clients ou bancaires.
+- Lire et appliquer `SECURITY.md` (racine) avant d'écrire du code qui touche aux secrets, aux routes API,
+  aux webhooks, à la base de données, aux comptes ou aux données clients et bancaires. Ces règles sont non négociables.
+- Ne pas installer de dépendance, de skill ou de serveur MCP sans validation préalable (voir `SECURITY.md`).
+- Le prototype Uplye OS est dans `uplye-os/` (voir `uplye-os/README.md`) : données fictives uniquement.

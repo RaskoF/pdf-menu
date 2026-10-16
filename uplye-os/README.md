@@ -40,7 +40,7 @@ npm run dev        # puis ouvrir http://localhost:5173
 - **Rôles** : le sélecteur sous le nom (barre latérale) permet de voir l'app en Enzo, Allan ou Alexis. En vue
   Production (Alexis), devis, clients, finance et montants sont masqués et leurs pages bloquées.
 
-Événements, Équipe et Catalogue affichent « pas encore développé ». Règles de sécurité : voir `SECURITY.md`.
+Événements, Équipe et Catalogue affichent « pas encore développé ». Règles de sécurité : voir `SECURITY.md` à la racine du dépôt.
 
 ## Stack
 

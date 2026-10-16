@@ -1,0 +1,6 @@
+# Fichiers sensibles : ne jamais versionner (voir SECURITY.md)
+.env
+.env.local
+.env.*.local
+*.pem
+.claude/settings.local.json
