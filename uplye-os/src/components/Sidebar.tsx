@@ -12,7 +12,7 @@ import NotificationsPanel, { notifCount } from './NotificationsPanel'
 
 const Item = ({ to, icon, label }: { to: string; icon: ReactNode; label: string }) => (
   <NavLink to={to} className={({ isActive }) =>
-    `flex items-center gap-3 rounded-xl px-3.5 py-2 text-[15px] font-medium ${isActive ? 'bg-accent text-ink' : 'text-ondark hover:bg-white/5'}`}>
+    `flex items-center gap-3 rounded-xl px-3.5 py-[7px] text-[15px] font-medium ${isActive ? 'bg-accent text-ink' : 'text-ondark hover:bg-white/5'}`}>
     {icon}{label}
   </NavLink>
 )

@@ -61,7 +61,7 @@ export default function ProjectsPage() {
             return (
               <div key={col.id} onDragOver={(e) => { e.preventDefault(); if (canMove) setOver(col.id) }} onDragLeave={() => setOver(null)} onDrop={(e) => dropOn(col.id, e)}
                 className={`min-w-0 flex-1 rounded-2xl p-2.5 ${over === col.id ? 'bg-hover ring-2 ring-accent' : 'bg-col'}`}>
-                <div className="flex items-center px-1.5 py-1.5"><span className="flex-1 font-semibold">{col.label}</span><span className="font-mono text-[11px] text-ink2">{items.length}{state.me !== 'X' ? ` · ${fmt(items.reduce((t, p) => t + p.budget, 0))}` : ''}</span></div>
+                <div className="px-1.5 py-1.5 leading-tight"><div className="truncate font-semibold">{col.label}</div><div className="mt-0.5 font-mono text-[11px] text-ink2">{items.length} projet{items.length > 1 ? 's' : ''}{state.me !== 'X' ? ` · ${fmt(items.reduce((t, p) => t + p.budget, 0))}` : ''}</div></div>
                 <div className="mt-1 flex flex-col gap-2">
                   {items.map((p) => {
                     const st = projectStats(p, state.tasks)
@@ -115,7 +115,7 @@ export default function ProjectsPage() {
 
 function NewProject({ onClose, onCreate }: { onClose: () => void; onCreate: (p: Project) => void }) {
   const { state } = useStore()
-  const [p, setP] = useState<Project>({ id: uid(), name: '', clientId: state.clients[0]!.id, activity: 'Studio', status: 'preprod', owner: 'E', start: new Date().toISOString(), due: new Date(Date.now() + 21 * 86400000).toISOString(), budget: 0, costs: [] })
+  const [p, setP] = useState<Project>({ id: uid(), name: '', clientId: state.clients[0]!.id, activity: 'Studio', status: 'brief', owner: 'E', start: new Date().toISOString(), due: new Date(Date.now() + 21 * 86400000).toISOString(), budget: 0, costs: [] })
   return (
     <Modal title="Nouveau projet" onClose={onClose}>
       <div className="space-y-3">

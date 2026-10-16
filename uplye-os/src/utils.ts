@@ -47,7 +47,7 @@ export function relative(iso?: string) {
 export const PEOPLE: Record<'E' | 'A' | 'X', { name: string; role: string; capacity: number }> = {
   E: { name: 'Enzo', role: 'Président · clients', capacity: 35 },
   A: { name: 'Allan', role: 'Direction artistique', capacity: 35 },
-  X: { name: 'Alexis', role: 'Montage (alternance)', capacity: 21 },
+  X: { name: 'Alexis', role: 'Vidéaste (alternance)', capacity: 21 },
 }
 export const HOURLY_COST = 35 // coût interne d'une heure de travail, € HT
 

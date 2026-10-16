@@ -49,7 +49,7 @@ function onSigned(s: State, d: Devis): State {
   if (s.projects.some((p) => p.devisId === d.id)) return s
   const now = new Date().toISOString()
   const project: Project = {
-    id: uid(), name: d.title, clientId: d.clientId, devisId: d.id, activity: d.activity, status: 'preprod',
+    id: uid(), name: d.title, clientId: d.clientId, devisId: d.id, activity: d.activity, status: 'brief',
     owner: d.owner === 'A' ? 'A' : 'E', start: now, due: new Date(Date.now() + 21 * 86400000).toISOString(), budget: totalHT(d), costs: [],
   }
   const first = scheduleParts(d.schedule)[0]!

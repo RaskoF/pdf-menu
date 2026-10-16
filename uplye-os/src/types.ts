@@ -56,7 +56,7 @@ export interface CatalogueItem {
 }
 
 export type Person = 'E' | 'A' | 'X' // Enzo, Allan, Alexis
-export type ProjectStatus = 'preprod' | 'tournage' | 'montage' | 'review' | 'livre'
+export type ProjectStatus = 'brief' | 'preprod' | 'tournage' | 'montage' | 'review' | 'livre'
 export type TaskStatus = 'todo' | 'progress' | 'review' | 'blocked' | 'done'
 export type TaskType = 'Tournage' | 'Montage' | 'Admin' | 'Commercial' | 'Azurpod'
 

@@ -51,8 +51,8 @@ npm run dev        # puis ouvrir http://localhost:5173
   (barre latérale) et alertes du Dashboard.
 - **Validation des changements sensibles** : quand Alexis modifie l'échéance, la durée ou l'assigné d'une tâche
   (fiche ou glisser dans le planning), le changement part en demande ; un admin l'accepte ou le refuse depuis la
-  cloche, et Alexis est notifié. Alexis ne peut ni supprimer de tâche ni changer l'étape d'un projet.
-- **Projets en Kanban** : bascule Cartes / Kanban par étape (préproduction → livré), glisser-déposer pour les admins.
+  cloche, et Alexis est notifié. Alexis ne peut ni supprimer de tâche, ni changer l'étape ou le responsable d'un projet, ni créer une tâche pour quelqu'un d'autre ; sur Azurpod il consulte les réservations sans les modifier et ne voit pas les montants.
+- **Projets en Kanban** : bascule Cartes / Kanban par étape (brief → livré), glisser-déposer pour les admins.
 - **Process (SOP)** : trames R1 / R2, relance devis, tournage, montage, Azurpod, onboarding, offboarding, facturation.
   Étapes éditables par les admins, « Suivre ce process » crée une checklist (ex. « Onboarding Alexis »).
 - **Espace client** (`#/portail/<id-client>`, bouton « Espace client » sur la fiche) : projets avec avancement,

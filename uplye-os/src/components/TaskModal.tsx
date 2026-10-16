@@ -23,7 +23,7 @@ export default function TaskModal({ task, onClose }: { task: Task; onClose: () =
       // le changement sensible reste en attente : la tâche garde ses valeurs actuelles jusqu'à validation
       dispatch({ type: 'upsert', coll: 'tasks', item: { ...t, due: task.due, hours: task.hours, assignee: task.assignee, pending: { ...diff, by: 'X', at: new Date().toISOString(), reason } } })
       dispatch({ type: 'upsert', coll: 'notifs', item: notif('admins', `Alexis demande un changement sur « ${t.title} » : ${describe(task, diff)}${reason ? ` (${reason})` : ''}`, '/kanban', 'demande') })
-    } else dispatch({ type: 'upsert', coll: 'tasks', item: t })
+    } else dispatch({ type: 'upsert', coll: 'tasks', item: state.me === 'X' && !exists ? { ...t, assignee: 'X' } : t })
     onClose()
   }
   return (
@@ -37,7 +37,7 @@ export default function TaskModal({ task, onClose }: { task: Task; onClose: () =
           </select>
         </L>
         <div className="grid grid-cols-2 gap-3">
-          <L label="Assignée à"><select className="field" value={t.assignee} onChange={(e) => setT({ ...t, assignee: e.target.value as Person })}>{(Object.keys(PEOPLE) as Person[]).map((p) => <option key={p} value={p}>{PEOPLE[p].name}</option>)}</select></L>
+          <L label="Assignée à"><select className="field" disabled={state.me === 'X' && !exists} value={state.me === 'X' && !exists ? 'X' : t.assignee} onChange={(e) => setT({ ...t, assignee: e.target.value as Person })}>{(Object.keys(PEOPLE) as Person[]).map((p) => <option key={p} value={p}>{PEOPLE[p].name}</option>)}</select></L>
           <L label="Type"><select className="field" value={t.type} onChange={(e) => setT({ ...t, type: e.target.value as TaskType })}>{['Tournage', 'Montage', 'Admin', 'Commercial', 'Azurpod'].map((x) => <option key={x}>{x}</option>)}</select></L>
           <L label="Statut"><select className="field" value={t.status} onChange={(e) => setT({ ...t, status: e.target.value as TaskStatus })}>{TASK_STATUSES.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}</select></L>
           <L label="Échéance"><input type="date" className="field" value={t.due.slice(0, 10)} onChange={(e) => setT({ ...t, due: new Date(e.target.value + 'T12:00:00').toISOString() })} /></L>

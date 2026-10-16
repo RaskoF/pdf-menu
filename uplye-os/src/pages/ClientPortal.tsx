@@ -67,7 +67,7 @@ export default function ClientPortal() {
                 <div key={p.id} className="card p-5">
                   <div className="flex items-center gap-3"><div className="h-sec flex-1">{p.name}</div><ProjectStatusPill s={p.status} /></div>
                   <div className="mt-1 text-[13px] text-ink2">Livraison prévue le {fmtDate(p.due, { day: 'numeric', month: 'long' })}</div>
-                  <div className="mt-4 grid grid-cols-5 gap-2">
+                  <div className="mt-4 grid grid-cols-6 gap-2">
                     {PROJECT_STEPS.map((s, i) => (
                       <div key={s.id}><div className={`h-1.5 rounded-full ${i <= idx ? 'bg-ink' : 'bg-line'}`} /><div className={`mt-1.5 text-[12px] ${i <= idx ? 'font-semibold' : 'text-ink2'}`}>{s.label}</div></div>
                     ))}

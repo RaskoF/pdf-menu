@@ -34,9 +34,11 @@ export default function ProjectDetail() {
             {devis && <> · <Link to={`/devis/${devis.id}`} className="hover:underline">{devis.number}</Link></>} · du {fmtDate(p.start)} au {fmtDate(p.due)}
           </div>
         </div>
-        <label className="flex items-center gap-2 text-[13px] text-ink2">Responsable
-          <select className="field !w-auto" value={p.owner} onChange={(e) => save({ owner: e.target.value as typeof p.owner })}>{Object.entries(PEOPLE).map(([k, v]) => <option key={k} value={k}>{v.name}</option>)}</select>
-        </label>
+        {state.me === 'X'
+          ? <div className="flex items-center gap-2 text-[13px] text-ink2">Responsable <span className="font-semibold text-ink">{PEOPLE[p.owner].name}</span></div>
+          : <label className="flex items-center gap-2 text-[13px] text-ink2">Responsable
+              <select className="field !w-auto" value={p.owner} onChange={(e) => save({ owner: e.target.value as typeof p.owner })}>{Object.entries(PEOPLE).map(([k, v]) => <option key={k} value={k}>{v.name}</option>)}</select>
+            </label>}
       </div>
 
       {/* étapes cliquables */}

@@ -31,11 +31,13 @@ export default function AzurpodPage() {
     <div className="px-10 py-8">
       <div className="flex items-center justify-between">
         <div><h1 className="h-page">Azurpod</h1><div className="mt-1 text-ink2">Studio podcast · réservations, sessions et packs d’heures</div></div>
-        <button className="btn-primary" onClick={() => setEdit(newBooking(atHour(new Date(Date.now() + 86400000), 10)))}><Plus size={18} weight="bold" />Nouvelle session</button>
+        {state.me !== 'X' && <button className="btn-primary" onClick={() => setEdit(newBooking(atHour(new Date(Date.now() + 86400000), 10)))}><Plus size={18} weight="bold" />Nouvelle session</button>}
       </div>
       <div className="mt-6 grid grid-cols-4 gap-4">
         <Kpi label="Occupation de la semaine" value={`${pct(booked, capacity)} %`} hint={`${booked} h réservées sur ${capacity} h`} />
-        <Kpi label="CA Azurpod du mois" value={fmt(revenue)} hint="sessions hors packs, HT" />
+        {state.me === 'X'
+          ? <Kpi label="Heures studio du mois" value={`${live.filter((b) => b.start.slice(0, 7) === month).reduce((t, b) => t + b.hours, 0)} h`} hint="sessions confirmées" />
+          : <Kpi label="CA Azurpod du mois" value={fmt(revenue)} hint="sessions hors packs, HT" />}
         <Kpi label="Sessions à venir" value={live.filter((b) => new Date(b.start) > new Date()).length} hint="toutes semaines" />
         <Kpi label="Livrables à monter" value={toEdit} hint="sessions Pré-montage / Clé en main" hintClass={toEdit ? 'text-o7' : 'text-ink2'} />
       </div>
@@ -61,7 +63,7 @@ export default function AzurpodPage() {
             {days.map((d, di) => (
               <div key={di} className="relative border-l border-line">
                 {Array.from({ length: STUDIO_HOURS.close - STUDIO_HOURS.open }, (_, i) => (
-                  <button key={i} title="Réserver ce créneau" onClick={() => setEdit(newBooking(atHour(d, STUDIO_HOURS.open + i)))} className="block w-full border-b border-line hover:bg-accent/15" style={{ height: ROW }} />
+                  <button key={i} title="Réserver ce créneau" onClick={() => state.me !== 'X' && setEdit(newBooking(atHour(d, STUDIO_HOURS.open + i)))} className="block w-full border-b border-line hover:bg-accent/15" style={{ height: ROW }} />
                 ))}
                 {inWeek.filter((b) => new Date(b.start).toDateString() === d.toDateString()).map((b) => {
                   const s = new Date(b.start); const top = (s.getHours() + s.getMinutes() / 60 - STUDIO_HOURS.open) * ROW
@@ -101,7 +103,7 @@ export default function AzurpodPage() {
                       {(Object.keys(DEL) as Deliverable[]).map((k) => <option key={k} value={k}>{DEL[k]}</option>)}
                     </select>
                   </td>
-                  <td className="px-4 py-3 text-right font-semibold">{b.status === 'annulee' ? 'Annulée' : b.packId ? <span className="text-ink2">Pack</span> : fmt(b.amountHT)}</td>
+                  <td className="px-4 py-3 text-right font-semibold">{b.status === 'annulee' ? 'Annulée' : b.packId ? <span className="text-ink2">Pack</span> : state.me === 'X' ? '—' : fmt(b.amountHT)}</td>
                 </tr>
               ))}
             </tbody>
@@ -117,7 +119,7 @@ export default function AzurpodPage() {
             const left = p.hoursTotal - used - planned
             return (
               <div key={p.id} className="card p-5">
-                <div className="flex items-start"><div className="flex-1"><div className="text-[17px] font-semibold">{client(p.clientId)}</div><div className="text-ink2">{p.label} · {fmt(p.priceHT)} HT · valable jusqu’au {fmtDate(p.expiresAt, { day: 'numeric', month: 'short', year: 'numeric' })}</div></div>
+                <div className="flex items-start"><div className="flex-1"><div className="text-[17px] font-semibold">{client(p.clientId)}</div><div className="text-ink2">{p.label}{state.me !== 'X' && <> · {fmt(p.priceHT)} HT</>} · valable jusqu’au {fmtDate(p.expiresAt, { day: 'numeric', month: 'short', year: 'numeric' })}</div></div>
                   {left <= 2 && <span className="pill bg-o1 text-o7"><Warning size={13} />Proposer un renouvellement</span>}</div>
                 <div className="mt-4 flex h-3 overflow-hidden rounded-full bg-app">
                   <div className="bg-t7" style={{ width: `${pct(used, p.hoursTotal)}%` }} /><div className="bg-t7/40" style={{ width: `${pct(planned, p.hoursTotal)}%` }} />
@@ -143,9 +145,11 @@ function BookingModal({ booking, onClose }: { booking: Booking; onClose: () => v
   const outside = start.getHours() < STUDIO_HOURS.open || end.getHours() + end.getMinutes() / 60 > STUDIO_HOURS.close
   const amount = b.packId ? 0 : b.hours * FORMULAS[b.formula].rate
   const set = (patch: Partial<Booking>) => setB({ ...b, ...patch })
+  const readOnly = state.me === 'X' // réservations client : gérées par Enzo et Allan
   return (
     <Modal title={exists ? 'Session' : 'Nouvelle session'} onClose={onClose}>
-      <div className="space-y-3">
+      {readOnly && <div className="mb-3 rounded-xl bg-hover p-3 text-[13px] text-ink2">Consultation seule : les réservations sont gérées par Enzo et Allan.</div>}
+      <fieldset disabled={readOnly} className="space-y-3">
         <label className="block"><div className="tag mb-1.5">Client</div><select className="field" value={b.clientId} onChange={(e) => set({ clientId: e.target.value, packId: undefined })}>{state.clients.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}</select></label>
         <label className="block"><div className="tag mb-1.5">Titre de la session</div><input className="field" value={b.title} onChange={(e) => set({ title: e.target.value })} placeholder="Ex. Épisode 3 · invité" /></label>
         <div className="grid grid-cols-3 gap-3">
@@ -158,19 +162,19 @@ function BookingModal({ booking, onClose }: { booking: Booking; onClose: () => v
           {(Object.keys(FORMULAS) as Formula[]).map((f) => (
             <button key={f} onClick={() => set({ formula: f, deliverable: f === 'Standard' ? 'aucun' : b.deliverable === 'aucun' ? 'a_monter' : b.deliverable })}
               className={`rounded-xl border p-3 text-left ${b.formula === f ? 'border-ink bg-accent/30' : 'border-line hover:bg-hover'}`}>
-              <div className="font-semibold">{f}</div><div className="text-[12px] text-ink2">{FORMULAS[f].rate} €/h · {FORMULAS[f].desc}</div>
+              <div className="font-semibold">{f}</div><div className="text-[12px] text-ink2">{!readOnly && `${FORMULAS[f].rate} €/h · `}{FORMULAS[f].desc}</div>
             </button>
           ))}
         </div>
         {packs.length > 0 && <label className="block"><div className="tag mb-1.5">Paiement</div><select className="field" value={b.packId ?? ''} onChange={(e) => set({ packId: e.target.value || undefined })}><option value="">Facturer la session</option>{packs.map((p) => <option key={p.id} value={p.id}>Décompter du {p.label}</option>)}</select></label>}
         {conflict && <div className="flex items-center gap-2 rounded-xl bg-r1 p-3 text-[13px] text-r7"><Warning size={16} />Le studio est déjà réservé à ce moment ({state.clients.find((c) => c.id === conflict.clientId)?.name}).</div>}
         {outside && <div className="flex items-center gap-2 rounded-xl bg-o1 p-3 text-[13px] text-o7"><Warning size={16} />Hors des horaires du studio ({STUDIO_HOURS.open}h–{STUDIO_HOURS.close}h).</div>}
-      </div>
+      </fieldset>
       <div className="mt-5 flex items-center gap-2">
-        {exists && b.status !== 'annulee' && <button className="btn-ghost text-r7" onClick={() => { dispatch({ type: 'upsert', coll: 'bookings', item: { ...b, status: 'annulee' } }); onClose() }}>Annuler la session</button>}
-        <span className="flex-1 text-right font-semibold">{b.packId ? 'Décomptée du pack' : `${fmt(amount)} HT`}</span>
+        {!readOnly && exists && b.status !== 'annulee' && <button className="btn-ghost text-r7" onClick={() => { dispatch({ type: 'upsert', coll: 'bookings', item: { ...b, status: 'annulee' } }); onClose() }}>Annuler la session</button>}
+        <span className="flex-1 text-right font-semibold">{readOnly ? '' : b.packId ? 'Décomptée du pack' : `${fmt(amount)} HT`}</span>
         <button className="btn-secondary" onClick={onClose}>Fermer</button>
-        <button className="btn-primary" disabled={!!conflict || outside} onClick={() => { dispatch({ type: 'upsert', coll: 'bookings', item: { ...b, title: b.title || 'Session podcast', amountHT: amount } }); onClose() }}>{exists ? 'Enregistrer' : 'Réserver'}</button>
+        {!readOnly && <button className="btn-primary" disabled={!!conflict || outside} onClick={() => { dispatch({ type: 'upsert', coll: 'bookings', item: { ...b, title: b.title || 'Session podcast', amountHT: amount } }); onClose() }}>{exists ? 'Enregistrer' : 'Réserver'}</button>}
       </div>
     </Modal>
   )

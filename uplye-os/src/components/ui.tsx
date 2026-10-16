@@ -78,16 +78,16 @@ const TYPE_CLS: Record<TaskType, string> = { Tournage: 'bg-o1 text-o7', Montage:
 export const TypePill = ({ t }: { t: TaskType }) => <span className={`pill !text-[12px] ${TYPE_CLS[t]}`}>{t}</span>
 
 export const PROJECT_STEPS: { id: ProjectStatus; label: string }[] = [
-  { id: 'preprod', label: 'Préproduction' }, { id: 'tournage', label: 'Tournage' }, { id: 'montage', label: 'Montage' },
+  { id: 'brief', label: 'Brief' }, { id: 'preprod', label: 'Préproduction' }, { id: 'tournage', label: 'Tournage' }, { id: 'montage', label: 'Montage' },
   { id: 'review', label: 'Retours client' }, { id: 'livre', label: 'Livré' },
 ]
 export const ProjectStatusPill = ({ s }: { s: ProjectStatus }) => {
-  const cls = s === 'livre' ? 'bg-g1 text-g7' : s === 'review' ? 'bg-y1 text-ink' : s === 'preprod' ? 'bg-hover text-ink' : 'bg-b1 text-b7'
+  const cls = s === 'livre' ? 'bg-g1 text-g7' : s === 'review' ? 'bg-y1 text-ink' : s === 'preprod' || s === 'brief' ? 'bg-hover text-ink' : 'bg-b1 text-b7'
   return <span className={`pill ${cls}`}>{PROJECT_STEPS.find((p) => p.id === s)!.label}</span>
 }
 
 export const PersonAvatar = ({ p, size = 24 }: { p: Person; size?: number }) =>
-  <Avatar text={p === 'X' ? 'AL' : p} tone={p === 'E' ? 'accent' : p === 'A' ? 'dark' : 'neutral'} size={size} />
+  <Avatar text={p === 'X' ? 'AX' : p} tone={p === 'E' ? 'accent' : p === 'A' ? 'dark' : 'neutral'} size={size} />
 
 export function Modal({ title, onClose, children, width = 520 }: { title: string; onClose: () => void; children: ReactNode; width?: number }) {
   return (
