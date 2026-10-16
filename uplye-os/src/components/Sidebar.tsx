@@ -29,20 +29,20 @@ export default function Sidebar() {
       <nav className="mt-2 flex-1 overflow-y-auto">
         <Group label="Pilotage" />
         <Item to="/bientot/dashboard" icon={<SquaresFour size={s} />} label="Dashboard" />
-        <Item to="/bientot/planning" icon={<CalendarBlank size={s} />} label="Planning" />
-        <Item to="/bientot/kanban" icon={<Kanban size={s} />} label="Kanban" />
-        <Item to="/bientot/workload" icon={<ChartBar size={s} />} label="Workload" />
+        <Item to="/planning" icon={<CalendarBlank size={s} />} label="Planning" />
+        <Item to="/kanban" icon={<Kanban size={s} />} label="Kanban" />
+        <Item to="/workload" icon={<ChartBar size={s} />} label="Workload" />
         <Group label="Commercial" />
         <Item to="/devis" icon={<FileText size={s} weight="fill" />} label="Devis" />
         <Item to="/clients" icon={<UsersThree size={s} />} label="Clients" />
         <Item to="/bientot/evenements" icon={<Handshake size={s} />} label="Événements" />
         <Group label="Production" />
-        <Item to="/bientot/projets" icon={<Folder size={s} />} label="Projets" />
+        <Item to="/projets" icon={<Folder size={s} />} label="Projets" />
         <Item to="/bientot/azurpod" icon={<Microphone size={s} />} label="Azurpod" />
         <Group label="Admin" />
         <Item to="/bientot/equipe" icon={<Users size={s} />} label="Équipe" />
         <Item to="/bientot/catalogue" icon={<Tag size={s} />} label="Catalogue" />
-        <Item to="/bientot/finance" icon={<ChartLine size={s} />} label="Finance" />
+        <Item to="/finance" icon={<ChartLine size={s} />} label="Finance" />
       </nav>
       <div className="mt-3 flex items-center gap-2 rounded-xl border border-accent/30 bg-accent/10 px-3.5 py-2.5 font-medium">
         <Sparkle size={18} className="text-accent" /> <span className="flex-1">Assistant IA</span>

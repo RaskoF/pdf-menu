@@ -6,12 +6,17 @@ import DevisEditor from './pages/DevisEditor'
 import DevisClientView from './pages/DevisClientView'
 import ClientsPage from './pages/ClientsPage'
 import ClientDetail from './pages/ClientDetail'
+import ProjectsPage from './pages/ProjectsPage'
+import ProjectDetail from './pages/ProjectDetail'
+import KanbanPage from './pages/KanbanPage'
+import PlanningPage from './pages/PlanningPage'
+import FinancePage from './pages/FinancePage'
 
 function Soon() {
   const { page } = useParams()
   return (
     <div className="grid h-full place-items-center text-center">
-      <div><div className="h-page capitalize">{page}</div><p className="mt-3 text-ink2">Pas encore développé dans ce prototype : seule la partie Commercial est branchée.</p></div>
+      <div><div className="h-page capitalize">{page}</div><p className="mt-3 text-ink2">Pas encore développé dans ce prototype : Commercial, Projets, Kanban, Planning et Finance sont branchés.</p></div>
     </div>
   )
 }
@@ -30,6 +35,12 @@ function Shell() {
           <Route path="/devis/:id" element={<DevisEditor />} />
           <Route path="/clients" element={<ClientsPage />} />
           <Route path="/clients/:id" element={<ClientDetail />} />
+          <Route path="/projets" element={<ProjectsPage />} />
+          <Route path="/projets/:id" element={<ProjectDetail />} />
+          <Route path="/kanban" element={<KanbanPage />} />
+          <Route path="/planning" element={<PlanningPage />} />
+          <Route path="/workload" element={<PlanningPage />} />
+          <Route path="/finance" element={<FinancePage />} />
           <Route path="/bientot/:page" element={<Soon />} />
           <Route path="*" element={<Navigate to="/devis" replace />} />
         </Routes>

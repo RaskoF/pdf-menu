@@ -50,3 +50,55 @@ export interface CatalogueItem {
   price: number
   activity: Activity
 }
+
+export type Person = 'E' | 'A' | 'X' // Enzo, Allan, Alexis
+export type ProjectStatus = 'preprod' | 'tournage' | 'montage' | 'review' | 'livre'
+export type TaskStatus = 'todo' | 'progress' | 'review' | 'blocked' | 'done'
+export type TaskType = 'Tournage' | 'Montage' | 'Admin' | 'Commercial' | 'Azurpod'
+
+export interface Cost { id: string; label: string; amount: number }
+
+export interface Project {
+  id: string
+  name: string
+  clientId: string
+  devisId?: string
+  activity: Activity
+  status: ProjectStatus
+  owner: Person
+  start: string
+  due: string
+  budget: number // CA HT du projet
+  costs: Cost[] // coûts directs : freelances, location, pub…
+  recurring?: boolean
+}
+
+export interface Task {
+  id: string
+  projectId?: string
+  title: string
+  assignee: Person
+  status: TaskStatus
+  type: TaskType
+  hours: number
+  due: string
+}
+
+export interface Invoice {
+  id: string
+  number: string
+  clientId: string
+  projectId?: string
+  label: string
+  amountHT: number
+  issuedAt: string
+  dueAt: string
+  paidAt?: string
+  remindedAt?: string
+}
+
+export type ExpenseCategory = 'Freelances' | 'Matériel' | 'Publicité' | 'Déplacements' | 'Divers'
+export interface Expense { id: string; date: string; label: string; category: ExpenseCategory; amountHT: number; projectId?: string }
+
+export type SubCategory = 'Local' | 'Logiciels' | 'Assurance' | 'Banque & compta' | 'Marketing' | 'Télécom'
+export interface Subscription { id: string; label: string; category: SubCategory; monthlyHT: number; active: boolean; note?: string }

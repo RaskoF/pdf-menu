@@ -1,6 +1,6 @@
-# Uplye OS · prototype « Commercial »
+# Uplye OS · prototype
 
-Prototype cliquable de la partie Commercial d'Uplye OS, avec des **données fictives** (aucun vrai client).
+Prototype cliquable d'Uplye OS (Commercial, gestion de projet et Finance), avec des **données fictives** (aucun vrai client).
 Les modifications sont gardées dans le navigateur (localStorage) ; le bouton « Remettre les données de démo »,
 en bas de la barre latérale, repart de zéro.
 
@@ -24,7 +24,16 @@ npm run dev        # puis ouvrir http://localhost:5173
 - **Clients** : liste avec CA signé et devis en cours, création d'un client, **fiche client** (indicateurs, devis, contact,
   historique, notes).
 
-Les autres entrées du menu affichent « pas encore développé ».
+- **Projets** : cartes avec étapes, budget, marge et échéance ; **fiche projet** avec étapes cliquables, tâches,
+  coûts directs, temps passé valorisé (35 € HT/h) et factures liées. Un devis signé crée son projet et sa facture d'acompte.
+- **Kanban** : tâches par statut (à faire, en cours, review, bloqué, fait), glisser-déposer, filtres équipe / projet,
+  durée libre de 30 min à 40 h.
+- **Planning / Workload** : semaine par personne, charge comparée à la capacité, glisser une tâche pour la replanifier.
+- **Finance** (admins) : synthèse avec choix de période (CA facturé, encaissé, charges, résultat, graphique 12 mois,
+  indicateurs, meilleurs clients), factures à encaisser avec relance et prévision de trésorerie sur 3 mois,
+  charges fixes et abonnements, marge par projet.
+
+Dashboard, Événements, Azurpod, Équipe et Catalogue affichent « pas encore développé ».
 
 ## Stack
 

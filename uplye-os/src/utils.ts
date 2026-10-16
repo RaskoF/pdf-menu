@@ -43,3 +43,24 @@ export function relative(iso?: string) {
   const d = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000)
   return d <= 0 ? "aujourd'hui" : d === 1 ? 'hier' : `il y a ${d} j`
 }
+
+export const PEOPLE: Record<'E' | 'A' | 'X', { name: string; role: string; capacity: number }> = {
+  E: { name: 'Enzo', role: 'Président · clients', capacity: 35 },
+  A: { name: 'Allan', role: 'Direction artistique', capacity: 35 },
+  X: { name: 'Alexis', role: 'Montage (alternance)', capacity: 21 },
+}
+export const HOURLY_COST = 35 // coût interne d'une heure de travail, € HT
+
+export const daysFromNow = (n: number) => new Date(Date.now() + n * 86400000).toISOString()
+export const monthKey = (iso: string) => iso.slice(0, 7)
+export const monthLabel = (key: string, opts: Intl.DateTimeFormatOptions = { month: 'short' }) =>
+  new Date(key + '-15').toLocaleDateString('fr-FR', opts).replace('.', '')
+export function lastMonths(n: number, from = new Date()) {
+  const out: string[] = []
+  for (let i = n - 1; i >= 0; i--) {
+    const d = new Date(from.getFullYear(), from.getMonth() - i, 15)
+    out.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`)
+  }
+  return out
+}
+export const pct = (a: number, b: number) => (b ? Math.round((a / b) * 100) : 0)

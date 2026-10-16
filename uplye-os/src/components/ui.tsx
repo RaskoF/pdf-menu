@@ -62,3 +62,40 @@ export function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) =
     </button>
   )
 }
+
+import type { Person, ProjectStatus, TaskStatus, TaskType } from '../types'
+
+export const TASK_STATUSES: { id: TaskStatus; label: string; cls: string }[] = [
+  { id: 'todo', label: 'À faire', cls: 'bg-hover text-ink' },
+  { id: 'progress', label: 'En cours', cls: 'bg-b1 text-b7' },
+  { id: 'review', label: 'En review', cls: 'bg-y1 text-ink' },
+  { id: 'blocked', label: 'Bloqué', cls: 'bg-r1 text-r7' },
+  { id: 'done', label: 'Fait', cls: 'bg-g1 text-g7' },
+]
+export const TaskStatusPill = ({ s }: { s: TaskStatus }) => { const x = TASK_STATUSES.find((t) => t.id === s)!; return <span className={`pill ${x.cls}`}>{x.label}</span> }
+
+const TYPE_CLS: Record<TaskType, string> = { Tournage: 'bg-o1 text-o7', Montage: 'bg-p1 text-p7', Admin: 'bg-hover text-ink', Commercial: 'bg-g1 text-g7', Azurpod: 'bg-t1 text-t7' }
+export const TypePill = ({ t }: { t: TaskType }) => <span className={`pill !text-[12px] ${TYPE_CLS[t]}`}>{t}</span>
+
+export const PROJECT_STEPS: { id: ProjectStatus; label: string }[] = [
+  { id: 'preprod', label: 'Préproduction' }, { id: 'tournage', label: 'Tournage' }, { id: 'montage', label: 'Montage' },
+  { id: 'review', label: 'Retours client' }, { id: 'livre', label: 'Livré' },
+]
+export const ProjectStatusPill = ({ s }: { s: ProjectStatus }) => {
+  const cls = s === 'livre' ? 'bg-g1 text-g7' : s === 'review' ? 'bg-y1 text-ink' : s === 'preprod' ? 'bg-hover text-ink' : 'bg-b1 text-b7'
+  return <span className={`pill ${cls}`}>{PROJECT_STEPS.find((p) => p.id === s)!.label}</span>
+}
+
+export const PersonAvatar = ({ p, size = 24 }: { p: Person; size?: number }) =>
+  <Avatar text={p === 'X' ? 'AL' : p} tone={p === 'E' ? 'accent' : p === 'A' ? 'dark' : 'neutral'} size={size} />
+
+export function Modal({ title, onClose, children, width = 520 }: { title: string; onClose: () => void; children: ReactNode; width?: number }) {
+  return (
+    <div className="fixed inset-0 z-30 grid place-items-center bg-ink/40 p-4" onClick={onClose}>
+      <div className="card max-h-[90vh] overflow-y-auto p-6" style={{ width }} onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center"><div className="h-sec flex-1">{title}</div><button onClick={onClose} className="rounded p-1 text-ink2 hover:bg-hover">✕</button></div>
+        <div className="mt-4">{children}</div>
+      </div>
+    </div>
+  )
+}

@@ -1,24 +1,58 @@
 import { createContext, useContext, useEffect, useReducer, type ReactNode } from 'react'
-import type { Client, Devis, Stage } from './types'
+import type { Client, Devis, Expense, Invoice, Project, Stage, Subscription, Task } from './types'
 import { SEED_CLIENTS, SEED_DEVIS } from './data'
+import { SEED_EXPENSES, SEED_INVOICES, SEED_PROJECTS, SEED_SUBS, SEED_TASKS } from './dataOps'
+import { scheduleParts, totalHT, uid } from './utils'
 
-interface State { devis: Devis[]; clients: Client[] }
+export interface State {
+  devis: Devis[]; clients: Client[]
+  projects: Project[]; tasks: Task[]; invoices: Invoice[]; expenses: Expense[]; subs: Subscription[]
+}
+type Coll = 'projects' | 'tasks' | 'invoices' | 'expenses' | 'subs'
+type Item = Project | Task | Invoice | Expense | Subscription
 type Action =
   | { type: 'upsertDevis'; devis: Devis }
   | { type: 'deleteDevis'; id: string }
   | { type: 'moveDevis'; id: string; stage: Stage }
   | { type: 'upsertClient'; client: Client }
+  | { type: 'upsert'; coll: Coll; item: Item }
+  | { type: 'remove'; coll: Coll; id: string }
   | { type: 'reset' }
 
-const KEY = 'uplye-os-commercial-v1'
-const seed = (): State => ({ devis: structuredClone(SEED_DEVIS), clients: structuredClone(SEED_CLIENTS) })
+const KEY = 'uplye-os-demo-v2'
+const seed = (): State => structuredClone({
+  devis: SEED_DEVIS, clients: SEED_CLIENTS, projects: SEED_PROJECTS, tasks: SEED_TASKS,
+  invoices: SEED_INVOICES, expenses: SEED_EXPENSES, subs: SEED_SUBS,
+})
 
 function load(): State {
   try {
     const raw = localStorage.getItem(KEY)
-    if (raw) return JSON.parse(raw) as State
+    if (raw) return { ...seed(), ...(JSON.parse(raw) as Partial<State>) }
   } catch { /* stockage indisponible : on repart des données de démo */ }
   return seed()
+}
+
+export function nextInvoiceNumber(inv: Invoice[]) {
+  const max = inv.reduce((m, i) => Math.max(m, Number(i.number.split('-')[2] ?? 0)), 0)
+  return `F-${new Date().getFullYear()}-${String(max + 1).padStart(3, '0')}`
+}
+
+// Un devis signé crée son projet et sa facture d'acompte (une seule fois).
+function onSigned(s: State, d: Devis): State {
+  if (s.projects.some((p) => p.devisId === d.id)) return s
+  const now = new Date().toISOString()
+  const project: Project = {
+    id: uid(), name: d.title, clientId: d.clientId, devisId: d.id, activity: d.activity, status: 'preprod',
+    owner: d.owner === 'A' ? 'A' : 'E', start: now, due: new Date(Date.now() + 21 * 86400000).toISOString(), budget: totalHT(d), costs: [],
+  }
+  const first = scheduleParts(d.schedule)[0]!
+  const invoice: Invoice = {
+    id: uid(), number: nextInvoiceNumber(s.invoices), clientId: d.clientId, projectId: project.id,
+    label: `Acompte ${first.pct} % · ${d.number}`, amountHT: Math.round(totalHT(d) * first.pct) / 100,
+    issuedAt: now, dueAt: new Date(Date.now() + 15 * 86400000).toISOString(),
+  }
+  return { ...s, projects: [project, ...s.projects], invoices: [...s.invoices, invoice] }
 }
 
 export function nextNumber(devis: Devis[]) {
@@ -34,8 +68,8 @@ function reducer(s: State, a: Action): State {
     }
     case 'deleteDevis':
       return { ...s, devis: s.devis.filter((d) => d.id !== a.id) }
-    case 'moveDevis':
-      return {
+    case 'moveDevis': {
+      const next: State = {
         ...s,
         devis: s.devis.map((d) => {
           if (d.id !== a.id) return d
@@ -49,10 +83,20 @@ function reducer(s: State, a: Action): State {
           return moved
         }),
       }
+      const signed = next.devis.find((d) => d.id === a.id)
+      return a.stage === 'signe' && signed ? onSigned(next, signed) : next
+    }
     case 'upsertClient': {
       const exists = s.clients.some((c) => c.id === a.client.id)
       return { ...s, clients: exists ? s.clients.map((c) => (c.id === a.client.id ? a.client : c)) : [...s.clients, a.client] }
     }
+    case 'upsert': {
+      const list = s[a.coll] as Item[]
+      const exists = list.some((x) => x.id === a.item.id)
+      return { ...s, [a.coll]: exists ? list.map((x) => (x.id === a.item.id ? a.item : x)) : [a.item, ...list] }
+    }
+    case 'remove':
+      return { ...s, [a.coll]: (s[a.coll] as Item[]).filter((x) => x.id !== a.id) }
     case 'reset':
       return seed()
   }
