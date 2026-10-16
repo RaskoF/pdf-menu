@@ -31,6 +31,7 @@ export interface Devis {
   lastOpenedAt?: string
   signedAt?: string
   source?: string // ex. « Rencontré au BNI »
+  globalDiscount?: { kind: 'eur' | 'pct'; value: number; label?: string } // remise commerciale sur tout le devis
 }
 
 export interface Client {

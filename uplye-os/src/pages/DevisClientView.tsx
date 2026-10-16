@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, Check, CheckCircle, DownloadSimple, PlayCircle, WhatsappLogo } from '@phosphor-icons/react'
 import { useStore } from '../store'
-import { TVA, fmt, fmtDate, grossHT, lineTotal, scheduleParts, totalHT } from '../utils'
+import { TVA, fmt, fmtDate, globalDiscountHT, grossHT, lineTotal, scheduleParts, totalHT } from '../utils'
 import { Avatar } from '../components/ui'
 
 const REFS = [
@@ -66,6 +66,13 @@ export default function DevisClientView() {
                   {l.offered ? <span className="pill bg-g1 text-g7">Offert</span> : <span className="font-semibold">{fmt(lineTotal(l))} HT</span>}
                 </div>
               ))}
+              {globalDiscountHT(d) > 0 && (
+                <div className="flex items-center gap-4 px-5 py-4">
+                  <CheckCircle size={20} className="text-g7" />
+                  <div className="flex-1 font-semibold">{d.globalDiscount?.label || 'Remise commerciale'}{d.globalDiscount?.kind === 'pct' ? ` · ${d.globalDiscount.value} %` : ''}</div>
+                  <span className="font-semibold text-g7">− {fmt(globalDiscountHT(d))} HT</span>
+                </div>
+              )}
             </div>
           </section>
           <section>

@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, Eye, DownloadSimple, PaperPlaneTilt, Plus, Trash, DotsSixVertical, Gift, CheckCircle, X, Copy } from '@phosphor-icons/react'
 import { useStore } from '../store'
 import type { Activity, Devis, Line, Owner, Schedule, Stage } from '../types'
-import { STAGES, TVA, fmt, fmt2, fmtDate, grossHT, lineTotal, scheduleParts, totalHT, uid } from '../utils'
+import { DISCOUNT_CAP, STAGES, TVA, fmt, fmt2, fmtDate, globalDiscountHT, grossHT, lineTotal, linesHT, scheduleParts, totalHT, uid } from '../utils'
 import { Segmented, Toggle } from '../components/ui'
 
 const FLOW: Stage[] = ['brouillon', 'envoye', 'ouvert', 'signe']
@@ -26,6 +26,8 @@ export default function DevisEditor() {
   const move = (stage: Stage) => dispatch({ type: 'moveDevis', id: d.id, stage })
 
   const ht = totalHT(d), tva = ht * TVA, ttc = ht + tva, saved = grossHT(d) - ht
+  const gd = d.globalDiscount ?? { kind: 'pct' as const, value: 0 }
+  const discPct = grossHT(d) ? Math.round((saved / grossHT(d)) * 100) : 0
   const missing = [
     !d.lines.length && 'au moins une prestation',
     !d.intro.trim() && 'le texte « Le projet »',
@@ -129,8 +131,20 @@ export default function DevisEditor() {
               </table>
               <button onClick={() => save({ lines: [...d.lines, { id: uid(), label: 'Prestation libre', desc: 'Description', qty: 1, unitPrice: 0, discount: 0, offered: false }] })}
                 className="mt-2 flex items-center gap-1.5 text-[13px] text-ink2 hover:text-ink"><Plus size={13} />Ligne libre</button>
-              <div className="mt-5 ml-auto w-72 rounded-xl bg-app px-4 py-3 text-[14px]">
-                {saved > 0 && <Row l="Économie client" r={`− ${fmt2(saved)}`} cls="text-g7" />}
+              <div className="mt-5 ml-auto w-[340px] rounded-xl bg-app px-4 py-3 text-[14px]">
+                <div className="mb-2 border-b border-line pb-2">
+                  <div className="flex items-center gap-2">
+                    <span className="flex-1 whitespace-nowrap">Remise commerciale</span>
+                    <input aria-label="Montant de la remise commerciale" type="number" min={0} className="field !w-20 !py-1 text-right" value={gd.value || ''} placeholder="0"
+                      onChange={(e) => save({ globalDiscount: { ...gd, value: Math.max(0, Number(e.target.value)) } })} />
+                    <div className="flex rounded-lg bg-hover p-0.5 text-[12px]">
+                      {(['pct', 'eur'] as const).map((k) => <button key={k} onClick={() => save({ globalDiscount: { ...gd, kind: k } })} className={`rounded-md px-2 py-0.5 ${gd.kind === k ? 'bg-surface font-semibold shadow-sm' : 'text-ink2'}`}>{k === 'pct' ? '%' : '€'}</button>)}
+                    </div>
+                  </div>
+                  {globalDiscountHT(d) > 0 && <div className="mt-1 flex justify-between text-[13px] text-ink2"><span>Sous-total {fmt2(linesHT(d))}</span><span>− {fmt2(globalDiscountHT(d))}</span></div>}
+                </div>
+                {saved > 0 && <Row l={`Économie client · ${discPct} %`} r={`− ${fmt2(saved)}`} cls="text-g7" />}
+                {discPct > DISCOUNT_CAP && <div className="mb-1 rounded-lg bg-o1 px-2 py-1 text-[12px] text-o7">Remise totale au-delà de {DISCOUNT_CAP} % : à valider par Enzo ou Allan.</div>}
                 <Row l="Total HT" r={fmt2(ht)} /><Row l="TVA 20 %" r={fmt2(tva)} />
                 <Row l="Total TTC" r={fmt2(ttc)} cls="mt-1 font-semibold text-[15px]" />
               </div>

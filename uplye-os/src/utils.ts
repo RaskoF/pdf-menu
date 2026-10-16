@@ -13,7 +13,15 @@ export const STAGES: { id: Stage; label: string; dot: string; proba: number }[] 
 export const stageOf = (s: Stage) => STAGES.find((x) => x.id === s)!
 
 export const lineTotal = (l: Line) => (l.offered ? 0 : Math.max(0, l.qty * l.unitPrice - l.discount))
-export const totalHT = (d: Devis) => d.lines.reduce((s, l) => s + lineTotal(l), 0)
+export const linesHT = (d: Devis) => d.lines.reduce((s, l) => s + lineTotal(l), 0)
+// remise commerciale globale, en € ou en %, appliquée après les remises par ligne
+export const globalDiscountHT = (d: Devis) => {
+  const g = d.globalDiscount, base = linesHT(d)
+  if (!g || g.value <= 0) return 0
+  return Math.min(base, g.kind === 'pct' ? base * Math.min(g.value, 100) / 100 : g.value)
+}
+export const totalHT = (d: Devis) => linesHT(d) - globalDiscountHT(d)
+export const DISCOUNT_CAP = 20 // % de remise totale au-delà duquel un admin doit valider
 export const grossHT = (d: Devis) => d.lines.reduce((s, l) => s + l.qty * l.unitPrice, 0)
 
 export const scheduleParts = (s: Schedule): { pct: number; label: string }[] =>
