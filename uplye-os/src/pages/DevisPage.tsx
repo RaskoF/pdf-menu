@@ -172,8 +172,8 @@ function List({ devis, clientName }: { devis: Devis[]; clientName: (id: string) 
     sort.k === 'number' ? d.number : sort.k === 'client' ? clientName(d.clientId) : sort.k === 'total' ? totalHT(d)
       : sort.k === 'stage' ? order.indexOf(d.stage) : d.createdAt
   const rows = [...devis].sort((a, b) => (val(a) < val(b) ? -1 : val(a) > val(b) ? 1 : 0) * (sort.asc ? 1 : -1))
-  const H = ({ k, label, right }: { k: SortKey; label: string; right?: boolean }) => (
-    <th className={`px-4 py-3 font-mono text-[11px] font-normal uppercase text-ink2 ${right ? 'text-right' : 'text-left'}`}>
+  const H = (k: SortKey, label: string, right?: boolean) => (
+    <th key={k} className={`px-4 py-3 font-mono text-[11px] font-normal uppercase text-ink2 ${right ? 'text-right' : 'text-left'}`}>
       <button onClick={() => setSort({ k, asc: sort.k === k ? !sort.asc : true })} className="inline-flex items-center gap-1 uppercase">
         {label}{sort.k === k && (sort.asc ? <CaretUp size={10} /> : <CaretDown size={10} />)}
       </button>
@@ -184,9 +184,9 @@ function List({ devis, clientName }: { devis: Devis[]; clientName: (id: string) 
     <div className="card mt-5 overflow-hidden">
       <table className="w-full">
         <thead className="border-b border-line"><tr>
-          <H k="number" label="N°" /><H k="client" label="Client" /><th className="px-4 py-3 text-left font-mono text-[11px] font-normal uppercase text-ink2">Objet</th>
+          {H('number', 'N°')}{H('client', 'Client')}<th className="px-4 py-3 text-left font-mono text-[11px] font-normal uppercase text-ink2">Objet</th>
           <th className="px-4 py-3 text-left font-mono text-[11px] font-normal uppercase text-ink2">Activité</th>
-          <H k="stage" label="Statut" /><H k="date" label="Créé" /><H k="total" label="Total HT" right />
+          {H('stage', 'Statut')}{H('date', 'Créé')}{H('total', 'Total HT', true)}
         </tr></thead>
         <tbody>
           {rows.map((d) => (
