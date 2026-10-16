@@ -1,0 +1,44 @@
+import type { CatalogueItem, Client, Devis, Line } from './types'
+import { daysAgo } from './utils'
+
+// Données fictives de démonstration : aucun client réel.
+export const CATALOGUE: CatalogueItem[] = [
+  { id: 'c1', label: 'Vidéo publicitaire', desc: 'Script, tournage, montage · 9:16 et 4:5', price: 750, activity: 'Studio' },
+  { id: 'c2', label: 'Shooting photo', desc: 'Demi-journée · 20 photos retouchées', price: 350, activity: 'Studio' },
+  { id: 'c3', label: 'Mise en place & suivi de campagne', desc: 'Paramétrage Meta, ciblage, bilan à 30 jours', price: 350, activity: 'Studio' },
+  { id: 'c4', label: 'Pack contenus mensuels', desc: '4 vidéos courtes + 8 visuels par mois', price: 1490, activity: 'Studio' },
+  { id: 'c5', label: 'Film corporate', desc: '2 à 3 min · interviews + images d’illustration', price: 2900, activity: 'Studio' },
+  { id: 'c6', label: 'Prise de vue drone', desc: 'Pilote certifié · demi-journée', price: 450, activity: 'Studio' },
+  { id: 'c7', label: 'Session podcast · Standard', desc: '1 h · 2 caméras · fichiers bruts', price: 150, activity: 'Azurpod' },
+  { id: 'c8', label: 'Pack studio 10 h', desc: '8 h + 2 h offertes · formule Standard', price: 648, activity: 'Azurpod' },
+  { id: 'c9', label: 'Montage épisode podcast', desc: 'Montage + 3 extraits verticaux', price: 220, activity: 'Azurpod' },
+  { id: 'c10', label: 'Formation création de contenu', desc: '1 journée en entreprise · 8 personnes max', price: 1350, activity: 'Academy' },
+  { id: 'c11', label: 'Formation Lightroom', desc: 'Programme en ligne + 1 h de coaching', price: 290, activity: 'Academy' },
+]
+
+const L = (label: string, desc: string, qty: number, unitPrice: number, discount = 0, offered = false): Line => ({
+  id: Math.random().toString(36).slice(2, 10), label, desc, qty, unitPrice, discount, offered,
+})
+
+export const SEED_CLIENTS: Client[] = [
+  { id: 'cl1', name: 'Boulangerie Maison Rivière', sector: 'Commerce de bouche', contact: { name: 'Julie Rivière', role: 'Gérante', phone: '06 12 34 56 78', email: 'julie@maison-riviere.fr' }, address: '12 rue du Port, 83000 Toulon', notes: ['Veut mettre en avant le fait-maison', 'Tournage idéal tôt le matin (fournée de 6 h)'], createdAt: daysAgo(80) },
+  { id: 'cl2', name: 'Hôtel Les Pins', sector: 'Hôtellerie', contact: { name: 'Marc Lefèvre', role: 'Directeur', phone: '06 22 11 44 55', email: 'direction@hotel-lespins.fr' }, address: 'Corniche du Mourillon, 83000 Toulon', notes: ['Saison haute : avril à septembre', 'Budget com’ voté en janvier'], createdAt: daysAgo(120) },
+  { id: 'cl3', name: 'Salle Fit Azur', sector: 'Sport & bien-être', contact: { name: 'Sofia Benali', role: 'Fondatrice', phone: '07 45 98 12 30', email: 'sofia@fitazur.fr' }, address: 'ZA des Plantades, 83130 La Garde', notes: ['Objectif : 60 nouveaux abonnés en janvier'], createdAt: daysAgo(45) },
+  { id: 'cl4', name: 'Cabinet Durand Avocats', sector: 'Services aux entreprises', contact: { name: 'Pierre Durand', role: 'Associé', phone: '04 94 00 11 22', email: 'p.durand@durand-avocats.fr' }, address: 'Bd de Strasbourg, 83000 Toulon', notes: ['Souhaite lancer un podcast juridique mensuel'], createdAt: daysAgo(30) },
+  { id: 'cl5', name: 'Domaine Saint-Clair', sector: 'Vin & spiritueux', contact: { name: 'Hélène Martin', role: 'Responsable marketing', phone: '06 87 65 43 21', email: 'helene@domaine-saintclair.fr' }, address: 'Route de Bandol, 83330 Le Beausset', notes: ['Vendanges fin septembre', 'Aime les images au drone'], createdAt: daysAgo(150) },
+  { id: 'cl6', name: 'Agence Immo Littoral', sector: 'Immobilier', contact: { name: 'Thomas Girard', role: 'Directeur d’agence', phone: '06 33 44 55 66', email: 't.girard@immo-littoral.fr' }, address: 'Av. de la République, 83400 Hyères', notes: ['3 mandats exclusifs par mois en moyenne'], createdAt: daysAgo(20) },
+  { id: 'cl7', name: 'Restaurant La Calanque', sector: 'Restauration', contact: { name: 'Nicolas Fabre', role: 'Chef & gérant', phone: '06 71 72 73 74', email: 'contact@lacalanque.fr' }, address: 'Port de Sanary, 83110 Sanary-sur-Mer', notes: ['Rencontré au BNI'], createdAt: daysAgo(6) },
+  { id: 'cl8', name: 'École Horizon', sector: 'Éducation', contact: { name: 'Claire Morel', role: 'Directrice pédagogique', phone: '04 94 55 66 77', email: 'c.morel@ecole-horizon.fr' }, address: 'Technopôle de la Mer, 83500 La Seyne', notes: ['Formation des équipes com’ au printemps'], createdAt: daysAgo(12) },
+]
+
+export const SEED_DEVIS: Devis[] = [
+  { id: 'd1', number: '', clientId: 'cl7', title: 'Contenus réseaux sociaux', intro: '', owner: 'A', activity: 'Studio', stage: 'a_chiffrer', lines: [], validityDays: 30, schedule: '40/30/30', createdAt: daysAgo(2), openedCount: 0, source: 'Rencontré au BNI' },
+  { id: 'd2', number: 'DEV-2026-018', clientId: 'cl8', title: 'Formation création de contenu', intro: 'Former l’équipe communication à produire des vidéos courtes en autonomie.', owner: 'E', activity: 'Academy', stage: 'brouillon', lines: [L('Formation création de contenu', '1 journée en entreprise · 8 personnes max', 2, 1350, 200), L('Kit de démarrage', 'Trépied, micro-cravate, éclairage LED', 1, 180)], validityDays: 30, schedule: '50/50', createdAt: daysAgo(1), openedCount: 0 },
+  { id: 'd3', number: 'DEV-2026-017', clientId: 'cl4', title: 'Lancement podcast juridique', intro: 'Un épisode par mois au studio Azurpod, monté et décliné en extraits pour LinkedIn.', owner: 'E', activity: 'Azurpod', stage: 'envoye', lines: [L('Pack studio 10 h', '8 h + 2 h offertes · formule Standard', 1, 648), L('Montage épisode podcast', 'Montage + 3 extraits verticaux', 6, 220, 120)], validityDays: 30, schedule: '40/30/30', createdAt: daysAgo(5), sentAt: daysAgo(3), openedCount: 0 },
+  { id: 'd4', number: 'DEV-2026-016', clientId: 'cl3', title: 'Campagne abonnements de janvier', intro: 'Faire venir 60 nouveaux abonnés en janvier grâce à une vidéo forte et une campagne Meta locale.', owner: 'E', activity: 'Studio', stage: 'ouvert', lines: [L('Vidéo publicitaire', 'Script, tournage, montage · 9:16 et 4:5', 1, 750, 150), L('Shooting photo', 'Demi-journée · 20 photos retouchées', 1, 350), L('Mise en place & suivi de campagne', 'Paramétrage Meta, ciblage, bilan à 30 jours', 1, 350, 0, true)], validityDays: 30, schedule: '40/30/30', createdAt: daysAgo(9), sentAt: daysAgo(7), openedCount: 3, lastOpenedAt: daysAgo(1) },
+  { id: 'd5', number: 'DEV-2026-015', clientId: 'cl2', title: 'Film de marque saison 2027', intro: 'Un film qui donne envie de réserver, décliné pour le site, Instagram et les salons.', owner: 'A', activity: 'Studio', stage: 'ouvert', lines: [L('Film corporate', '2 à 3 min · interviews + images d’illustration', 1, 2900), L('Prise de vue drone', 'Pilote certifié · demi-journée', 1, 450), L('Vidéo publicitaire', 'Déclinaisons 15 s', 2, 750, 300)], validityDays: 45, schedule: '40/30/30', createdAt: daysAgo(14), sentAt: daysAgo(12), openedCount: 5, lastOpenedAt: daysAgo(4) },
+  { id: 'd6', number: 'DEV-2026-014', clientId: 'cl1', title: 'Vidéo + photos fait-maison', intro: 'Montrer la fournée du matin : une vidéo et des photos pour la vitrine et les réseaux.', owner: 'E', activity: 'Studio', stage: 'signe', lines: [L('Vidéo publicitaire', 'Script, tournage, montage · 9:16 et 4:5', 1, 750, 100), L('Shooting photo', 'Demi-journée · 20 photos retouchées', 1, 350)], validityDays: 30, schedule: '40/30/30', createdAt: daysAgo(28), sentAt: daysAgo(26), openedCount: 4, lastOpenedAt: daysAgo(22), signedAt: daysAgo(21) },
+  { id: 'd7', number: 'DEV-2026-013', clientId: 'cl6', title: 'Pack studio podcast', intro: 'Des vidéos podcast pour présenter les biens et l’équipe.', owner: 'A', activity: 'Azurpod', stage: 'signe', lines: [L('Pack studio 10 h', '8 h + 2 h offertes · formule Standard', 1, 648)], validityDays: 30, schedule: '100', createdAt: daysAgo(18), sentAt: daysAgo(17), openedCount: 2, lastOpenedAt: daysAgo(16), signedAt: daysAgo(15) },
+  { id: 'd8', number: 'DEV-2026-012', clientId: 'cl5', title: 'Vendanges 2026', intro: 'Raconter les vendanges en images, du drone aux mains des vendangeurs.', owner: 'E', activity: 'Studio', stage: 'refuse', lines: [L('Film corporate', 'Format 90 s', 1, 2900, 400), L('Prise de vue drone', 'Pilote certifié · demi-journée', 1, 450)], validityDays: 30, schedule: '40/30/30', createdAt: daysAgo(60), sentAt: daysAgo(58), openedCount: 6, lastOpenedAt: daysAgo(40) },
+  { id: 'd9', number: 'DEV-2026-011', clientId: 'cl5', title: 'Contenus mensuels', intro: 'Quatre vidéos courtes par mois pour garder le lien avec la clientèle.', owner: 'A', activity: 'Studio', stage: 'signe', lines: [L('Pack contenus mensuels', '4 vidéos courtes + 8 visuels par mois', 3, 1490, 270)], validityDays: 30, schedule: '50/50', createdAt: daysAgo(70), sentAt: daysAgo(66), openedCount: 3, lastOpenedAt: daysAgo(63), signedAt: daysAgo(60) },
+]
