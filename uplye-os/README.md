@@ -40,7 +40,11 @@ npm run dev        # puis ouvrir http://localhost:5173
 - **Rôles** : le sélecteur sous le nom (barre latérale) permet de voir l'app en Enzo, Allan ou Alexis. En vue
   Production (Alexis), devis, clients, finance et montants sont masqués et leurs pages bloquées.
 
-Événements, Équipe et Catalogue affichent « pas encore développé ». Règles de sécurité : voir `SECURITY.md` à la racine du dépôt.
+- **Événements** : networking, salons, conférences ; contacts rencontrés avec leur statut, « Créer le prospect »
+  (crée le client et une carte « À chiffrer » dans le pipeline), CA signé issu des événements.
+- **Équipe** : fiches membres, charge de la semaine, absences, invitation (préparée, non envoyée), tableau « qui voit quoi ».
+- **Catalogue** : prestations, prix et unité, temps interne et coûts directs, marge estimée, utilisation dans les devis,
+  archivage. L'éditeur de devis lit ce catalogue. Règles de sécurité : voir `SECURITY.md` à la racine du dépôt.
 
 ## Stack
 

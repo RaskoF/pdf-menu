@@ -49,6 +49,10 @@ export interface CatalogueItem {
   desc: string
   price: number
   activity: Activity
+  unit?: 'forfait' | 'heure' | 'mois'
+  hours?: number // temps interne estimé
+  directCost?: number // coûts directs estimés (freelance, location…)
+  archived?: boolean
 }
 
 export type Person = 'E' | 'A' | 'X' // Enzo, Allan, Alexis
@@ -119,3 +123,11 @@ export interface Booking {
   title: string
 }
 export interface Pack { id: string; clientId: string; label: string; hoursTotal: number; priceHT: number; expiresAt: string }
+
+export type ContactStatus = 'a_recontacter' | 'prospect' | 'devis' | 'gagne' | 'pas_interesse'
+export interface EventContact { id: string; name: string; company: string; role: string; notes: string; status: ContactStatus; clientId?: string; devisId?: string }
+export type EventType = 'Networking' | 'Salon' | 'Conférence' | 'Afterwork'
+export interface EventItem { id: string; name: string; type: EventType; date: string; place: string; cost: number; attendees: Person[]; contacts: EventContact[]; notes: string }
+
+export interface Absence { id: string; from: string; to: string; label: string }
+export interface Member { id: Person; email: string; phone: string; skills: string[]; contract: string; since: string; absences: Absence[] }

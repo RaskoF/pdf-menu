@@ -1,4 +1,4 @@
-import type { Booking, Expense, ExpenseCategory, Invoice, Pack, Project, Subscription, Task } from './types'
+import type { Booking, EventItem, Expense, ExpenseCategory, Invoice, Member, Pack, Project, Subscription, Task } from './types'
 import { daysAgo, daysFromNow, lastMonths } from './utils'
 
 // Données fictives de démonstration pour la gestion de projet et la finance.
@@ -124,3 +124,24 @@ export const SEED_BOOKINGS: Booking[] = RAW_BOOKINGS.map((b) =>
   new Date(b.start) < new Date() && b.status === 'confirmee'
     ? { ...b, status: 'terminee', deliverable: b.formula === 'Standard' ? 'aucun' : b.deliverable === 'aucun' ? 'a_monter' : b.deliverable }
     : b)
+
+// Événements de prospection et équipe.
+export const SEED_EVENTS: EventItem[] = [
+  { id: 'ev1', name: 'BNI Toulon Rade · petit-déjeuner', type: 'Networking', date: daysAgo(9), place: 'Toulon', cost: 35, attendees: ['E'], notes: 'Présentation de 60 s sur Azurpod.',
+    contacts: [
+      { id: 'ec1', name: 'Nicolas Fabre', company: 'Restaurant La Calanque', role: 'Chef & gérant', notes: 'Veut des contenus réseaux pour la saison', status: 'devis', clientId: 'cl7', devisId: 'd1' },
+      { id: 'ec2', name: 'Camille Roux', company: 'Roux Paysages', role: 'Gérante', notes: 'Intéressée par un film de chantier, budget au printemps', status: 'a_recontacter' },
+    ] },
+  { id: 'ev2', name: 'Salon de l’immobilier du Var', type: 'Salon', date: daysAgo(30), place: 'Hyères', cost: 0, attendees: ['E', 'A'], notes: '',
+    contacts: [
+      { id: 'ec3', name: 'Thomas Girard', company: 'Agence Immo Littoral', role: 'Directeur d’agence', notes: 'Pack podcast signé', status: 'gagne', clientId: 'cl6' },
+      { id: 'ec4', name: 'Lucie Bernard', company: 'Bernard Immobilier', role: 'Négociatrice', notes: 'Pas de budget cette année', status: 'pas_interesse' },
+    ] },
+  { id: 'ev3', name: 'Afterwork CCI · entrepreneurs du Var', type: 'Afterwork', date: daysFromNow(6), place: 'La Seyne-sur-Mer', cost: 20, attendees: ['E', 'A'], notes: 'Apporter les cartes et la plaquette Azurpod.', contacts: [] },
+  { id: 'ev4', name: 'Conférence « Vidéo et marque employeur »', type: 'Conférence', date: daysFromNow(20), place: 'Technopôle de la Mer', cost: 0, attendees: ['A'], notes: 'Allan intervient 20 min.', contacts: [] },
+]
+export const SEED_MEMBERS: Member[] = [
+  { id: 'E', email: 'enzo@exemple.fr', phone: '06 00 00 00 01', skills: ['Relation client', 'Réalisation', 'Publicité Meta'], contract: 'Président', since: daysAgo(560), absences: [] },
+  { id: 'A', email: 'allan@exemple.fr', phone: '06 00 00 00 02', skills: ['Direction artistique', 'Motion design', 'Photo'], contract: 'Associé · sous-traitance', since: daysAgo(560), absences: [{ id: 'ab1', from: daysFromNow(12), to: daysFromNow(16), label: 'Congés' }] },
+  { id: 'X', email: 'alexis@exemple.fr', phone: '06 00 00 00 03', skills: ['Montage', 'Sous-titres', 'Étalonnage'], contract: 'Alternance · 3 j / semaine', since: daysAgo(40), absences: [{ id: 'ab2', from: daysFromNow(3), to: daysFromNow(4), label: 'École' }] },
+]

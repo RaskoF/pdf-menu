@@ -1,17 +1,18 @@
 import { createContext, useContext, useEffect, useReducer, type ReactNode } from 'react'
-import type { Booking, Client, Devis, Expense, Invoice, Pack, Person, Project, Stage, Subscription, Task } from './types'
-import { SEED_CLIENTS, SEED_DEVIS } from './data'
-import { SEED_BOOKINGS, SEED_EXPENSES, SEED_INVOICES, SEED_PACKS, SEED_PROJECTS, SEED_SUBS, SEED_TASKS } from './dataOps'
+import type { Booking, CatalogueItem, Client, Devis, EventItem, Expense, Invoice, Member, Pack, Person, Project, Stage, Subscription, Task } from './types'
+import { CATALOGUE, SEED_CLIENTS, SEED_DEVIS } from './data'
+import { SEED_BOOKINGS, SEED_EVENTS, SEED_MEMBERS, SEED_EXPENSES, SEED_INVOICES, SEED_PACKS, SEED_PROJECTS, SEED_SUBS, SEED_TASKS } from './dataOps'
 import { scheduleParts, totalHT, uid } from './utils'
 
 export interface State {
   devis: Devis[]; clients: Client[]
   projects: Project[]; tasks: Task[]; invoices: Invoice[]; expenses: Expense[]; subs: Subscription[]
   bookings: Booking[]; packs: Pack[]
+  events: EventItem[]; members: Member[]; catalogue: CatalogueItem[]
   me: Person // personne connectée (pour tester les vues par rôle)
 }
-type Coll = 'projects' | 'tasks' | 'invoices' | 'expenses' | 'subs' | 'bookings' | 'packs'
-type Item = Project | Task | Invoice | Expense | Subscription | Booking | Pack
+type Coll = 'projects' | 'tasks' | 'invoices' | 'expenses' | 'subs' | 'bookings' | 'packs' | 'events' | 'members' | 'catalogue' | 'clients'
+type Item = Project | Task | Invoice | Expense | Subscription | Booking | Pack | EventItem | Member | CatalogueItem | Client
 type Action =
   | { type: 'upsertDevis'; devis: Devis }
   | { type: 'deleteDevis'; id: string }
@@ -25,7 +26,7 @@ type Action =
 const KEY = 'uplye-os-demo-v2'
 const seed = (): State => structuredClone({
   devis: SEED_DEVIS, clients: SEED_CLIENTS, projects: SEED_PROJECTS, tasks: SEED_TASKS,
-  invoices: SEED_INVOICES, expenses: SEED_EXPENSES, subs: SEED_SUBS, bookings: SEED_BOOKINGS, packs: SEED_PACKS, me: 'E' as Person,
+  invoices: SEED_INVOICES, expenses: SEED_EXPENSES, subs: SEED_SUBS, bookings: SEED_BOOKINGS, packs: SEED_PACKS, events: SEED_EVENTS, members: SEED_MEMBERS, catalogue: CATALOGUE, me: 'E' as Person,
 })
 
 function load(): State {

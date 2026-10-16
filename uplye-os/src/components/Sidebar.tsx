@@ -39,14 +39,14 @@ export default function Sidebar() {
           <Group label="Commercial" />
           <Item to="/devis" icon={<FileText size={s} weight="fill" />} label="Devis" />
           <Item to="/clients" icon={<UsersThree size={s} />} label="Clients" />
-          <Item to="/bientot/evenements" icon={<Handshake size={s} />} label="Événements" />
+          <Item to="/evenements" icon={<Handshake size={s} />} label="Événements" />
         </>}
         <Group label="Production" />
         <Item to="/projets" icon={<Folder size={s} />} label="Projets" />
         <Item to="/azurpod" icon={<Microphone size={s} />} label="Azurpod" />
         <Group label="Admin" />
-        <Item to="/bientot/equipe" icon={<Users size={s} />} label="Équipe" />
-        {admin && <Item to="/bientot/catalogue" icon={<Tag size={s} />} label="Catalogue" />}
+        <Item to="/equipe" icon={<Users size={s} />} label="Équipe" />
+        {admin && <Item to="/catalogue" icon={<Tag size={s} />} label="Catalogue" />}
         {admin && <Item to="/finance" icon={<ChartLine size={s} />} label="Finance" />}
       </nav>
       <div className="mt-3 flex items-center gap-2 rounded-xl border border-accent/30 bg-accent/10 px-3.5 py-2.5 font-medium">

@@ -13,6 +13,9 @@ import PlanningPage from './pages/PlanningPage'
 import FinancePage from './pages/FinancePage'
 import DashboardPage from './pages/DashboardPage'
 import AzurpodPage from './pages/AzurpodPage'
+import EventsPage from './pages/EventsPage'
+import TeamPage from './pages/TeamPage'
+import CataloguePage from './pages/CataloguePage'
 import { useStore } from './store'
 
 function Soon() {
@@ -43,6 +46,9 @@ function Shell() {
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/azurpod" element={<AzurpodPage />} />
+          <Route path="/evenements" element={<AdminOnly><EventsPage /></AdminOnly>} />
+          <Route path="/equipe" element={<TeamPage />} />
+          <Route path="/catalogue" element={<AdminOnly><CataloguePage /></AdminOnly>} />
           <Route path="/devis" element={<AdminOnly><DevisPage /></AdminOnly>} />
           <Route path="/devis/:id" element={<AdminOnly><DevisEditor /></AdminOnly>} />
           <Route path="/clients" element={<AdminOnly><ClientsPage /></AdminOnly>} />

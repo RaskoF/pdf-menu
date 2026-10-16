@@ -3,17 +3,17 @@ import { daysAgo } from './utils'
 
 // Données fictives de démonstration : aucun client réel.
 export const CATALOGUE: CatalogueItem[] = [
-  { id: 'c1', label: 'Vidéo publicitaire', desc: 'Script, tournage, montage · 9:16 et 4:5', price: 750, activity: 'Studio' },
-  { id: 'c2', label: 'Shooting photo', desc: 'Demi-journée · 20 photos retouchées', price: 350, activity: 'Studio' },
-  { id: 'c3', label: 'Mise en place & suivi de campagne', desc: 'Paramétrage Meta, ciblage, bilan à 30 jours', price: 350, activity: 'Studio' },
-  { id: 'c4', label: 'Pack contenus mensuels', desc: '4 vidéos courtes + 8 visuels par mois', price: 1490, activity: 'Studio' },
-  { id: 'c5', label: 'Film corporate', desc: '2 à 3 min · interviews + images d’illustration', price: 2900, activity: 'Studio' },
-  { id: 'c6', label: 'Prise de vue drone', desc: 'Pilote certifié · demi-journée', price: 450, activity: 'Studio' },
-  { id: 'c7', label: 'Session podcast · Standard', desc: '1 h · 2 caméras · fichiers bruts', price: 150, activity: 'Azurpod' },
-  { id: 'c8', label: 'Pack studio 10 h', desc: '8 h + 2 h offertes · formule Standard', price: 648, activity: 'Azurpod' },
-  { id: 'c9', label: 'Montage épisode podcast', desc: 'Montage + 3 extraits verticaux', price: 220, activity: 'Azurpod' },
-  { id: 'c10', label: 'Formation création de contenu', desc: '1 journée en entreprise · 8 personnes max', price: 1350, activity: 'Academy' },
-  { id: 'c11', label: 'Formation Lightroom', desc: 'Programme en ligne + 1 h de coaching', price: 290, activity: 'Academy' },
+  { id: 'c1', label: 'Vidéo publicitaire', desc: 'Script, tournage, montage · 9:16 et 4:5', price: 750, activity: 'Studio', unit: 'forfait', hours: 3, directCost: 0 },
+  { id: 'c2', label: 'Shooting photo', desc: 'Demi-journée · 20 photos retouchées', price: 350, activity: 'Studio', unit: 'forfait', hours: 4, directCost: 0 },
+  { id: 'c3', label: 'Mise en place & suivi de campagne', desc: 'Paramétrage Meta, ciblage, bilan à 30 jours', price: 350, activity: 'Studio', unit: 'forfait', hours: 2, directCost: 0 },
+  { id: 'c4', label: 'Pack contenus mensuels', desc: '4 vidéos courtes + 8 visuels par mois', price: 1490, activity: 'Studio', unit: 'mois', hours: 10, directCost: 0 },
+  { id: 'c5', label: 'Film corporate', desc: '2 à 3 min · interviews + images d’illustration', price: 2900, activity: 'Studio', unit: 'forfait', hours: 18, directCost: 350 },
+  { id: 'c6', label: 'Prise de vue drone', desc: 'Pilote certifié · demi-journée', price: 450, activity: 'Studio', unit: 'forfait', hours: 3, directCost: 0 },
+  { id: 'c7', label: 'Session podcast · Standard', desc: '1 h · 2 caméras · fichiers bruts', price: 150, activity: 'Azurpod', unit: 'heure', hours: 1, directCost: 0 },
+  { id: 'c8', label: 'Pack studio 10 h', desc: '8 h + 2 h offertes · formule Standard', price: 648, activity: 'Azurpod', unit: 'forfait', hours: 2, directCost: 0 },
+  { id: 'c9', label: 'Montage épisode podcast', desc: 'Montage + 3 extraits verticaux', price: 220, activity: 'Azurpod', unit: 'forfait', hours: 2, directCost: 0 },
+  { id: 'c10', label: 'Formation création de contenu', desc: '1 journée en entreprise · 8 personnes max', price: 1350, activity: 'Academy', unit: 'forfait', hours: 10, directCost: 0 },
+  { id: 'c11', label: 'Formation Lightroom', desc: 'Programme en ligne + 1 h de coaching', price: 290, activity: 'Academy', unit: 'forfait', hours: 1, directCost: 0 },
 ]
 
 const L = (label: string, desc: string, qty: number, unitPrice: number, discount = 0, offered = false): Line => ({

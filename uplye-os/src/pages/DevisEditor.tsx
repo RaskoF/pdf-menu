@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, Eye, DownloadSimple, PaperPlaneTilt, Plus, Trash, DotsSixVertical, Gift, CheckCircle, X, Copy } from '@phosphor-icons/react'
 import { useStore } from '../store'
 import type { Activity, Devis, Line, Owner, Schedule, Stage } from '../types'
-import { CATALOGUE } from '../data'
 import { STAGES, TVA, fmt, fmt2, fmtDate, grossHT, lineTotal, scheduleParts, totalHT, uid } from '../utils'
 import { Segmented, Toggle } from '../components/ui'
 
@@ -207,7 +206,7 @@ export default function DevisEditor() {
             {(['Studio', 'Azurpod', 'Academy'] as const).map((a) => (
               <div key={a} className="mt-4">
                 <div className="tag mb-2">{a}</div>
-                {CATALOGUE.filter((c) => c.activity === a).map((c) => (
+                {state.catalogue.filter((c) => c.activity === a && !c.archived).map((c) => (
                   <button key={c.id} onClick={() => { save({ lines: [...d.lines, { id: uid(), label: c.label, desc: c.desc, qty: 1, unitPrice: c.price, discount: 0, offered: false }] }); setPicker(false) }}
                     className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left hover:bg-hover">
                     <div className="flex-1"><div className="font-semibold">{c.label}</div><div className="text-[13px] text-ink2">{c.desc}</div></div>
