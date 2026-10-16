@@ -23,7 +23,7 @@ function Shell() {
   return (
     <div className="flex h-full">
       <Sidebar />
-      <main className="relative min-w-0 flex-1 overflow-y-auto">
+      <main className="relative min-w-0 flex-1 overflow-auto">
         <Routes>
           <Route path="/" element={<Navigate to="/devis" replace />} />
           <Route path="/devis" element={<DevisPage />} />

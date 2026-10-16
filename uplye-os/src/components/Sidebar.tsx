@@ -3,7 +3,7 @@ import {
   MagnifyingGlass, SquaresFour, CalendarBlank, Kanban, ChartBar, FileText, UsersThree, Handshake,
   Folder, Microphone, Users, Tag, ChartLine, Sparkle, Bell, GearSix, ArrowCounterClockwise,
 } from '@phosphor-icons/react'
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Avatar } from './ui'
 import { useStore } from '../store'
 
@@ -17,6 +17,7 @@ const Group = ({ label }: { label: string }) => <div className="mt-3 mb-1 px-3 f
 
 export default function Sidebar() {
   const { dispatch } = useStore()
+  const [armed, setArmed] = useState(false)
   const s = 20
   return (
     <aside className="flex h-full w-[248px] shrink-0 flex-col bg-side px-4 py-6 text-ondark">
@@ -52,9 +53,10 @@ export default function Sidebar() {
         <div className="flex-1 leading-tight"><div className="font-semibold">Enzo</div><div className="text-[12px] text-ondarkm">Admin</div></div>
         <Bell size={18} className="text-ondarkm" /><GearSix size={18} className="text-ondarkm" />
       </div>
-      <button onClick={() => { if (confirm('Remettre les données de démonstration ? Tes modifications seront perdues.')) dispatch({ type: 'reset' }) }}
-        className="mt-3 flex items-center gap-1.5 px-2 text-[12px] text-ondarkm hover:text-ondark">
-        <ArrowCounterClockwise size={13} />Remettre les données de démo
+      {/* confirmation dans la page : les boîtes confirm() natives ne s'affichent pas partout */}
+      <button onClick={() => { if (armed) { dispatch({ type: 'reset' }); setArmed(false) } else { setArmed(true); setTimeout(() => setArmed(false), 4000) } }}
+        className={`mt-3 flex items-center gap-1.5 px-2 text-[12px] ${armed ? 'text-accent' : 'text-ondarkm hover:text-ondark'}`}>
+        <ArrowCounterClockwise size={13} />{armed ? 'Cliquer à nouveau pour tout remettre à zéro' : 'Remettre les données de démo'}
       </button>
     </aside>
   )

@@ -12,7 +12,7 @@ type Period = '30' | '90' | '365'
 export default function DevisPage() {
   const { state, dispatch } = useStore()
   const nav = useNavigate()
-  const [view, setView] = useState<View>(() => (localStorage.getItem('devis-view') as View) || 'pipeline')
+  const [view, setView] = useState<View>(() => { try { return (localStorage.getItem('devis-view') as View) || 'pipeline' } catch { return 'pipeline' } })
   const [owner, setOwner] = useState<'all' | Owner>('all')
   const [activity, setActivity] = useState<'all' | Activity>('all')
   const [period, setPeriod] = useState<Period>('90')
