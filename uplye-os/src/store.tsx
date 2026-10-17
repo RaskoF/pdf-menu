@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useReducer, type ReactNode } from 'react'
-import type { Booking, CatalogueItem, Client, Devis, EventItem, Expense, Invoice, Member, Notification, Pack, Person, Project, Referral, Sop, SopRun, Stage, Subscription, Task } from './types'
+import type { Booking, CatalogueItem, Client, Devis, EventItem, Expense, Invoice, Member, Notification, Pack, Person, Project, Referral, SocialAccount, SocialPost, Sop, SopRun, Stage, Subscription, Task } from './types'
 import { SEED_NOTIFS, SEED_REFERRALS, SEED_RUNS, SEED_SOPS } from './dataExtra'
+import { SEED_SOCIAL_ACCOUNTS, SEED_SOCIAL_POSTS } from './dataSocial'
 import { CATALOGUE, SEED_CLIENTS, SEED_DEVIS } from './data'
 import { SEED_BOOKINGS, SEED_EVENTS, SEED_MEMBERS, SEED_EXPENSES, SEED_INVOICES, SEED_PACKS, SEED_PROJECTS, SEED_SUBS, SEED_TASKS } from './dataOps'
 import { scheduleParts, totalHT, uid } from './utils'
@@ -11,10 +12,11 @@ export interface State {
   bookings: Booking[]; packs: Pack[]
   events: EventItem[]; members: Member[]; catalogue: CatalogueItem[]
   sops: Sop[]; runs: SopRun[]; referrals: Referral[]; notifs: Notification[]
+  socialPosts: SocialPost[]; socialAccounts: SocialAccount[]
   me: Person // personne connectée (pour tester les vues par rôle)
 }
-type Coll = 'projects' | 'tasks' | 'invoices' | 'expenses' | 'subs' | 'bookings' | 'packs' | 'events' | 'members' | 'catalogue' | 'clients' | 'sops' | 'runs' | 'referrals' | 'notifs'
-type Item = Project | Task | Invoice | Expense | Subscription | Booking | Pack | EventItem | Member | CatalogueItem | Client | Sop | SopRun | Referral | Notification
+type Coll = 'projects' | 'tasks' | 'invoices' | 'expenses' | 'subs' | 'bookings' | 'packs' | 'events' | 'members' | 'catalogue' | 'clients' | 'sops' | 'runs' | 'referrals' | 'notifs' | 'socialPosts' | 'socialAccounts'
+type Item = Project | Task | Invoice | Expense | Subscription | Booking | Pack | EventItem | Member | CatalogueItem | Client | Sop | SopRun | Referral | Notification | SocialPost | SocialAccount
 type Action =
   | { type: 'upsertDevis'; devis: Devis }
   | { type: 'deleteDevis'; id: string }
@@ -28,7 +30,7 @@ type Action =
 const KEY = 'uplye-os-demo-v2'
 const seed = (): State => structuredClone({
   devis: SEED_DEVIS, clients: SEED_CLIENTS, projects: SEED_PROJECTS, tasks: SEED_TASKS,
-  invoices: SEED_INVOICES, expenses: SEED_EXPENSES, subs: SEED_SUBS, bookings: SEED_BOOKINGS, packs: SEED_PACKS, events: SEED_EVENTS, members: SEED_MEMBERS, catalogue: CATALOGUE, sops: SEED_SOPS, runs: SEED_RUNS, referrals: SEED_REFERRALS, notifs: SEED_NOTIFS, me: 'E' as Person,
+  invoices: SEED_INVOICES, expenses: SEED_EXPENSES, subs: SEED_SUBS, bookings: SEED_BOOKINGS, packs: SEED_PACKS, events: SEED_EVENTS, members: SEED_MEMBERS, catalogue: CATALOGUE, sops: SEED_SOPS, runs: SEED_RUNS, referrals: SEED_REFERRALS, notifs: SEED_NOTIFS, socialPosts: SEED_SOCIAL_POSTS, socialAccounts: SEED_SOCIAL_ACCOUNTS, me: 'E' as Person,
 })
 
 function load(): State {

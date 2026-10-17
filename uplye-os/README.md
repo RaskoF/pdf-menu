@@ -59,6 +59,12 @@ npm run dev        # puis ouvrir http://localhost:5173
   factures, et **parrainage** : lien et code, recommandation d'un filleul, choix 5 % en commission ou 10 % en crédit,
   suivi des gains. Côté OS, la fiche client liste les filleuls, le passage en signé et le règlement.
 
+- **Réseaux sociaux** (`#/social`) : calendrier séparé du Planning (vues Mois, Semaine, Liste), filtres par marque
+  (Uplye Studio, Azurpod, Uplye Academy), éditeur de post (Instagram / Facebook, format, médias, légende, date, aperçu),
+  statuts Brouillon / Programmé / Publié / Échec, sans étape de validation. Les posts dont l'heure est passée « partent »
+  (simulation) ou échouent si le compte est à reconnecter. **Comptes connectés** (`#/social/comptes`) : connexion simulée,
+  réservée à Enzo et Allan. En production : connexion Meta côté serveur, accès chiffrés, jamais dans le navigateur.
+
 ## Stack
 
 Vite + React + TypeScript, Tailwind CSS, icônes Phosphor, polices Barlow Condensed / Hanken Grotesk / DM Mono

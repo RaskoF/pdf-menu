@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import {
   MagnifyingGlass, SquaresFour, CalendarBlank, Kanban, ChartBar, FileText, UsersThree, Handshake,
-  Folder, Microphone, Users, Tag, ChartLine, Sparkle, Bell, BookOpenText, ArrowCounterClockwise,
+  Folder, Microphone, Users, Tag, ChartLine, Sparkle, Bell, BookOpenText, ShareNetwork, ArrowCounterClockwise,
 } from '@phosphor-icons/react'
 import { useState, type ReactNode } from 'react'
 import { PersonAvatar } from './ui'
@@ -47,6 +47,7 @@ export default function Sidebar() {
         <Group label="Production" />
         <Item to="/projets" icon={<Folder size={s} />} label="Projets" />
         <Item to="/azurpod" icon={<Microphone size={s} />} label="Azurpod" />
+        <Item to="/social" icon={<ShareNetwork size={s} />} label="Réseaux sociaux" />
         <Group label="Admin" />
         <Item to="/equipe" icon={<Users size={s} />} label="Équipe" />
         <Item to="/sop" icon={<BookOpenText size={s} />} label="Process (SOP)" />

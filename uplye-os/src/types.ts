@@ -144,3 +144,11 @@ export interface SopRun { id: string; sopId: string; label: string; startedAt: s
 
 export type ReferralReward = 'commission' | 'credit'
 export interface Referral { id: string; referrerId: string; name: string; company: string; email: string; status: 'invite' | 'devis' | 'signe' | 'perdu'; amountHT: number; reward: ReferralReward; settled: boolean; createdAt: string }
+
+// Réseaux sociaux : comptes des marques du groupe et publications programmées
+export type SocialBrand = 'studio' | 'azurpod' | 'academy'
+export type SocialNetwork = 'instagram' | 'facebook'
+export type SocialFormat = 'post' | 'carrousel' | 'reel' | 'story'
+export type SocialStatus = 'draft' | 'scheduled' | 'published' | 'failed'
+export interface SocialAccount { id: SocialBrand; instagram: string; facebook: string; status: 'connected' | 'expired' | 'disconnected'; expiresAt?: string }
+export interface SocialPost { id: string; brand: SocialBrand; networks: SocialNetwork[]; format: SocialFormat; caption: string; at: string; status: SocialStatus; media: number; projectId?: string; by: Person; views?: number }

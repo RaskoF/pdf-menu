@@ -17,6 +17,8 @@ import EventsPage from './pages/EventsPage'
 import TeamPage from './pages/TeamPage'
 import CataloguePage from './pages/CataloguePage'
 import SopPage from './pages/SopPage'
+import SocialPage from './pages/SocialPage'
+import SocialAccountsPage from './pages/SocialAccountsPage'
 import ClientPortal from './pages/ClientPortal'
 import { useStore } from './store'
 
@@ -52,6 +54,8 @@ function Shell() {
           <Route path="/evenements" element={<AdminOnly><EventsPage /></AdminOnly>} />
           <Route path="/equipe" element={<TeamPage />} />
           <Route path="/sop" element={<SopPage />} />
+          <Route path="/social" element={<SocialPage />} />
+          <Route path="/social/comptes" element={<SocialAccountsPage />} />
           <Route path="/catalogue" element={<AdminOnly><CataloguePage /></AdminOnly>} />
           <Route path="/devis" element={<AdminOnly><DevisPage /></AdminOnly>} />
           <Route path="/devis/:id" element={<AdminOnly><DevisEditor /></AdminOnly>} />
