@@ -45,7 +45,7 @@ npm run build:single # démo autonome en un seul fichier HTML (dist-single/)
   - Événements (`#/evenements`) : rentabilité par événement, à venir, contacts rencontrés à relancer (messages relus
     puis envoyés), nouvel événement, saisie d'une carte de visite, état vide.
   - Réunions (`#/reunions`, entrée ajoutée à la barre latérale : absente du Figma) : compte rendu, création des
-    tâches, impact sur le projet, moments clés, questions à l'assistant, transcription, export texte, état
+    tâches, impact sur le projet, moments clés, questions à l'assistant, transcription, copie du compte rendu, état
     « Fireflies déconnecté ».
 - Les autres modules ont une page d'attente (`ComingSoonPage`) en attendant leur développement.
 

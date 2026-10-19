@@ -7,7 +7,7 @@ import {
   CheckCircle,
   Clock,
   DotsThree,
-  Export,
+  Copy,
   FileText,
   LinkSimple,
   Microphone,
@@ -77,7 +77,7 @@ export function MeetingsPage() {
 
   const select = (id: string) => setParams({ rdv: id }, { replace: true })
 
-  const exportNotes = (m: Meeting) => {
+  const copyNotes = (m: Meeting) => {
     const lines = [
       `${m.title} — ${m.company}`,
       `${formatShortDate(m.date)} à ${m.time}, ${m.duration} min, ${m.platform}`,
@@ -89,12 +89,10 @@ export function MeetingsPage() {
       'Points d’action',
       ...m.actions.map((a) => `- [${a.taskCreated ? 'x' : ' '}] ${a.label} (${memberName(a.owner)}, ${a.due})`),
     ]
-    const url = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' }))
-    const link = document.createElement('a')
-    link.href = url
-    link.download = `compte-rendu-${m.id}.txt`
-    link.click()
-    URL.revokeObjectURL(url)
+    navigator.clipboard
+      .writeText(lines.join('\n'))
+      .then(() => toast({ message: 'Compte rendu copié, prêt à coller', variant: 'success' }))
+      .catch(() => toast({ message: 'Copie impossible : autorisez le presse-papiers', variant: 'error' }))
   }
 
   return (
@@ -104,8 +102,8 @@ export function MeetingsPage() {
           <h1 id="reunions-title" className="text-h1 text-foreground">
             Réunions
           </h1>
-          <IconButton variant="outline" label="Exporter le compte rendu" disabled={!selected} onClick={() => selected && exportNotes(selected)}>
-            <Export />
+          <IconButton variant="outline" label="Copier le compte rendu" disabled={!selected} onClick={() => selected && copyNotes(selected)}>
+            <Copy />
           </IconButton>
         </div>
         <DropdownMenu>
