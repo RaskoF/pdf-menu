@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-single
+*.local
+
+# Fichiers sensibles (voir ../SECURITY.md)
+.env
+.env.local
+.env.*.local
+*.pem

@@ -3,13 +3,15 @@
 Ce fichier sert de mémoire au projet. Une nouvelle conversation (ou une autre personne) doit pouvoir repartir d'ici
 sans relire l'historique. **À mettre à jour à la fin de chaque séance de travail.**
 
-Dernière mise à jour : 18 octobre 2026.
+Dernière mise à jour : 19 octobre 2026.
 
 ## Où sont les choses
 
 | Quoi | Où |
 |---|---|
-| Prototype de l'app (React, données fictives) | `uplye-os/` · branche `claude/magical-cray-hcwsby` |
+| **Uplye OS v2** (refonte sur le nouveau Figma, à privilégier) | `uplye-os-v2/` (voir `uplye-os-v2/README.md`) · démo https://claude.ai/artifact/Sg8AQAJmzLMze4qRXkMP3c |
+| Figma v2 (design system shadcn + 100 écrans) | fichier `A50zmdlWg9tb1DBoCkaYD8` |
+| Prototype v1 (React, données fictives) | `uplye-os/` · branche `claude/magical-cray-hcwsby` |
 | Démo en ligne du prototype | https://claude.ai/artifact/Q32WBpkZJzKKQHC7QRvrCd |
 | Catalogue 2027 de travail (réunion du 16 oct.) | https://claude.ai/artifact/7w4RNen9wzAonFTxmNuWkQ |
 | Maquettes et design system | Figma, fichier `rg1KuWYKJvxNP79Wp8azbx`, page « ↪ Uplye OS » |
@@ -31,6 +33,17 @@ Design system (section 01) :
   Événement, Jour, Réseau, Post, Post · mini, Compte connecté.
 - Règle : tout nouvel écran se construit avec ces composants et ces variables, et avec les données « Figma »
   (Mayli Spa & Beauty, Institut Lumière du Sud, Club Royalty, Skeals, Laforêt). Alexis = « AX ».
+
+## Uplye OS v2 (depuis le 19 oct.)
+
+- Décisions : pile shadcn validée (Radix UI, class-variance-authority, clsx, tailwind-merge v2, Vitest + Testing Library + jsdom),
+  nouveau dossier `uplye-os-v2/` (la v1 reste en ligne), ordre : base + Aujourd'hui, puis un module par séance
+  (Commercial, Production, Finance, Admin, Portail).
+- Fait : tokens Figma → `src/styles/tokens.css` (script `scripts/build-tokens.mjs`), 23 composants de base, shell,
+  écran Aujourd'hui (états normal, chargement, tout traité), vitrine `#/systeme`, 19 tests.
+- Figma v2 : pages 01 Foundations, 02 Components (≈ 50 composants), 03 Icons (Phosphor), 10 à 16 = écrans par module.
+  Les composants métier (Deal Card, Kanban Card, Phase Bar…) se codent avec leur module.
+- Vérifier : `cd uplye-os-v2 && npm run check && npm run build`.
 
 ## Décisions prises (ne pas remettre en question sans demander)
 

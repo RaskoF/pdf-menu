@@ -1,0 +1,26 @@
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body, #root { height: 100%; }
+  body {
+    @apply bg-sidebar text-foreground font-body antialiased;
+    font-optical-sizing: auto;
+    font-size: var(--type-body-md-size);
+    line-height: var(--type-body-md-lh);
+  }
+  :focus-visible { outline: none; }
+  ::selection { background: var(--brand-accent-soft); }
+}
+
+@layer utilities {
+  /* Anneau de focus du Figma (effet focus/ring) */
+  .focus-ring { @apply focus-visible:shadow-focus; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
