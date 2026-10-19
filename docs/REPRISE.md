@@ -45,7 +45,11 @@ Design system (section 01) :
   anciennes maquettes à la demande), nouveau devis, éditeur et envoi, clients et fiche, événements, réunions.
   47 tests. Écarts assumés : entrée « Réunions » ajoutée à la barre latérale ; remise globale + alerte 20 % ajoutées
   à l'éditeur (décision ci-dessous, absente du Figma v2) ; « Scanner une carte » = saisie manuelle en attendant le mobile.
-- Prochain module v2 : Production (projets, Azurpod, réseaux sociaux, Kanban, planning, charge).
+- Module Production fait (19 oct.) : projets (liste, fiche, nouveau projet depuis un devis signé), Azurpod (livraisons,
+  packs, calendrier jour/semaine/mois, nouvelle session), réseaux sociaux (semaine/mois/liste, comptes, éditeur de post,
+  publication refusée). 65 tests au total. Écart assumé : libellés neutres « côté client » (le Figma écrit « cliente »).
+  Dates partagées dans `src/lib/dates.ts`, équipe et date de démo dans `src/data/session.ts`.
+- Prochain module v2 : Pilotage (Kanban, planning, charge équipe), puis Finance, Admin, Portail.
 - Figma v2 : pages 01 Foundations, 02 Components (≈ 50 composants), 03 Icons (Phosphor), 10 à 16 = écrans par module.
   Les composants métier (Deal Card, Kanban Card, Phase Bar…) se codent avec leur module.
 - Vérifier : `cd uplye-os-v2 && npm run check && npm run build`.

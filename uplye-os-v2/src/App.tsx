@@ -4,11 +4,17 @@ import { AppShell } from '@/layouts/app-shell'
 import { TodayPage } from '@/features/today/today-page'
 import { CommercialProvider } from '@/features/commercial/store'
 import { DevisPage } from '@/features/commercial/devis/devis-page'
-import { DevisEditorPage } from '@/features/commercial/editor/devis-editor-page'
+import { DevisEditorRoute } from '@/features/commercial/editor/devis-editor-page'
 import { ClientsPage } from '@/features/commercial/clients/clients-page'
 import { ClientPage } from '@/features/commercial/clients/client-page'
 import { EventsPage } from '@/features/commercial/events/events-page'
 import { MeetingsPage } from '@/features/commercial/meetings/meetings-page'
+import { ProductionProvider } from '@/features/production/store'
+import { ProjectsPage } from '@/features/production/projects/projects-page'
+import { ProjectPage } from '@/features/production/projects/project-page'
+import { AzurpodPage } from '@/features/production/azurpod/azurpod-page'
+import { SocialPage } from '@/features/production/social/social-page'
+import { PostEditorRoute } from '@/features/production/social/post-editor-page'
 import { ComingSoonPage } from '@/pages/coming-soon-page'
 import { NotFoundPage } from '@/pages/not-found-page'
 import { DesignSystemPage } from '@/pages/design-system-page'
@@ -22,25 +28,32 @@ export default function App() {
     <TooltipProvider delayDuration={300}>
       <ToastProvider>
         <CommercialProvider>
-          <HashRouter>
-            <Routes>
-              {/* L'éditeur occupe tout l'écran, sans barre latérale (Figma 33:780) */}
-              <Route path="devis/:id/editeur" element={<DevisEditorPage />} />
-              <Route element={<AppShell />}>
-                <Route index element={<TodayPage />} />
-                <Route path="devis" element={<DevisPage />} />
-                <Route path="clients" element={<ClientsPage />} />
-                <Route path="clients/:id" element={<ClientPage />} />
-                <Route path="evenements" element={<EventsPage />} />
-                <Route path="reunions" element={<MeetingsPage />} />
-                {PENDING_ROUTES.map((path) => (
-                  <Route key={path} path={path} element={<ComingSoonPage />} />
-                ))}
-                <Route path="systeme" element={<DesignSystemPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Route>
-            </Routes>
-          </HashRouter>
+          <ProductionProvider>
+            <HashRouter>
+              <Routes>
+                {/* L'éditeur occupe tout l'écran, sans barre latérale (Figma 33:780) */}
+                <Route path="devis/:id/editeur" element={<DevisEditorRoute />} />
+                <Route path="reseaux-sociaux/post/:id" element={<PostEditorRoute />} />
+                <Route element={<AppShell />}>
+                  <Route index element={<TodayPage />} />
+                  <Route path="devis" element={<DevisPage />} />
+                  <Route path="clients" element={<ClientsPage />} />
+                  <Route path="clients/:id" element={<ClientPage />} />
+                  <Route path="evenements" element={<EventsPage />} />
+                  <Route path="reunions" element={<MeetingsPage />} />
+                  <Route path="projets" element={<ProjectsPage />} />
+                  <Route path="projets/:id" element={<ProjectPage />} />
+                  <Route path="azurpod" element={<AzurpodPage />} />
+                  <Route path="reseaux-sociaux" element={<SocialPage />} />
+                  {PENDING_ROUTES.map((path) => (
+                    <Route key={path} path={path} element={<ComingSoonPage />} />
+                  ))}
+                  <Route path="systeme" element={<DesignSystemPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Route>
+              </Routes>
+            </HashRouter>
+          </ProductionProvider>
         </CommercialProvider>
       </ToastProvider>
     </TooltipProvider>

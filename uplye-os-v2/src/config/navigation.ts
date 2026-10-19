@@ -39,9 +39,9 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     label: 'Production',
     items: [
-      { label: 'Projets', to: '/projets', icon: Folder },
-      { label: 'Azurpod', to: '/azurpod', icon: Microphone },
-      { label: 'Réseaux sociaux', to: '/reseaux-sociaux', icon: ShareNetwork },
+      { label: 'Projets', to: '/projets', icon: Folder, ready: true },
+      { label: 'Azurpod', to: '/azurpod', icon: Microphone, ready: true },
+      { label: 'Réseaux sociaux', to: '/reseaux-sociaux', icon: ShareNetwork, ready: true },
     ],
   },
   {

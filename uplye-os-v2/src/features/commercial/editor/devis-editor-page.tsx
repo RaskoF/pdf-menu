@@ -41,6 +41,12 @@ const sendProposal = (email: string) =>
 
 const savedLabel = (seconds: number) => (seconds < 5 ? 'à l’instant' : seconds < 60 ? `il y a ${seconds} s` : `il y a ${Math.floor(seconds / 60)} min`)
 
+/** Une instance par devis : changer de devis repart d'un état propre (ligne sélectionnée, envoi). */
+export function DevisEditorRoute() {
+  const { id } = useParams()
+  return <DevisEditorPage key={id} />
+}
+
 // Figma : « Éditeur de devis » (33:780), « Envoi en cours » (119:2378), « Échec d’envoi » (119:2502).
 export function DevisEditorPage({ send = sendProposal }: { send?: (email: string) => Promise<'ok' | 'bounced'> }) {
   const { id } = useParams()

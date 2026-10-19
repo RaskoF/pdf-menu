@@ -47,6 +47,20 @@ npm run build:single # démo autonome en un seul fichier HTML (dist-single/)
   - Réunions (`#/reunions`, entrée ajoutée à la barre latérale : absente du Figma) : compte rendu, création des
     tâches, impact sur le projet, moments clés, questions à l'assistant, transcription, copie du compte rendu, état
     « Fireflies déconnecté ».
+- **Production** (`src/features/production`, store `store.tsx`, règles dans `lib.ts`) :
+  - Projets (`#/projets`) : groupes « À surveiller » (blocage, budget temps dépassé, révisions épuisées, retard),
+    « En bonne voie » et « Livrés ce mois », barre de phases, filtres et recherche ; fiche projet avec phases,
+    tâches à cocher et passage à la phase suivante (avec Annuler), attendus côté client, budget temps et marge
+    projetée (saisie de temps), révisions, livrables, aperçu de l'espace client ; nouveau projet depuis un devis
+    signé du module Commercial (process, pilote, dates, tâches créées) ou projet libre.
+  - Azurpod (`#/azurpod`) : livraisons promises en jours ouvrés (bloqué, à monter, en montage, livré), packs et
+    saisons, chiffres du mois (tarifs du catalogue : 90 / 165 / 350 € HT de l'heure), calendrier jour / semaine /
+    mois, nouvelle session sur les créneaux réellement libres avec décompte du pack, lien de réservation.
+  - Réseaux sociaux (`#/reseaux-sociaux`) : semaine, mois et liste, filtres par marque, posts bloqués quand un compte
+    est déconnecté (bandeau + reconnexion), comptes connectés, état « aucun compte » ; éditeur plein écran
+    (`#/reseaux-sociaux/post/:id`) : marque, réseaux, format, médias (depuis un projet ou ajoutés depuis l'ordinateur,
+    restent dans le navigateur), légende avec limite par réseau et réécritures, créneau conseillé, aperçus
+    Instagram / Facebook / LinkedIn, validation avant de programmer, publication refusée « Compresser et renvoyer ».
 - Les autres modules ont une page d'attente (`ComingSoonPage`) en attendant leur développement.
 
 ## Organisation
@@ -72,5 +86,4 @@ src/
 
 ## Prochaines étapes
 
-Production (projets, Azurpod, réseaux sociaux, Kanban,
-planning, charge), Finance, Admin, Portail client, puis recherche, notifications et assistant.
+Pilotage (Kanban, planning, charge équipe), Finance, Admin, Portail client, puis recherche, notifications et assistant.

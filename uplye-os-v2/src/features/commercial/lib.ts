@@ -1,4 +1,5 @@
 import type { BadgeProps } from '@/components/ui'
+import { daysBetween, formatShortDate } from '@/lib/dates'
 import type { ClientStatus, Devis, DevisLine, DevisStatus, PipelineStatus } from './types'
 
 // Règles métier pures (sans React) : faciles à tester et à reprendre côté serveur.
@@ -78,23 +79,8 @@ export const weightedAmount = (devis: Devis) => Math.round((devisAmount(devis) ?
 
 export const isOpen = (status: DevisStatus) => status === 'envoye' || status === 'ouvert'
 
-const DAY = 86_400_000
-const parse = (iso: string) => new Date(`${iso}T12:00:00`)
-export const daysBetween = (fromIso: string, to: Date) => Math.floor((to.getTime() - parse(fromIso).getTime()) / DAY)
-export const addDays = (iso: string, days: number) => toIso(new Date(parse(iso).getTime() + days * DAY))
-export const toIso = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
-
-const shortDate = new Intl.DateTimeFormat('fr-FR', { day: 'numeric', month: 'short' })
-/** « 14 oct. » */
-export const formatShortDate = (iso: string) => shortDate.format(parse(iso))
-
-const dayMonth = new Intl.DateTimeFormat('fr-FR', { day: '2-digit' })
-const monthShort = new Intl.DateTimeFormat('fr-FR', { month: 'short' })
-/** { day: '23', month: 'OCT' } pour les pastilles de date */
-export const dateBadge = (iso: string) => ({ day: dayMonth.format(parse(iso)), month: monthShort.format(parse(iso)).replace('.', '').toUpperCase() })
-
-const monthLong = new Intl.DateTimeFormat('fr-FR', { month: 'long' })
-export const monthLabel = (iso: string) => monthLong.format(parse(iso)).toUpperCase()
+// Dates : utilitaires partagés, réexportés pour les écrans du module
+export { addDays, dateBadge, daysBetween, formatShortDate, monthLabel, toIso } from '@/lib/dates'
 
 /** « 54 % » */
 export const formatPercent = (fraction: number) => `${Math.round(fraction * 100)} %`
