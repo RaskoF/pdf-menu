@@ -1,6 +1,6 @@
 import type { Icon } from '@phosphor-icons/react'
 import {
-  BookOpen, Buildings, CalendarBlank, ChartLineUp, FileText, Folder, Gauge, Handshake, Kanban, Microphone, ShareNetwork, SquaresFour, Tag, Users,
+  BookOpen, Buildings, CalendarBlank, ChartLineUp, FileText, Folder, Gauge, Handshake, Kanban, Microphone, ShareNetwork, SquaresFour, Tag, Users, VideoConference,
 } from '@phosphor-icons/react'
 
 // Source unique de la navigation (barre latérale + routes). Ordre et libellés : Figma « Sidebar » (14:147).
@@ -29,9 +29,11 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     label: 'Commercial',
     items: [
-      { label: 'Devis', to: '/devis', icon: FileText },
-      { label: 'Clients', to: '/clients', icon: Buildings },
-      { label: 'Événements', to: '/evenements', icon: Handshake },
+      { label: 'Devis', to: '/devis', icon: FileText, ready: true },
+      { label: 'Clients', to: '/clients', icon: Buildings, ready: true },
+      { label: 'Événements', to: '/evenements', icon: Handshake, ready: true },
+      // Écart assumé avec la barre latérale Figma : les Réunions (37:1407) n'y ont pas d'entrée.
+      { label: 'Réunions', to: '/reunions', icon: VideoConference, ready: true },
     ],
   },
   {

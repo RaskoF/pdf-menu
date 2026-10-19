@@ -21,13 +21,32 @@ npm run build:single # démo autonome en un seul fichier HTML (dist-single/)
   Tailwind ne lit que ces variables : aucune couleur en dur dans les composants.
 - **Composants de base** (`src/components/ui`, un fichier par composant du Figma « 02 Components ») : Button, Icon Button,
   Badge, Kbd, Avatar, Input, Textarea, Select, Checkbox, Radio, Switch, Field, Tabs (segmented / underline),
-  Dropdown Menu, Tooltip, Progress, Skeleton, Separator, Card, Alert, Toast, Dialog, Chip.
+  Dropdown Menu, Tooltip, Progress, Skeleton, Separator, Card, Alert, Toast, Dialog, Sheet (panneau latéral), Chip,
+  ChoiceGroup (choix en pastilles ou en segments).
   Vitrine : `#/systeme` (menu du compte → Design system).
 - **Shell** (`src/layouts/app-shell.tsx`, `src/components/app`) : barre latérale repliable, tiroir sur mobile, raccourcis
   ⌘K (recherche) et ⌘J (assistant), thème clair/sombre mémorisé, lien d'évitement « Aller au contenu ».
 - **Aujourd'hui** (`src/features/today`) : tâches groupées (urgent, aujourd'hui, en attente), filtres par pôle,
   cases à cocher avec annulation, états chargement et « tout est à jour », cash du mois, charge de l'équipe,
   prochain rendez-vous.
+- **Commercial** (`src/features/commercial`, store partagé `store.tsx`, règles pures dans `lib.ts`) :
+  - Devis (`#/devis`) : liste avec cartes d'attention (relances en retard, devis chaud, brouillon oublié), filtres,
+    tri, sélection groupée, panneau de détail (relance relue, autre ton, activité) ; pipeline avec indicateurs et
+    objectif du trimestre, glisser-déposer entre étapes (ou menu ⋯ au clavier), zones Refusé (motif demandé) et
+    Archiver, annulation dans le toast ; onglet Analyse gagnés / perdus (anciennes maquettes remises sur le nouveau DS).
+  - Motifs de signature (avec confettis) et de refus : vocabulaire fixe dans `reasons.ts`, il alimente l'analyse.
+  - Nouveau devis : client existant ou prospect, départ depuis un RDV Fireflies, un modèle, un devis à dupliquer ou vierge.
+  - Éditeur plein écran (`#/devis/:id/editeur`) : sections, checklist « Prêt à envoyer » avec points bloquants,
+    lignes (prix, quantité, remise, offert, optionnelle, marge), remise commerciale globale en € ou en % avec alerte
+    au-delà de 20 %, catalogue (touche /), suggestions issues du RDV, aperçu client, PDF (impression),
+    envoi simulé avec états « Envoi en cours » et « Le devis n'est pas parti » (adresse en `.invalid`).
+  - Clients (`#/clients`) : liste filtrable et triable, création, import CSV lu dans le navigateur ; fiche avec
+    indicateurs, fil d'activité (notes, filtres), projets, devis et factures, fichiers, contacts, épinglés.
+  - Événements (`#/evenements`) : rentabilité par événement, à venir, contacts rencontrés à relancer (messages relus
+    puis envoyés), nouvel événement, saisie d'une carte de visite, état vide.
+  - Réunions (`#/reunions`, entrée ajoutée à la barre latérale : absente du Figma) : compte rendu, création des
+    tâches, impact sur le projet, moments clés, questions à l'assistant, transcription, export texte, état
+    « Fireflies déconnecté ».
 - Les autres modules ont une page d'attente (`ComingSoonPage`) en attendant leur développement.
 
 ## Organisation
@@ -53,5 +72,5 @@ src/
 
 ## Prochaines étapes
 
-Commercial (devis, éditeur, clients, événements, réunions), Production (projets, Azurpod, réseaux sociaux, Kanban,
+Production (projets, Azurpod, réseaux sociaux, Kanban,
 planning, charge), Finance, Admin, Portail client, puis recherche, notifications et assistant.

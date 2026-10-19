@@ -41,6 +41,11 @@ Design system (section 01) :
   (Commercial, Production, Finance, Admin, Portail).
 - Fait : tokens Figma → `src/styles/tokens.css` (script `scripts/build-tokens.mjs`), 23 composants de base, shell,
   écran Aujourd'hui (états normal, chargement, tout traité), vitrine `#/systeme`, 19 tests.
+- Module Commercial fait (séance du 19 oct.) : devis liste / pipeline / analyse, motifs gagné-perdu (repris des
+  anciennes maquettes à la demande), nouveau devis, éditeur et envoi, clients et fiche, événements, réunions.
+  47 tests. Écarts assumés : entrée « Réunions » ajoutée à la barre latérale ; remise globale + alerte 20 % ajoutées
+  à l'éditeur (décision ci-dessous, absente du Figma v2) ; « Scanner une carte » = saisie manuelle en attendant le mobile.
+- Prochain module v2 : Production (projets, Azurpod, réseaux sociaux, Kanban, planning, charge).
 - Figma v2 : pages 01 Foundations, 02 Components (≈ 50 composants), 03 Icons (Phosphor), 10 à 16 = écrans par module.
   Les composants métier (Deal Card, Kanban Card, Phase Bar…) se codent avec leur module.
 - Vérifier : `cd uplye-os-v2 && npm run check && npm run build`.

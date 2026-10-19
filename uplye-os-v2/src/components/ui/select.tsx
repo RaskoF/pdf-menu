@@ -20,7 +20,7 @@ export const SelectTrigger = forwardRef<ElementRef<typeof SelectPrimitive.Trigge
       )}
       {...props}
     >
-      <span className="truncate">{children}</span>
+      <span className="flex min-w-0 items-center gap-2 [&>span]:truncate">{children}</span>
       <SelectPrimitive.Icon asChild>
         <CaretDown className="size-4 shrink-0 text-muted-foreground" aria-hidden />
       </SelectPrimitive.Icon>

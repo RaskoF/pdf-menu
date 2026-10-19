@@ -2,6 +2,13 @@ import { HashRouter, Route, Routes } from 'react-router-dom'
 import { ToastProvider, TooltipProvider } from '@/components/ui'
 import { AppShell } from '@/layouts/app-shell'
 import { TodayPage } from '@/features/today/today-page'
+import { CommercialProvider } from '@/features/commercial/store'
+import { DevisPage } from '@/features/commercial/devis/devis-page'
+import { DevisEditorPage } from '@/features/commercial/editor/devis-editor-page'
+import { ClientsPage } from '@/features/commercial/clients/clients-page'
+import { ClientPage } from '@/features/commercial/clients/client-page'
+import { EventsPage } from '@/features/commercial/events/events-page'
+import { MeetingsPage } from '@/features/commercial/meetings/meetings-page'
 import { ComingSoonPage } from '@/pages/coming-soon-page'
 import { NotFoundPage } from '@/pages/not-found-page'
 import { DesignSystemPage } from '@/pages/design-system-page'
@@ -14,18 +21,27 @@ export default function App() {
   return (
     <TooltipProvider delayDuration={300}>
       <ToastProvider>
-        <HashRouter>
-          <Routes>
-            <Route element={<AppShell />}>
-              <Route index element={<TodayPage />} />
-              {PENDING_ROUTES.map((path) => (
-                <Route key={path} path={path} element={<ComingSoonPage />} />
-              ))}
-              <Route path="systeme" element={<DesignSystemPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Route>
-          </Routes>
-        </HashRouter>
+        <CommercialProvider>
+          <HashRouter>
+            <Routes>
+              {/* L'éditeur occupe tout l'écran, sans barre latérale (Figma 33:780) */}
+              <Route path="devis/:id/editeur" element={<DevisEditorPage />} />
+              <Route element={<AppShell />}>
+                <Route index element={<TodayPage />} />
+                <Route path="devis" element={<DevisPage />} />
+                <Route path="clients" element={<ClientsPage />} />
+                <Route path="clients/:id" element={<ClientPage />} />
+                <Route path="evenements" element={<EventsPage />} />
+                <Route path="reunions" element={<MeetingsPage />} />
+                {PENDING_ROUTES.map((path) => (
+                  <Route key={path} path={path} element={<ComingSoonPage />} />
+                ))}
+                <Route path="systeme" element={<DesignSystemPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Route>
+            </Routes>
+          </HashRouter>
+        </CommercialProvider>
       </ToastProvider>
     </TooltipProvider>
   )
