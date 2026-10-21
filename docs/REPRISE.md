@@ -3,7 +3,7 @@
 Ce fichier sert de mémoire au projet. Une nouvelle conversation (ou une autre personne) doit pouvoir repartir d'ici
 sans relire l'historique. **À mettre à jour à la fin de chaque séance de travail.**
 
-Dernière mise à jour : 19 octobre 2026.
+Dernière mise à jour : 21 octobre 2026.
 
 ## Où sont les choses
 
@@ -54,6 +54,39 @@ Design system (section 01) :
   Les composants métier (Deal Card, Kanban Card, Phase Bar…) se codent avec leur module.
 - Vérifier : `cd uplye-os-v2 && npm run check && npm run build`.
 
+## Révision des maquettes v2 (21 oct., d'après les commentaires d'Enzo dans Figma)
+
+Dans le fichier `A50zmdlWg9tb1DBoCkaYD8`, chaque écran révisé est placé sur une **deuxième rangée** de sa section,
+nommé « … (révision 21 oct.) ». Les originaux sont gardés au-dessus.
+
+- 10 Shell & Pilotage :
+  - Kanban en colonnes colorées (style de l'ancienne version) avec progression par projet ;
+  - détail de tâche avec temps estimé, réel et chrono ;
+  - « Ma journée / Dashboard » dans Aujourd'hui, et dashboard chiffré ;
+  - créneau multi-participants avec ordre du jour et agenda Google ;
+  - nouvelle section « Connexion (OS) » : connexion, lien envoyé, double authentification admin, invitation.
+- 11 Commercial :
+  - pipeline à colonnes différenciées ;
+  - éditeur de devis : descriptions entières, ligne libre, conditions de règlement, résumé financier ;
+  - fenêtre « Envoyer » avec e-mail type et lien à copier.
+- 12 Portail : proposition façon Propal (sommaire à gauche, vidéo d'équipe, équipe, avis, FAQ, bon pour accord) ;
+  vrai logo Uplye Studio partout (composant « Logo / Uplye Studio (officiel) »).
+- 13 Production : Projets en Liste et Kanban par phase, « Livraison prévue », source du budget expliquée ;
+  nouveau projet avec modèle de tâches et formule de livraison (Standard J+2, Pré-montage J+5, Clé en main J+7).
+- 15 Admin : rôle Super admin (Enzo).
+- Mode clair : mettre la collection « Semantic » en mode Light sur un écran suffit (exemples : Kanban, Dashboard, Pipeline).
+- Design system : estimation du temps ajoutée à « Kanban Card », icône `Icon/minus`.
+- Parcours utilisateurs (FigJam, 4 schémas, vert = existe, jaune = revu, rouge = manque) :
+  https://www.figma.com/board/3T7p8xDt5UkmR0ODsZK57d
+- Écrans encore manquants :
+  - facturation (acompte, solde, impayés) ;
+  - nouveau client ;
+  - historique des notifications ;
+  - e-mails (invitation, accès client) ;
+  - accueil Production d'Alexis ;
+  - gestion des modèles de projet.
+- À revoir : Charge équipe d'après l'ancien « Workload » (commentaire 24, à confirmer). Finance : garder l'ancienne version.
+
 ## Décisions prises (ne pas remettre en question sans demander)
 
 **Rôles**
@@ -70,6 +103,12 @@ Design system (section 01) :
 - Planning : calques Uplye Studio / Azurpod / Uplye Academy / Interne.
 - Devis : remise commerciale globale en € ou en %, alerte au-delà de 20 %.
 - Parrainage client : 5 % en commission ou 10 % en crédit.
+- (21 oct.) Priorité aux essentiels : CRM, dashboard, projets et planning, admin essentiel, notifications.
+  Azurpod en pause (autre application à venir), réseaux sociaux dans un second temps.
+- (21 oct.) Enzo est super admin ; l'assistant IA lui est réservé pour l'instant.
+- (21 oct.) Versions sombre et claire pour tous les écrans. Finance : on garde l'ancienne version.
+- (21 oct.) Délais de livraison : Standard J+2, Pré-montage J+5, Clé en main J+7. Modèles de projet modifiables
+  par les admins seulement. Créneaux du planning : plusieurs participants et un ordre du jour.
 
 **Catalogue (réunion du 16 oct.)** : voir la page du catalogue de travail. Décidé : reportage événement 500 / 900 €
 (150 / 300 photos), reportage entreprise 750 / 1 200 €, portraits d'équipe 390 à 590 €, suivi de chantier dès 500 €,
