@@ -37,7 +37,7 @@ export const SEED_SOPS: Sop[] = [
     steps: [S('J-3 : liste des plans validée par le client'), S('J-2 : checklist matériel (batteries chargées, cartes vides, micros testés)'), S('J-1 : confirmer l’horaire et l’adresse au client par message'), S('Sur place : plans larges d’abord, interviews ensuite, B-roll pour finir'), S('Le soir : double sauvegarde des rushs (NAS + disque) et nommage', 'AAAA-MM-JJ_Client_Projet_Camera'), S('J+1 : message de remerciement au client avec 2 photos des coulisses')] },
   { id: 'sop5', title: 'Montage, retours et livraison', category: 'Production', owner: 'A', duration: '1 à 2 semaines', updatedAt: daysAgo(20),
     goal: 'Livrer en deux allers-retours maximum.',
-    steps: [S('V1 envoyée dans le portail client, avec 3 questions précises'), S('Retours horodatés sur la vidéo, regroupés en une seule liste'), S('V2 corrigée, vérification sous-titres et formats (9:16, 4:5, 16:9)'), S('Validation client puis export final et livraison dans le portail'), S('Archiver le projet et ranger les rushs sur le NAS')] },
+    steps: [S('V1 envoyée dans le portail client, avec 3 questions précises'), S('Retours horodatés sur la vidéo, regroupés en une seule liste'), S('V2 corrigée, puis check-list post-production complète', 'Voir le process « Check-list post-production »'), S('Validation client puis export final et livraison dans le portail'), S('Archiver le projet et ranger les rushs sur le NAS')] },
   { id: 'sop6', title: 'Accueillir une session Azurpod', category: 'Azurpod', owner: 'A', duration: '20 min avant', updatedAt: daysAgo(15),
     goal: 'Le client se sent attendu, l’enregistrement démarre à l’heure.',
     steps: [S('Studio prêt 20 min avant : lumières, caméras, micros testés'), S('Eau et café sur la table'), S('Brief de 5 min avec les invités : posture, regard caméra, micro'), S('Enregistrement + sauvegarde immédiate'), S('Fin : proposer le pack 10 h ou la formule Clé en main')] },
@@ -50,6 +50,21 @@ export const SEED_SOPS: Sop[] = [
   { id: 'sop9', title: 'Facturation et relances de paiement', category: 'Admin', owner: 'E', duration: 'Chaque fin de mois', updatedAt: daysAgo(25),
     goal: 'Délai de paiement moyen sous 20 jours.',
     steps: [S('Facture d’acompte envoyée à la signature (automatique)'), S('Facture de livraison le jour de la livraison'), S('J+1 après échéance : relance automatique'), S('J+7 : appel'), S('J+30 : mise en demeure (modèle dans le Drive)')] },
+  // Ajouté en fin de liste : les identifiants d'étapes sont séquentiels et SEED_RUNS s'y réfère.
+  { id: 'sop10', title: 'Check-list post-production', category: 'Production', owner: 'A', duration: '30 min avant chaque envoi', updatedAt: daysAgo(0),
+    goal: 'Aucune faute ni aucun bug dans une vidéo envoyée au client, V1 comprise.',
+    steps: [
+      S('Relire tous les sous-titres mot à mot', 'Orthographe, accents, accords, noms propres et marques du client. Passer le fichier SRT au correcteur.'),
+      S('Vérifier la synchro des sous-titres', 'Chaque sous-titre apparaît avec la voix et reste lisible, sans sortir des marges (zones de sécurité en 9:16).'),
+      S('Regarder la vidéo en entier, sans couper', 'Pas d’image noire, de saut, de plan en double, de glitch ni de flash entre deux plans.'),
+      S('Contrôler le son', 'Niveaux homogènes, voix au premier plan, pas de clic, de souffle ni de coupure en fin de musique.'),
+      S('Contrôler l’image', 'Étalonnage cohérent d’un plan à l’autre, aucun plan flou ou surexposé non voulu.'),
+      S('Relire les textes à l’écran', 'Titrages, logos, coordonnées, liens et appels à l’action du client à jour.'),
+      S('Vérifier les droits', 'Musique sous licence, images d’archive autorisées, autorisations de droit à l’image signées par les personnes filmées.'),
+      S('Exporter dans les bons formats', 'Formats prévus au devis (16:9, 9:16, 4:5), résolution, cadence. Nommage : AAAA-MM-JJ_Client_Projet_Version.'),
+      S('Ouvrir chaque export sur un téléphone et un ordinateur', 'Le fichier se lit, le son est présent, rien n’est coupé.'),
+      S('Faire valider par une deuxième personne', 'Un autre membre de l’équipe regarde la version avant l’envoi au client.'),
+    ] },
 ]
 
 export const SEED_RUNS: SopRun[] = [

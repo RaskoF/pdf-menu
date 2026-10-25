@@ -87,6 +87,11 @@ nommé « … (révision 21 oct.) ». Les originaux sont gardés au-dessus.
   - gestion des modèles de projet.
 - À revoir : Charge équipe d'après l'ancien « Workload » (commentaire 24, à confirmer). Finance : garder l'ancienne version.
 
+- (25 oct.) Nouveau process « Check-list post-production » (10 étapes : sous-titres, synchro, visionnage complet, son,
+  image, textes, droits, exports, test sur téléphone, double validation) dans le prototype v1 (`uplye-os/src/dataExtra.ts`,
+  `sop10`). À reprendre tel quel dans le module Process de la v2. Les données de démo déjà en mémoire du navigateur ne le
+  montrent qu'après « Remettre les données de démo ».
+
 ## Décisions prises (ne pas remettre en question sans demander)
 
 **Rôles**
