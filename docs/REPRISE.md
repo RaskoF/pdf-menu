@@ -16,6 +16,7 @@ Dernière mise à jour : 29 octobre 2026.
 | Catalogue 2027 de travail (réunion du 16 oct.) | https://claude.ai/artifact/7w4RNen9wzAonFTxmNuWkQ |
 | Maquettes et design system | Figma, fichier `rg1KuWYKJvxNP79Wp8azbx`, page « ↪ Uplye OS » |
 | Règles de sécurité (non négociables) | `SECURITY.md` |
+| Roadmap à valider par Elias (un fichier par pôle) | `docs/roadmap/` (01 Authentification) |
 | Fonctionnalités du prototype | `uplye-os/README.md` |
 
 ### Figma : plan de la page « ↪ Uplye OS »
