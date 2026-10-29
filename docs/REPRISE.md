@@ -3,7 +3,7 @@
 Ce fichier sert de mémoire au projet. Une nouvelle conversation (ou une autre personne) doit pouvoir repartir d'ici
 sans relire l'historique. **À mettre à jour à la fin de chaque séance de travail.**
 
-Dernière mise à jour : 21 octobre 2026.
+Dernière mise à jour : 29 octobre 2026.
 
 ## Où sont les choses
 
@@ -110,6 +110,10 @@ nommé « … (révision 21 oct.) ». Les originaux sont gardés au-dessus.
 - Parrainage client : 5 % en commission ou 10 % en crédit.
 - (21 oct.) Priorité aux essentiels : CRM, dashboard, projets et planning, admin essentiel, notifications.
   Azurpod en pause (autre application à venir), réseaux sociaux dans un second temps.
+- (29 oct.) Authentification : pas d'inscription libre (comptes créés par invitation). Équipe : e-mail + mot de passe
+  uniquement, **pas de connexion Google**, double authentification pour les admins. Clients : lien magique. Roadmap des
+  écrans d'auth (connexion, 2FA, mot de passe oublié, activation, lien magique, session expirée, Équipe, Mon compte >
+  Sécurité, e-mails) à faire valider par Elias, avec les durées de session et limites de tentatives.
 - (21 oct.) Enzo est super admin ; l'assistant IA lui est réservé pour l'instant.
 - (21 oct.) Versions sombre et claire pour tous les écrans. Finance : on garde l'ancienne version.
 - (21 oct.) Délais de livraison : Standard J+2, Pré-montage J+5, Clé en main J+7. Modèles de projet modifiables
